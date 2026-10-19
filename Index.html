@@ -15,6 +15,8 @@
   --success: #10b981;
   --success-dark: #065f46;
   --danger: #ef4444;
+  --locked: #94a3b8;
+  --admin-purple: #7e22ce;
 }
 * { font-family: 'Poppins', sans-serif; }
 body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
@@ -25,86 +27,83 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
 .navbar-brand { font-weight: 700; font-size: 1.4rem; color: var(--primary-blue) !important; letter-spacing: -0.5px; margin-bottom: 0; }
 .navbar-brand span { background: var(--primary-blue); color: #fff; border-radius: 10px; padding: 0.1rem 0.5rem; margin-right: 0.3rem; font-size: 1.3rem; }
 
-/* User chip */
-.user-chip {
-  background: var(--bg-soft); border-radius: 30px;
-  padding: 0.35rem 0.9rem 0.35rem 0.4rem;
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  font-size: 0.85rem; font-weight: 500;
-}
-.user-chip .avatar {
-  width: 28px; height: 28px; border-radius: 50%;
-  background: var(--primary-blue); color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.8rem; font-weight: 700;
-}
+.user-chip { background: var(--bg-soft); border-radius: 30px; padding: 0.35rem 0.9rem 0.35rem 0.4rem; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 500; }
+.user-chip .avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--primary-blue); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; }
 
-/* Bottom nav — semua ukuran layar */
+/* Bottom nav */
 .bottom-nav {
-  position: fixed; bottom: 0; left: 0; right: 0;
-  background: #fff;
+  position: fixed; bottom: 0; left: 0; right: 0; background: #fff;
   box-shadow: 0 -4px 24px rgba(0,0,0,0.08);
   display: flex; justify-content: space-around; align-items: stretch;
   padding: 0.5rem 0 calc(0.5rem + env(safe-area-inset-bottom, 0px));
-  z-index: 1030;
-  border-top: 1px solid #e2e8f0;
-  max-width: 640px;
-  margin: 0 auto;
-  border-radius: 20px 20px 0 0;
+  z-index: 1030; border-top: 1px solid #e2e8f0;
+  max-width: 640px; margin: 0 auto; border-radius: 20px 20px 0 0;
 }
-.bottom-nav a {
-  color: #94a3b8; text-decoration: none; text-align: center;
-  font-size: 0.72rem; font-weight: 500;
-  flex: 1; padding: 0.4rem 0.2rem;
-  transition: color 0.2s, background 0.2s, transform 0.15s;
-  border-radius: 14px;
-  margin: 0 0.15rem;
-}
-.bottom-nav a i {
-  font-size: 1.35rem; display: block; margin-bottom: 0.15rem;
-  transition: transform 0.2s;
-}
+.bottom-nav a { color: #94a3b8; text-decoration: none; text-align: center; font-size: 0.72rem; font-weight: 500; flex: 1; padding: 0.4rem 0.2rem; transition: all 0.2s; border-radius: 14px; margin: 0 0.15rem; }
+.bottom-nav a i { font-size: 1.35rem; display: block; margin-bottom: 0.15rem; transition: transform 0.2s; }
 .bottom-nav a:hover { color: var(--primary-blue); background: var(--bg-soft); }
-.bottom-nav a.active {
-  color: var(--primary-blue); background: var(--bg-soft); font-weight: 600;
-}
+.bottom-nav a.active { color: var(--primary-blue); background: var(--bg-soft); font-weight: 600; }
 .bottom-nav a.active i { transform: scale(1.1); }
-
-@media (min-width: 992px) {
-  .bottom-nav { padding: 0.7rem 0; max-width: 720px; }
-  .bottom-nav a { font-size: 0.78rem; padding: 0.5rem 0.3rem; }
-  .bottom-nav a i { font-size: 1.5rem; }
-}
+@media (min-width: 992px) { .bottom-nav { padding: 0.7rem 0; max-width: 720px; } .bottom-nav a { font-size: 0.78rem; } .bottom-nav a i { font-size: 1.5rem; } }
 
 /* Buttons */
 .btn-primary { background: var(--primary-blue); border-color: var(--primary-blue); border-radius: 30px; font-weight: 500; padding: 0.5rem 1.4rem; }
 .btn-primary:hover { background: #152c6b; border-color: #152c6b; }
 .btn-outline-primary { border-color: var(--primary-blue); color: var(--primary-blue); border-radius: 30px; font-weight: 500; padding: 0.4rem 1.2rem; }
 .btn-outline-primary:hover { background: var(--primary-blue); color: #fff; }
+.btn-warning { background: #f59e0b; border-color: #f59e0b; color: #fff; border-radius: 30px; font-weight: 500; padding: 0.5rem 1.4rem; }
+.btn-warning:hover { background: #d97706; border-color: #d97706; color: #fff; }
 
 /* Cards */
-.card { border: none; border-radius: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; background: #fff; }
+.card { border: none; border-radius: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; background: #fff; overflow: hidden; }
 .card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,0.08); }
 .card-body { padding: 1.4rem; }
 .cafe-card { cursor: pointer; border-left: 5px solid var(--primary-blue); height: 100%; }
 .cafe-card .card-title { font-weight: 600; color: #0f172a; font-size: 1.05rem; margin-bottom: 0.3rem; }
+
+/* Thumbnail */
+.cafe-card .cafe-image { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #f1f5f9; display: block; transition: transform 0.3s; }
+.cafe-card:hover .cafe-image { transform: scale(1.03); }
+
+/* Detail hero */
+.detail-hero { width: 100%; aspect-ratio: 21 / 9; object-fit: cover; background: #f1f5f9; display: block; }
+@media (max-width: 768px) { .detail-hero { aspect-ratio: 16 / 9; } }
+
+/* Locked cafe */
+.cafe-card.locked { cursor: pointer; border-left-color: var(--locked); position: relative; }
+.cafe-card.locked .cafe-image { filter: blur(6px) grayscale(0.5); }
+.cafe-card.locked .card-body { filter: blur(4px); user-select: none; pointer-events: none; }
+.cafe-card.locked::after {
+  content: '\F47A';
+  font-family: 'bootstrap-icons';
+  position: absolute; top: 42%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem; color: var(--primary-blue);
+  opacity: 0.9; text-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  pointer-events: none;
+}
+.cafe-card.locked .lock-label {
+  position: absolute; bottom: 12px; left: 50%;
+  transform: translateX(-50%); z-index: 2;
+  background: rgba(30,58,138,0.95); color: #fff;
+  font-size: 0.75rem; font-weight: 600;
+  padding: 0.35rem 0.9rem; border-radius: 20px;
+  white-space: nowrap;
+}
 
 /* Favorite */
 .favorite-icon { font-size: 1.4rem; cursor: pointer; color: #cbd5e1; transition: color 0.2s; }
 .favorite-icon.favorited { color: var(--danger); }
 .favorite-icon:hover { color: #f87171; }
 
-/* Sections */
+/* Section */
 .section-title { font-weight: 700; color: #0f172a; margin-bottom: 0.4rem; font-size: 1.7rem; }
 .section-subtitle { color: #475569; margin-bottom: 1.6rem; font-size: 1rem; }
 .page-section { display: none; }
 .page-section.active { display: block; }
 
 /* Mood */
-.mood-option {
-  border: 2px solid #e2e8f0; border-radius: 20px; padding: 1.5rem 1rem;
-  text-align: center; cursor: pointer; transition: all 0.2s; background: #fff; height: 100%;
-}
+.mood-option { border: 2px solid #e2e8f0; border-radius: 20px; padding: 1.5rem 1rem; text-align: center; cursor: pointer; transition: all 0.2s; background: #fff; height: 100%; }
 .mood-option:hover { border-color: var(--primary-blue); background: var(--bg-soft); }
 .mood-option.selected { border-color: var(--primary-blue); background: var(--bg-soft); box-shadow: 0 4px 16px rgba(30,58,138,0.15); }
 .mood-option i { font-size: 2rem; margin-bottom: 0.5rem; }
@@ -112,19 +111,13 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
 .mood-option p { font-size: 0.82rem; color: #64748b; margin-bottom: 0; }
 
 /* Location */
-.loc-option {
-  border: 2px solid #e2e8f0; border-radius: 16px; padding: 1rem;
-  cursor: pointer; transition: all 0.2s; text-align: center;
-}
+.loc-option { border: 2px solid #e2e8f0; border-radius: 16px; padding: 1rem; cursor: pointer; transition: all 0.2s; text-align: center; }
 .loc-option:hover { border-color: var(--primary-blue); background: var(--bg-soft); }
 .loc-option.selected { border-color: var(--primary-blue); background: var(--bg-soft); }
 .loc-option .count { font-size: 0.75rem; color: #94a3b8; }
 
 /* Facility */
-.fac-option {
-  border: 2px solid #e2e8f0; border-radius: 14px; padding: 0.8rem 1rem;
-  cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.6rem;
-}
+.fac-option { border: 2px solid #e2e8f0; border-radius: 14px; padding: 0.8rem 1rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.6rem; }
 .fac-option:hover { border-color: var(--primary-blue); background: var(--bg-soft); }
 .fac-option.selected { border-color: var(--primary-blue); background: var(--bg-soft); }
 .fac-option i { font-size: 1.2rem; color: var(--primary-blue); }
@@ -135,18 +128,10 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
 
 /* Result */
 .result-card { border-left: 5px solid var(--primary-blue); }
-.match-badge {
-  background: var(--success); color: #fff; font-size: 0.75rem;
-  padding: 0.25rem 0.7rem; border-radius: 20px; font-weight: 600;
-}
+.match-badge { background: var(--success); color: #fff; font-size: 0.75rem; padding: 0.25rem 0.7rem; border-radius: 20px; font-weight: 600; }
 
 /* Profile */
-.profile-avatar {
-  width: 90px; height: 90px; border-radius: 50%;
-  background: var(--primary-blue); color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2.2rem; font-weight: 700; margin: 0 auto 1rem;
-}
+.profile-avatar { width: 90px; height: 90px; border-radius: 50%; background: var(--primary-blue); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 700; margin: 0 auto 1rem; }
 .stat-box { text-align: center; padding: 1rem; background: var(--bg-soft); border-radius: 16px; }
 .stat-box .num { font-size: 1.6rem; font-weight: 700; color: var(--primary-blue); }
 .stat-box .label { font-size: 0.8rem; color: #64748b; }
@@ -156,22 +141,13 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
 .empty-state i { font-size: 3.5rem; margin-bottom: 1rem; display: block; color: #cbd5e1; }
 
 /* Hero */
-.hero-home {
-  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-  color: #fff; border-radius: 24px; padding: 2rem; margin-bottom: 1.5rem;
-}
+.hero-home { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: #fff; border-radius: 24px; padding: 2rem; margin-bottom: 1.5rem; }
 .hero-home h1 { font-weight: 700; font-size: 1.6rem; margin-bottom: 0.5rem; }
 .hero-home p { opacity: 0.9; margin-bottom: 1.2rem; font-size: 0.95rem; }
 
 /* Login */
-.login-wrapper {
-  min-height: 100vh; display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 2rem 1rem;
-}
-.login-card {
-  background: #fff; border-radius: 24px; padding: 2.5rem 2rem;
-  max-width: 420px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-}
+.login-wrapper { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 2rem 1rem; }
+.login-card { background: #fff; border-radius: 24px; padding: 2.5rem 2rem; max-width: 420px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
 .login-logo { text-align: center; margin-bottom: 1.5rem; }
 .login-logo .brand { font-weight: 700; font-size: 1.8rem; color: var(--primary-blue); }
 .login-logo .brand span { background: var(--primary-blue); color: #fff; border-radius: 12px; padding: 0.1rem 0.6rem; margin-right: 0.3rem; }
@@ -183,11 +159,94 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
 .alert-error { background: #fee2e2; color: #991b1b; border: none; border-radius: 12px; padding: 0.7rem 1rem; font-size: 0.88rem; }
 .alert-success { background: #d1fae5; color: #065f46; border: none; border-radius: 12px; padding: 0.7rem 1rem; font-size: 0.88rem; }
 
-#cafeDetailHome .card, #cafeDetailMood .card, #cafeDetailFav .card { border-left: 8px solid var(--primary-blue); }
+/* Unlock banner */
+.unlock-banner { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px dashed #f59e0b; border-radius: 20px; padding: 1.5rem; text-align: center; margin: 1.5rem 0; }
+.unlock-banner h5 { color: #92400e; font-weight: 700; margin-bottom: 0.4rem; }
+.unlock-banner p { color: #78350f; font-size: 0.9rem; margin-bottom: 1rem; }
+
+/* Survey */
+.survey-question { background: #f8fafc; border-radius: 16px; padding: 1rem 1.2rem; margin-bottom: 1rem; }
+.survey-question p { font-weight: 600; margin-bottom: 0.7rem; font-size: 0.95rem; }
+.survey-option { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.9rem; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; transition: all 0.2s; margin-bottom: 0.4rem; font-size: 0.9rem; }
+.survey-option:hover { border-color: var(--primary-blue); background: var(--bg-soft); }
+.survey-option.selected { border-color: var(--primary-blue); background: var(--bg-soft); }
+.survey-option .dot { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #cbd5e1; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.survey-option.selected .dot { border-color: var(--primary-blue); }
+.survey-option.selected .dot::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--primary-blue); }
+
+/* Locked preview di modal */
+.locked-preview { display: flex; gap: 0.5rem; margin-bottom: 1.2rem; overflow-x: auto; padding-bottom: 0.5rem; }
+.locked-preview img { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; filter: blur(4px) grayscale(0.4); flex-shrink: 0; }
+
+/* Success icon */
+.success-icon { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #10b981, #059669); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 1rem; animation: pop 0.4s ease; }
+@keyframes pop { 0% { transform: scale(0); } 70% { transform: scale(1.15); } 100% { transform: scale(1); } }
+
+/* Slider */
+.cafe-slider-wrapper { position: relative; overflow: hidden; border-radius: 20px; }
+.cafe-slider { display: flex; transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1); cursor: grab; user-select: none; }
+.cafe-slider:active { cursor: grabbing; }
+.cafe-slider.dragging { transition: none; }
+.cafe-slide { min-width: 100%; flex-shrink: 0; padding: 0 0.25rem; box-sizing: border-box; }
+
+.slider-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; border-radius: 50%;
+  background: #fff; border: 2px solid var(--primary-blue); color: var(--primary-blue);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 5;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  transition: all 0.2s; font-size: 1.2rem;
+}
+.slider-btn:hover { background: var(--primary-blue); color: #fff; transform: translateY(-50%) scale(1.08); }
+.slider-btn.prev { left: -8px; }
+.slider-btn.next { right: -8px; }
+.slider-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: translateY(-50%); }
+@media (max-width: 768px) {
+  .slider-btn { width: 38px; height: 38px; font-size: 1rem; }
+  .slider-btn.prev { left: 4px; }
+  .slider-btn.next { right: 4px; }
+}
+
+.slider-dots { display: flex; justify-content: center; gap: 0.4rem; margin-top: 1rem; flex-wrap: wrap; }
+.slider-dot { width: 8px; height: 8px; border-radius: 50%; background: #cbd5e1; cursor: pointer; transition: all 0.2s; }
+.slider-dot.active { background: var(--primary-blue); width: 24px; border-radius: 4px; }
+
+.slider-counter { text-align: center; font-size: 0.85rem; color: #64748b; margin-top: 0.5rem; font-weight: 500; }
+.slider-counter strong { color: var(--primary-blue); }
+
+.cafe-slide .card { height: 100%; }
+.cafe-slide .cafe-image { aspect-ratio: 16/9; }
+
+/* ===== ADMIN PANEL ===== */
+.admin-header { background: linear-gradient(135deg, var(--admin-purple), #a855f7); color: #fff; padding: 1.5rem 0; margin-bottom: 1.5rem; border-radius: 20px; }
+.admin-stat { text-align: center; padding: 1.2rem; border-radius: 16px; color: #fff; }
+.admin-stat.blue { background: linear-gradient(135deg, #1e3a8a, #3b82f6); }
+.admin-stat.green { background: linear-gradient(135deg, #059669, #10b981); }
+.admin-stat.orange { background: linear-gradient(135deg, #d97706, #f59e0b); }
+.admin-stat.purple { background: linear-gradient(135deg, #7e22ce, #a855f7); }
+.admin-stat .num { font-size: 1.8rem; font-weight: 700; }
+.admin-stat .label { font-size: 0.8rem; opacity: 0.9; }
+
+.admin-table { width: 100%; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.05); }
+.admin-table th { background: #f8fafc; font-weight: 600; padding: 0.9rem 1rem; text-align: left; font-size: 0.85rem; color: #475569; }
+.admin-table td { padding: 0.9rem 1rem; border-top: 1px solid #f1f5f9; font-size: 0.88rem; vertical-align: middle; }
+.admin-table tr:hover td { background: #f8fafc; }
+
+.badge-unlock { background: #d1fae5; color: #065f46; padding: 0.25rem 0.7rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+.badge-locked { background: #fee2e2; color: #991b1b; padding: 0.25rem 0.7rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+
+.admin-nav-btn { background: transparent; border: none; color: #fff; padding: 0.5rem 1rem; border-radius: 30px; font-weight: 500; transition: background 0.2s; }
+.admin-nav-btn:hover, .admin-nav-btn.active { background: rgba(255,255,255,0.2); }
+
+/* Page animation */
+.page-section.active { animation: fadeIn 0.3s; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
 @media (max-width: 768px) {
   .section-title { font-size: 1.4rem; }
   .hero-home h1 { font-size: 1.3rem; }
+  .admin-table th, .admin-table td { padding: 0.6rem 0.5rem; font-size: 0.78rem; }
 }
 </style>
 </head>
@@ -201,11 +260,6 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
         <div class="brand"><span>Nf</span>Ngafeeling</div>
         <p>Mood-Mu, Cafe-Mu.</p>
       </div>
-
-      <ul class="nav nav-pills nav-fill mb-4" style="background:#f1f5f9;border-radius:30px;padding:4px;">
-        <li class="nav-item"><a class="nav-link active" data-auth-tab="login" style="border-radius:30px;cursor:pointer;">Masuk</a></li>
-        <li class="nav-item"><a class="nav-link" data-auth-tab="register" style="border-radius:30px;cursor:pointer;">Daftar</a></li>
-      </ul>
 
       <div id="authAlert"></div>
 
@@ -223,32 +277,14 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
         </button>
       </form>
 
-      <form id="formRegister" class="d-none">
-        <div class="mb-3">
-          <label class="form-label small fw-semibold">Nama Lengkap</label>
-          <input type="text" class="form-control" id="regName" placeholder="Nama kamu" required maxlength="30">
-        </div>
-        <div class="mb-3">
-          <label class="form-label small fw-semibold">Email</label>
-          <input type="email" class="form-control" id="regEmail" placeholder="nama@email.com" required>
-        </div>
-        <div class="mb-3">
-          <label class="form-label small fw-semibold">Password</label>
-          <input type="password" class="form-control" id="regPassword" placeholder="Minimal 6 karakter" required minlength="6">
-        </div>
-        <button type="submit" class="btn btn-primary w-100 py-2">
-          <i class="bi bi-person-plus me-1"></i>Daftar
-        </button>
-      </form>
-
       <div class="login-toggle">
-        <span id="toggleText">Belum punya akun? <a data-auth-tab="register">Daftar di sini</a></span>
+        <a data-auth-tab="admin" style="font-size: 0.8rem; opacity: 0.7;"><i class="bi bi-shield-lock me-1"></i>Login Admin</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ HEADER ============ -->
+<!-- ============ HEADER USER ============ -->
 <nav class="navbar sticky-top" id="navbarTop" style="display:none;">
   <div class="container d-flex justify-content-between align-items-center">
     <a class="navbar-brand mb-0" href="#" data-nav="app-home"><span>Nf</span> Ngafeeling</a>
@@ -264,14 +300,12 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
   <div class="container py-4">
     <div class="hero-home">
       <h1><i class="bi bi-cup-hot me-2"></i>Hai, <span id="heroName">User</span>! 👋</h1>
-      <p>Lagi pengin suasana apa hari ini? Pilih mood, kami tunjukkan 10 cafe terbaik.</p>
-      <a href="#" class="btn btn-light fw-semibold" data-nav="app-mood">
-        <i class="bi bi-magic me-1"></i>Cari Cafe Sesuai Mood
-      </a>
+      <p>Lagi pengin suasana apa hari ini? Pilih mood, kami tunjukkan cafe terbaik.</p>
+      <a href="#" class="btn btn-light fw-semibold" data-nav="app-mood"><i class="bi bi-magic me-1"></i>Cari Cafe Sesuai Mood</a>
     </div>
 
     <h3 class="section-title">Pilih Mood Cepat</h3>
-    <p class="section-subtitle">Klik salah satu mood, langsung tampil 10 rekomendasi cafe.</p>
+    <p class="section-subtitle">Klik salah satu mood, langsung tampil rekomendasi cafe.</p>
     <div class="row g-3 mb-4" id="shortcutMood"></div>
 
     <div id="quickResult" class="d-none">
@@ -280,11 +314,9 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
           <h4 class="fw-bold mb-0" id="quickResultTitle">Rekomendasi</h4>
           <p class="text-secondary small mb-0" id="quickResultSubtitle"></p>
         </div>
-        <button class="btn btn-outline-primary btn-sm" id="closeQuickResult">
-          <i class="bi bi-x me-1"></i>Tutup
-        </button>
+        <button class="btn btn-outline-primary btn-sm" id="closeQuickResult"><i class="bi bi-x me-1"></i>Tutup</button>
       </div>
-      <div class="row g-3" id="quickResultGrid"></div>
+      <div id="quickResultGrid"></div>
     </div>
 
     <div id="cafeDetailHome" class="mt-4"></div>
@@ -297,17 +329,13 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
     <h2 class="section-title">Cari Cafe Sesuai Mood</h2>
     <p class="section-subtitle">Isi mood dan lokasimu, kami carikan cafe paling cocok.</p>
 
-    <div class="progress mb-4">
-      <div class="progress-bar" id="wizardProgress" style="width:33%;"></div>
-    </div>
+    <div class="progress mb-4"><div class="progress-bar" id="wizardProgress" style="width:33%;"></div></div>
     <p class="text-secondary small mb-3" id="wizardStepLabel">Langkah 1 dari 3</p>
 
     <div class="wizard-step" data-step="1">
       <h5 class="fw-semibold mb-3">1. Lagi pengin suasana apa?</h5>
       <div class="row g-3" id="moodOptions"></div>
-      <div class="mt-4">
-        <button class="btn btn-primary" data-wizard="next" id="btnNext1" disabled>Lanjut <i class="bi bi-arrow-right"></i></button>
-      </div>
+      <div class="mt-4"><button class="btn btn-primary" data-wizard="next" id="btnNext1" disabled>Lanjut <i class="bi bi-arrow-right"></i></button></div>
     </div>
 
     <div class="wizard-step d-none" data-step="2">
@@ -334,9 +362,7 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
           <h4 class="fw-bold mb-0">Hasil untukmu</h4>
           <p class="text-secondary small mb-0" id="hasilSummary"></p>
         </div>
-        <button class="btn btn-outline-primary btn-sm" data-wizard="reset">
-          <i class="bi bi-arrow-counterclockwise me-1"></i>Cari Lagi
-        </button>
+        <button class="btn btn-outline-primary btn-sm" data-wizard="reset"><i class="bi bi-arrow-counterclockwise me-1"></i>Cari Lagi</button>
       </div>
       <div class="row g-3" id="hasilGrid"></div>
     </div>
@@ -367,9 +393,7 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
           <div class="profile-avatar" id="profileAvatar">U</div>
           <h5 class="fw-semibold mb-0" id="profileName">User</h5>
           <p class="text-secondary small mb-3" id="profileEmail">email@example.com</p>
-          <button class="btn btn-outline-danger btn-sm" id="logoutBtn">
-            <i class="bi bi-box-arrow-right me-1"></i>Logout
-          </button>
+          <button class="btn btn-outline-danger btn-sm" id="logoutBtn"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
         </div>
       </div>
 
@@ -391,9 +415,7 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
         <div class="card mt-3">
           <div class="card-body">
             <h5 class="fw-semibold mb-3"><i class="bi bi-gear me-1"></i>Pengaturan</h5>
-            <button class="btn btn-outline-danger btn-sm" id="resetDataBtn">
-              <i class="bi bi-trash me-1"></i>Reset Semua Data
-            </button>
+            <button class="btn btn-outline-danger btn-sm" id="resetDataBtn"><i class="bi bi-trash me-1"></i>Reset Semua Data Saya</button>
           </div>
         </div>
 
@@ -401,18 +423,206 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
           <div class="card-body">
             <h5 class="fw-semibold mb-3"><i class="bi bi-info-circle me-1"></i>Tentang & Kontak</h5>
             <p class="small text-secondary mb-2">Ngafeeling — kurasi cafe berbasis mood untuk Soloraya.</p>
-            <a href="https://wa.me/6287705339063" target="_blank" rel="noopener" class="btn btn-primary btn-sm me-1 mb-1">
-              <i class="bi bi-whatsapp me-1"></i>WhatsApp
-            </a>
-            <a href="https://instagram.com/ngafeeling.mu" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm mb-1">
-              <i class="bi bi-instagram me-1"></i>Instagram
-            </a>
+            <a href="https://wa.me/6287705339063" target="_blank" rel="noopener" class="btn btn-primary btn-sm me-1 mb-1"><i class="bi bi-whatsapp me-1"></i>WhatsApp</a>
+            <a href="https://instagram.com/ngafeeling.mu" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm mb-1"><i class="bi bi-instagram me-1"></i>Instagram</a>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- ============ PAGE: ADMIN PANEL ============ -->
+<section id="page-admin" class="page-section">
+  <div class="container py-4">
+    <div class="admin-header p-4">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div>
+          <h3 class="fw-bold mb-1"><i class="bi bi-shield-lock me-2"></i>Admin Panel</h3>
+          <p class="mb-0 small opacity-75">Rekap semua aktivitas pengguna Ngafeeling</p>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+          <button class="admin-nav-btn active" data-admin-tab="dashboard"><i class="bi bi-graph-up me-1"></i>Dashboard</button>
+          <button class="admin-nav-btn" data-admin-tab="users"><i class="bi bi-people me-1"></i>User</button>
+          <button class="admin-nav-btn" data-admin-tab="survey"><i class="bi bi-clipboard-check me-1"></i>Survey</button>
+          <button class="btn btn-light btn-sm" id="adminLogoutBtn"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="adminAlert"></div>
+
+    <!-- Tab Dashboard -->
+    <div id="adminTabDashboard" class="admin-tab-content">
+      <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3"><div class="admin-stat blue"><div class="num" id="admTotalUsers">0</div><div class="label">Total User</div></div></div>
+        <div class="col-6 col-md-3"><div class="admin-stat green"><div class="num" id="admTotalSearch">0</div><div class="label">Total Pencarian</div></div></div>
+        <div class="col-6 col-md-3"><div class="admin-stat orange"><div class="num" id="admTotalFav">0</div><div class="label">Total Favorit</div></div></div>
+        <div class="col-6 col-md-3"><div class="admin-stat purple"><div class="num" id="admTotalUnlock">0</div><div class="label">User Unlock</div></div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="fw-semibold mb-3"><i class="bi bi-clock-history me-1"></i>Aktivitas Terbaru (Semua User)</h5>
+          <div id="adminRecentActivity"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Users -->
+    <div id="adminTabUsers" class="admin-tab-content d-none">
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <h5 class="fw-bold mb-0"><i class="bi bi-people me-1"></i>Daftar User</h5>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary btn-sm" id="adminAddUserBtn"><i class="bi bi-plus-circle me-1"></i>Tambah User</button>
+          <button class="btn btn-outline-primary btn-sm" id="adminExportBtn"><i class="bi bi-download me-1"></i>Export CSV</button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Nama</th>
+              <th class="text-center">Pencarian</th>
+              <th class="text-center">Favorit</th>
+              <th class="text-center">Dilihat</th>
+              <th class="text-center">Chat</th>
+              <th class="text-center">Unlock</th>
+              <th class="text-center">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="adminUsersTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tab Survey -->
+    <div id="adminTabSurvey" class="admin-tab-content d-none">
+      <h5 class="fw-bold mb-3"><i class="bi bi-clipboard-check me-1"></i>Jawaban Survey (Unlock)</h5>
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Q1 (Sering ngafe)</th>
+              <th>Q2 (Prioritas)</th>
+              <th>Q3 (Sumber tahu)</th>
+              <th>Waktu</th>
+            </tr>
+          </thead>
+          <tbody id="adminSurveyTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODAL: TAMBAH USER ============ -->
+<div class="modal fade" id="addUserModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: 24px; border: none;">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold"><i class="bi bi-person-plus text-primary me-2"></i>Tambah User Baru</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="addUserAlert"></div>
+        <div class="mb-3">
+          <label class="form-label small fw-semibold">Nama Lengkap</label>
+          <input type="text" class="form-control" id="newUserName" placeholder="Nama user">
+        </div>
+        <div class="mb-3">
+          <label class="form-label small fw-semibold">Email</label>
+          <input type="email" class="form-control" id="newUserEmail" placeholder="user@email.com">
+        </div>
+        <div class="mb-3">
+          <label class="form-label small fw-semibold">Password</label>
+          <input type="text" class="form-control" id="newUserPassword" placeholder="Minimal 6 karakter">
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-primary" id="saveNewUserBtn"><i class="bi bi-check me-1"></i>Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL: DETAIL USER ============ -->
+<div class="modal fade" id="userDetailModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content" style="border-radius: 24px; border: none;">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold"><i class="bi bi-person-circle text-primary me-2"></i>Detail User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="userDetailContent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL SURVEY (USER) ============ -->
+<div class="modal fade" id="surveyModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content" style="border-radius: 24px; border: none;">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title fw-bold"><i class="bi bi-clipboard-check text-warning me-2"></i>Unlock 30 Cafe Lainnya</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body pt-2">
+        <p class="text-secondary small mb-3">Jawab 3 pertanyaan singkat ini untuk membuka akses ke 30 cafe lainnya di Ngafeeling. 🎁</p>
+
+        <div class="locked-preview" id="lockedPreview"></div>
+
+        <div class="survey-question">
+          <p>1. Seberapa sering kamu ngafe dalam seminggu?</p>
+          <label class="survey-option" data-survey-group="q1" data-value="1-2 kali"><span class="dot"></span><span>1–2 kali</span></label>
+          <label class="survey-option" data-survey-group="q1" data-value="3-5 kali"><span class="dot"></span><span>3–5 kali</span></label>
+          <label class="survey-option" data-survey-group="q1" data-value="Hampir setiap hari"><span class="dot"></span><span>Hampir setiap hari</span></label>
+        </div>
+
+        <div class="survey-question">
+          <p>2. Apa yang paling penting saat pilih cafe?</p>
+          <label class="survey-option" data-survey-group="q2" data-value="Suasana"><span class="dot"></span><span>Suasana</span></label>
+          <label class="survey-option" data-survey-group="q2" data-value="Menu & rasa"><span class="dot"></span><span>Menu & rasa</span></label>
+          <label class="survey-option" data-survey-group="q2" data-value="Fasilitas (WiFi, colokan)"><span class="dot"></span><span>Fasilitas (WiFi, colokan)</span></label>
+          <label class="survey-option" data-survey-group="q2" data-value="Harga"><span class="dot"></span><span>Harga</span></label>
+        </div>
+
+        <div class="survey-question">
+          <p>3. Dari mana kamu tahu Ngafeeling?</p>
+          <label class="survey-option" data-survey-group="q3" data-value="Instagram"><span class="dot"></span><span>Instagram</span></label>
+          <label class="survey-option" data-survey-group="q3" data-value="TikTok"><span class="dot"></span><span>TikTok</span></label>
+          <label class="survey-option" data-survey-group="q3" data-value="Teman"><span class="dot"></span><span>Teman</span></label>
+          <label class="survey-option" data-survey-group="q3" data-value="Google"><span class="dot"></span><span>Google</span></label>
+          <label class="survey-option" data-survey-group="q3" data-value="Lainnya"><span class="dot"></span><span>Lainnya</span></label>
+        </div>
+
+        <div id="surveyAlert" class="mb-2"></div>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Nanti Saja</button>
+        <button type="button" class="btn btn-warning" id="submitSurveyBtn" disabled><i class="bi bi-unlock me-1"></i>Unlock Sekarang</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL SUCCESS ============ -->
+<div class="modal fade" id="successModal" tabindex="-1" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center" style="border-radius: 24px; border: none; padding: 1.5rem;">
+      <div class="modal-body">
+        <div class="success-icon"><i class="bi bi-unlock-fill"></i></div>
+        <h4 class="fw-bold mb-2">Selamat! 🎉</h4>
+        <p class="text-secondary mb-4">Kamu berhasil membuka <strong>30 cafe lainnya</strong>.<br>Selamat menjelajah!</p>
+        <button type="button" class="btn btn-primary w-100 py-2" data-bs-dismiss="modal"><i class="bi bi-compass me-1"></i>Mulai Jelajah</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ============ BOTTOM NAV ============ -->
 <nav class="bottom-nav" id="bottomNav" style="display:none;">
@@ -426,13 +636,29 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
 <script>
 /* ============================== KONFIG ============================== */
 const CONFIG = { whatsappNumber: '6287705339063', scrollOffset: 90 };
+
+const ADMIN_ACCOUNT = {
+  email: 'ngafeelingmu@gmail.com',
+  password: 'Ngafeeling@27',
+  name: 'Admin Ngafeeling'
+};
+
 const STORAGE_KEYS = {
   users: 'ngafeeling_users',
   session: 'ngafeeling_session',
-  favorites: 'ngafeeling_favorites',
-  history: 'ngafeeling_history',
-  stats: 'ngafeeling_stats'
+  favorites: (email) => `ngafeeling_favorites_${email}`,
+  history:   (email) => `ngafeeling_history_${email}`,
+  stats:     (email) => `ngafeeling_stats_${email}`,
+  unlocked:  (email) => `ngafeeling_unlocked_${email}`,
+  survey:    (email) => `ngafeeling_survey_${email}`
 };
+
+/* ============================== HELPER GAMBAR ============================== */
+function cafeImage(cafe, width = 800, height = 450) {
+  if (cafe.image) return cafe.image;
+  const seed = `${cafe.id}-${cafe.name.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
+  return `https://picsum.photos/seed/${seed}/${width}/${height}`;
+}
 
 /* ============================== DATA 40 CAFE ============================== */
 const CAFES = [
@@ -466,7 +692,7 @@ const CAFES = [
   { id:28, name:'Seperdua',     location:'Solo',        mood:'Nongkrong rame', color:'#b45309', desc:'Cocok untuk grup kecil hingga menengah.',              menu:['Kopi Susu 18k','Es Kopi 18k','Pisang Goreng 10k'], contact:'0812-3333-0028', facilities:['wifi','parkir'], rating:4.4, jamBuka:'10.00–23.00', lat:-7.5620, lng:110.8275 },
   { id:29, name:'Teman Coffee', location:'Karanganyar', mood:'Nongkrong rame', color:'#b45309', desc:'"Teman" — tempat nongkrong bareng sahabat.',           menu:['Kopi Susu 18k','Es Teh 10k','Pisang Goreng 12k'], contact:'0812-3333-0029', facilities:['wifi','parkir','nonkopi'], rating:4.5, jamBuka:'10.00–24.00', lat:-7.5970, lng:110.9500 },
   { id:30, name:'Ankara Cafe',  location:'Karanganyar', mood:'Nongkrong rame', color:'#b45309', desc:'Konsep hangat & intimate, cocok untuk kumpul bareng.', menu:['Latte 22k','Coklat 22k','Roti Bakar 15k'], contact:'0812-3333-0030', facilities:['wifi','parkir','nonkopi'], rating:4.6, jamBuka:'10.00–23.00', lat:-7.5980, lng:110.9490 },
-  { id:31, name:'Lekas Ngopi',     location:'Karanganyar', mood:'Quality time', color:'#7e22ce', desc:'Tempat hangat untuk ngobrol berdua.',              menu:['Latte 20k','Coklat 22k','Roti Bakar 15k'], contact:'0896-8412-6227', facilities:['wifi','senyap','nonkopi'], rating:4.6, jamBuka:'10.00–23.00', lat:-7.5955, lng:110.9485 },
+  { id:31, name:'Lekas Ngopi',     location:'Karanganyar', mood:'Quality time', color:'#7e22ce', desc:'Tempat hangat untuk ngobrol berdua.',              menu:['Latte 20k','Coklat 22k','Roti Bakar 15k'], contact:'0812-4444-0031', facilities:['wifi','senyap','nonkopi'], rating:4.6, jamBuka:'10.00–23.00', lat:-7.5955, lng:110.9485 },
   { id:32, name:'Lawu Kala Senja', location:'Tawangmangu', mood:'Quality time', color:'#7e22ce', desc:'View 360° Gunung Lawu, bangunan piramida. Sunset terbaik.', menu:['Thai Tea 18k','Chicken Katsu 25k','Blackpepper Beef 30k'], contact:'0812-4444-0032', facilities:['outdoor','parkir','nonkopi'], rating:4.8, jamBuka:'10.00–21.00', lat:-7.6730, lng:111.1310 },
   { id:33, name:'Lavana',          location:'Solo',        mood:'Quality time', color:'#7e22ce', desc:'Kafe dengan konsep elegan, cocok untuk quality time.', menu:['Latte 22k','Matcha 25k','Croissant 20k'], contact:'0812-4444-0033', facilities:['wifi','senyap','nonkopi'], rating:4.6, jamBuka:'10.00–22.00', lat:-7.5630, lng:110.8280 },
   { id:34, name:'The Bridge',      location:'Tawangmangu', mood:'Quality time', color:'#7e22ce', desc:'View jembatan & alam, suasana romantis.',          menu:['Kopi Susu 20k','Thai Tea 18k','Chicken Wings 25k'], contact:'0812-4444-0034', facilities:['outdoor','parkir','nonkopi'], rating:4.6, jamBuka:'09.00–21.00', lat:-7.6705, lng:111.1285 },
@@ -479,10 +705,17 @@ const CAFES = [
 ];
 
 const MOOD_GROUPS = [
-  { mood:'Fokus kerja',     color:'#1e3a8a', icon:'laptop', desc:'Area senyap, colokan banyak, WiFi cepat.',           cafeIds:[1,2,3,4,5,6,7,8,9,10] },
-  { mood:'Healing sendiri', color:'#0f766e', icon:'moon',   desc:'Musik pelan, cahaya hangat, meja tunggal.',          cafeIds:[11,12,13,14,15,16,17,18,19,20] },
-  { mood:'Nongkrong rame',  color:'#b45309', icon:'people', desc:'Meja besar, jam tutup larut, parkir luas.',          cafeIds:[21,22,23,24,25,26,27,28,29,30] },
-  { mood:'Quality time',    color:'#7e22ce', icon:'heart',  desc:'Meja berjarak, tenang, menu non-kopi lengkap.',      cafeIds:[31,32,33,34,35,36,37,38,39,40] }
+  { mood:'Fokus kerja',     color:'#1e3a8a', icon:'laptop', desc:'Area senyap, colokan banyak, WiFi cepat.',           cafeIds:[1, 3, 2] },
+  { mood:'Healing sendiri', color:'#0f766e', icon:'moon',   desc:'Musik pelan, cahaya hangat, meja tunggal.',          cafeIds:[11, 13, 12] },
+  { mood:'Nongkrong rame',  color:'#b45309', icon:'people', desc:'Meja besar, jam tutup larut, parkir luas.',          cafeIds:[21, 22] },
+  { mood:'Quality time',    color:'#7e22ce', icon:'heart',  desc:'Meja berjarak, tenang, menu non-kopi lengkap.',      cafeIds:[31, 32] }
+];
+
+const LOCKED_CAFE_IDS = [
+  4, 5, 6, 7, 8, 9, 10,
+  14, 15, 16, 17, 18, 19, 20,
+  23, 24, 25, 26, 27, 28, 29, 30,
+  33, 34, 35, 36, 37, 38, 39, 40
 ];
 
 const WILAYAH = [
@@ -511,34 +744,100 @@ const state = {
   filter: { mood: null, location: null, facilities: [] },
   wizardStep: 1,
   currentPage: 'app-login',
-  currentMoodQuick: null
+  currentMoodQuick: null,
+  isUnlocked: false,
+  surveyAnswers: { q1: null, q2: null, q3: null },
+  isAdmin: false
 };
+
+let sliderState = { current: 0, total: 0, startX: 0, isDragging: false };
 
 /* ============================== UTIL ============================== */
 const $  = (s, c = document) => c.querySelector(s);
 const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 const findCafe = id => CAFES.find(c => c.id === Number(id));
+const isCafeLocked = id => !state.isUnlocked && LOCKED_CAFE_IDS.includes(Number(id));
 const escapeHtml = str => String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+
 function scrollToEl(el, offset = CONFIG.scrollOffset) {
   if (!el) return;
   const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
   window.scrollTo({ top, behavior: 'smooth' });
 }
 
+function resetState() {
+  state.favorites = [];
+  state.history = [];
+  state.stats = { pencarian: 0, dilihat: 0, chat: 0 };
+  state.filter = { mood: null, location: null, facilities: [] };
+  state.wizardStep = 1;
+  state.currentMoodQuick = null;
+  state.isUnlocked = false;
+  state.surveyAnswers = { q1: null, q2: null, q3: null };
+  sliderState = { current: 0, total: 0, startX: 0, isDragging: false };
+}
+
 /* ============================== STORAGE ============================== */
 const storage = {
-  loadUsers() { try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.users) || '[]'); } catch { return []; } },
-  saveUsers(u) { localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(u)); },
+  loadUsers() {
+    try {
+      const raw = JSON.parse(localStorage.getItem(STORAGE_KEYS.users) || '[]');
+      // pastikan admin selalu ada
+      if (!raw.some(u => u.email === ADMIN_ACCOUNT.email)) {
+        raw.push({ name: ADMIN_ACCOUNT.name, email: ADMIN_ACCOUNT.email, password: ADMIN_ACCOUNT.password, role: 'admin' });
+        localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(raw));
+      }
+      return raw;
+    } catch { return []; }
+  },
+  saveUsers(users) { localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(users)); },
+
   loadSession() { try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.session) || 'null'); } catch { return null; } },
-  saveSession(u) { localStorage.setItem(STORAGE_KEYS.session, JSON.stringify(u)); },
+  saveSession(user) { localStorage.setItem(STORAGE_KEYS.session, JSON.stringify(user)); },
   clearSession() { localStorage.removeItem(STORAGE_KEYS.session); },
-  loadFavorites() { try { state.favorites = JSON.parse(localStorage.getItem(STORAGE_KEYS.favorites) || '[]'); } catch { state.favorites = []; } },
-  saveFavorites() { localStorage.setItem(STORAGE_KEYS.favorites, JSON.stringify(state.favorites)); },
-  loadHistory() { try { state.history = JSON.parse(localStorage.getItem(STORAGE_KEYS.history) || '[]'); } catch { state.history = []; } },
-  saveHistory() { localStorage.setItem(STORAGE_KEYS.history, JSON.stringify(state.history.slice(0, 10))); },
-  loadStats() { try { state.stats = JSON.parse(localStorage.getItem(STORAGE_KEYS.stats) || '{"pencarian":0,"dilihat":0,"chat":0}'); } catch { state.stats = { pencarian: 0, dilihat: 0, chat: 0 }; } },
-  saveStats() { localStorage.setItem(STORAGE_KEYS.stats, JSON.stringify(state.stats)); },
-  resetAll() { [STORAGE_KEYS.favorites, STORAGE_KEYS.history, STORAGE_KEYS.stats].forEach(k => localStorage.removeItem(k)); }
+
+  _key(type) {
+    const email = state.user?.email || 'guest';
+    return STORAGE_KEYS[type](email);
+  },
+
+  loadFavorites() { try { const r = localStorage.getItem(this._key('favorites')); state.favorites = r ? JSON.parse(r) : []; } catch { state.favorites = []; } },
+  saveFavorites() { localStorage.setItem(this._key('favorites'), JSON.stringify(state.favorites)); },
+
+  loadHistory() { try { const r = localStorage.getItem(this._key('history')); state.history = r ? JSON.parse(r) : []; } catch { state.history = []; } },
+  saveHistory() { localStorage.setItem(this._key('history'), JSON.stringify(state.history.slice(0, 10))); },
+
+  loadStats() { try { const r = localStorage.getItem(this._key('stats')); state.stats = r ? JSON.parse(r) : { pencarian: 0, dilihat: 0, chat: 0 }; } catch { state.stats = { pencarian: 0, dilihat: 0, chat: 0 }; } },
+  saveStats() { localStorage.setItem(this._key('stats'), JSON.stringify(state.stats)); },
+
+  loadUnlocked() { return localStorage.getItem(this._key('unlocked')) === 'true'; },
+  saveUnlocked() { localStorage.setItem(this._key('unlocked'), 'true'); },
+
+  loadSurvey() { try { const r = localStorage.getItem(this._key('survey')); return r ? JSON.parse(r) : null; } catch { return null; } },
+  saveSurvey(data) { localStorage.setItem(this._key('survey'), JSON.stringify(data)); },
+
+  resetAll() {
+    ['favorites', 'history', 'stats', 'unlocked', 'survey'].forEach(type => {
+      localStorage.removeItem(this._key(type));
+    });
+  },
+
+  // Untuk admin: ambil data semua user
+  getUserData(email) {
+    return {
+      favorites: JSON.parse(localStorage.getItem(STORAGE_KEYS.favorites(email)) || '[]'),
+      history: JSON.parse(localStorage.getItem(STORAGE_KEYS.history(email)) || '[]'),
+      stats: JSON.parse(localStorage.getItem(STORAGE_KEYS.stats(email)) || '{"pencarian":0,"dilihat":0,"chat":0}'),
+      unlocked: localStorage.getItem(STORAGE_KEYS.unlocked(email)) === 'true',
+      survey: JSON.parse(localStorage.getItem(STORAGE_KEYS.survey(email)) || 'null')
+    };
+  },
+
+  deleteUserData(email) {
+    ['favorites', 'history', 'stats', 'unlocked', 'survey'].forEach(type => {
+      localStorage.removeItem(STORAGE_KEYS[type](email));
+    });
+  }
 };
 
 /* ============================== AUTH ============================== */
@@ -547,73 +846,102 @@ function showAuthAlert(msg, type = 'error') {
   $('#authAlert').innerHTML = `<div class="${cls} mb-3">${escapeHtml(msg)}</div>`;
   setTimeout(() => { $('#authAlert').innerHTML = ''; }, 4000);
 }
-function switchAuthTab(tab) {
-  $$('[data-auth-tab]').forEach(el => {
-    if (el.classList.contains('nav-link')) el.classList.toggle('active', el.dataset.authTab === tab);
-  });
-  if (tab === 'login') {
-    $('#formLogin').classList.remove('d-none');
-    $('#formRegister').classList.add('d-none');
-    $('#toggleText').innerHTML = 'Belum punya akun? <a data-auth-tab="register">Daftar di sini</a>';
-  } else {
-    $('#formLogin').classList.add('d-none');
-    $('#formRegister').classList.remove('d-none');
-    $('#toggleText').innerHTML = 'Sudah punya akun? <a data-auth-tab="login">Masuk di sini</a>';
-  }
-  $('#authAlert').innerHTML = '';
-}
-function handleRegister(e) {
-  e.preventDefault();
-  const name = $('#regName').value.trim();
-  const email = $('#regEmail').value.trim().toLowerCase();
-  const password = $('#regPassword').value;
-  if (name.length < 3) return showAuthAlert('Nama minimal 3 karakter.');
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showAuthAlert('Format email tidak valid.');
-  if (password.length < 6) return showAuthAlert('Password minimal 6 karakter.');
-  const users = storage.loadUsers();
-  if (users.some(u => u.email === email)) return showAuthAlert('Email sudah terdaftar. Silakan masuk.');
-  users.push({ name, email, password });
-  storage.saveUsers(users);
-  showAuthAlert('Registrasi berhasil! Silakan masuk.', 'success');
-  switchAuthTab('login');
-  $('#loginEmail').value = email;
-  $('#regName').value = ''; $('#regEmail').value = ''; $('#regPassword').value = '';
-}
+
 function handleLogin(e) {
   e.preventDefault();
   const email = $('#loginEmail').value.trim().toLowerCase();
   const password = $('#loginPassword').value;
   const users = storage.loadUsers();
+
   const user = users.find(u => u.email === email && u.password === password);
   if (!user) return showAuthAlert('Email atau password salah.');
+
+  resetState();
   state.user = { name: user.name, email: user.email };
-  storage.saveSession(state.user);
-  enterApp();
+
+  // Admin?
+  if (user.role === 'admin' || email === ADMIN_ACCOUNT.email) {
+    state.isAdmin = true;
+    storage.saveSession({ name: user.name, email: user.email, role: 'admin' });
+    enterAdmin();
+  } else {
+    state.isAdmin = false;
+    storage.saveSession({ name: user.name, email: user.email });
+    enterApp();
+  }
 }
+
 function handleLogout() {
   if (!confirm('Yakin ingin logout?')) return;
+
   storage.clearSession();
+  resetState();
   state.user = null;
-  state.favorites = []; state.history = []; state.stats = { pencarian: 0, dilihat: 0, chat: 0 };
+  state.isAdmin = false;
+
+  $('#quickResult').classList.add('d-none');
+  $('#quickResultGrid').innerHTML = '';
+  $('#cafeDetailHome').innerHTML = '';
+  $('#cafeDetailMood').innerHTML = '';
+  $('#cafeDetailFav').innerHTML = '';
+  $('#hasilRekomendasi').classList.add('d-none');
+  $('#hasilGrid').innerHTML = '';
+  $('#favoritGrid').innerHTML = '';
+  $('#shortcutMood').innerHTML = '';
+  $('#moodOptions').innerHTML = '';
+  $('#locationOptions').innerHTML = '';
+  $('#facilityOptions').innerHTML = '';
+
   showAppShell(false);
+  showAdminShell(false);
   switchPage('app-login');
-  $('#formLogin').reset(); $('#formRegister').reset();
-  switchAuthTab('login');
+  $('#formLogin').reset();
 }
+
 function showAppShell(show) {
   $('#navbarTop').style.display = show ? '' : 'none';
   $('#bottomNav').style.display = show ? '' : 'none';
 }
+function showAdminShell(show) {
+  // admin tidak pakai navbar/bottomnav, hanya page
+}
+
 function enterApp() {
+  const currentUser = state.user;
+  resetState();
+  state.user = currentUser;
+
   storage.loadFavorites();
   storage.loadHistory();
   storage.loadStats();
+  state.isUnlocked = storage.loadUnlocked();
+
   const initial = state.user.name.charAt(0).toUpperCase();
   $('#navAvatar').textContent = initial;
   $('#navUserName').textContent = state.user.name.split(' ')[0];
   $('#heroName').textContent = state.user.name.split(' ')[0];
+
+  $('#quickResult').classList.add('d-none');
+  $('#quickResultGrid').innerHTML = '';
+  $('#cafeDetailHome').innerHTML = '';
+  $('#cafeDetailMood').innerHTML = '';
+  $('#cafeDetailFav').innerHTML = '';
+  $('#hasilRekomendasi').classList.add('d-none');
+  $('#hasilGrid').innerHTML = '';
+
+  renderShortcutMood();
+  renderWizard();
+  renderFavorit();
+  renderProfil();
+
   showAppShell(true);
   switchPage('app-home');
+}
+
+function enterAdmin() {
+  showAppShell(false);
+  switchPage('admin');
+  renderAdmin();
 }
 
 /* ============================== NAVIGASI ============================== */
@@ -623,6 +951,7 @@ const NAV_IDS = {
   'app-favorit': ['bn-app-favorit'],
   'app-profil':  ['bn-app-profil']
 };
+
 function switchPage(page) {
   state.currentPage = page;
   $$('.page-section').forEach(s => s.classList.remove('active'));
@@ -634,14 +963,19 @@ function switchPage(page) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-/* ============================== HOME ============================== */
+/* ============================== HOME (USER) ============================== */
 function shortcutMoodHTML(group) {
+  const total = group.cafeIds.length;
+  const totalLocked = LOCKED_CAFE_IDS.length;
   return `
     <div class="col-6 col-md-3">
       <div class="mood-option" data-shortcut-mood="${group.mood}">
         <i class="bi bi-${group.icon}" style="color:${group.color};"></i>
         <h6 style="color:${group.color};">${group.mood}</h6>
         <p>${group.desc}</p>
+        <p class="small mt-2 mb-0" style="color:${group.color};font-weight:600;">
+          ${total} cafe terbuka${state.isUnlocked ? '' : ` · ${totalLocked} terkunci`}
+        </p>
       </div>
     </div>
   `;
@@ -650,52 +984,207 @@ function renderShortcutMood() {
   const el = $('#shortcutMood');
   if (el) el.innerHTML = MOOD_GROUPS.map(shortcutMoodHTML).join('');
 }
+
 function quickCafeHTML(cafe, idx) {
   const isFav = state.favorites.includes(cafe.id);
-  return `
-    <div class="col-md-6 col-lg-4">
-      <div class="card cafe-card" style="border-left-color:${cafe.color};">
+  const locked = isCafeLocked(cafe.id);
+  const img = cafeImage(cafe, 1000, 560);
+
+  if (locked) {
+    return `
+      <div class="card cafe-card locked" data-locked-id="${cafe.id}">
+        <img src="${img}" class="cafe-image" alt="Cafe terkunci" loading="lazy">
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start mb-1">
             <h6 class="card-title mb-0">${idx+1}. ${escapeHtml(cafe.name)}</h6>
-            <i class="bi bi-heart${isFav?'-fill':''} favorite-icon ${isFav?'favorited':''}"
-               data-favorite-id="${cafe.id}" role="button"></i>
           </div>
-          <p class="text-secondary small mb-1"><i class="bi bi-geo-alt me-1"></i>${cafe.location} · ${cafe.mood}</p>
-          <p class="text-secondary small mb-2"><i class="bi bi-star-fill text-warning me-1"></i>${cafe.rating} · <i class="bi bi-clock ms-1 me-1"></i>${cafe.jamBuka}</p>
+          <p class="text-secondary small mb-1">${cafe.location} · ${cafe.mood}</p>
           <p class="small mb-2">${escapeHtml(cafe.desc)}</p>
-          <div class="d-flex gap-2">
-            <button class="btn btn-sm btn-primary" data-order-id="${cafe.id}"><i class="bi bi-whatsapp"></i> Pesan</button>
-            <button class="btn btn-sm btn-outline-primary" data-cafe-id="${cafe.id}" data-source="home">Detail</button>
-          </div>
+        </div>
+        <div class="lock-label">🔒 Klik untuk unlock</div>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="card cafe-card" style="border-left-color:${cafe.color};">
+      <img src="${img}" class="cafe-image" alt="${escapeHtml(cafe.name)}" loading="lazy">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start mb-1">
+          <h6 class="card-title mb-0">${idx+1}. ${escapeHtml(cafe.name)}</h6>
+          <i class="bi bi-heart${isFav?'-fill':''} favorite-icon ${isFav?'favorited':''}"
+             data-favorite-id="${cafe.id}" role="button"></i>
+        </div>
+        <p class="text-secondary small mb-1"><i class="bi bi-geo-alt me-1"></i>${cafe.location} · ${cafe.mood}</p>
+        <p class="text-secondary small mb-2"><i class="bi bi-star-fill text-warning me-1"></i>${cafe.rating} · <i class="bi bi-clock ms-1 me-1"></i>${cafe.jamBuka}</p>
+        <p class="small mb-2">${escapeHtml(cafe.desc)}</p>
+        <div class="d-flex gap-2">
+          <button class="btn btn-sm btn-primary" data-order-id="${cafe.id}"><i class="bi bi-whatsapp"></i> Pesan</button>
+          <button class="btn btn-sm btn-outline-primary" data-cafe-id="${cafe.id}" data-source="home">Detail</button>
         </div>
       </div>
     </div>
   `;
 }
+
 function showQuickResult(mood) {
   const group = MOOD_GROUPS.find(g => g.mood === mood);
   if (!group) return;
   state.currentMoodQuick = mood;
-  const cafes = group.cafeIds.slice(0, 10).map(findCafe).filter(Boolean);
+
+  const cafes = group.cafeIds.map(findCafe).filter(Boolean);
+  const lockedCafes = state.isUnlocked ? [] : LOCKED_CAFE_IDS.map(findCafe).filter(Boolean);
+
+  const allCafes = [...cafes, ...lockedCafes];
+  const unlockedCount = cafes.filter(c => !isCafeLocked(c.id)).length;
+  const lockedCount = allCafes.length - unlockedCount;
+
   $('#quickResultTitle').innerHTML = `<i class="bi bi-${group.icon} me-2" style="color:${group.color};"></i>${group.mood}`;
-  $('#quickResultSubtitle').textContent = `10 rekomendasi terbaik untuk mood "${group.mood}".`;
-  $('#quickResultGrid').innerHTML = cafes.map(quickCafeHTML).join('');
+
+  if (state.isUnlocked) {
+    $('#quickResultSubtitle').textContent = `${allCafes.length} cafe tersedia untuk mood "${group.mood}".`;
+  } else {
+    $('#quickResultSubtitle').textContent = `${unlockedCount} cafe terbuka · 🔒 ${lockedCount} cafe terkunci`;
+  }
+
+  const slides = allCafes.map((cafe, idx) => `
+    <div class="cafe-slide" data-slide-index="${idx}">
+      ${quickCafeHTML(cafe, idx)}
+    </div>
+  `).join('');
+
+  const dots = allCafes.map((_, idx) => 
+    `<div class="slider-dot ${idx === 0 ? 'active' : ''}" data-slide-to="${idx}"></div>`
+  ).join('');
+
+  let html = `
+    <div class="cafe-slider-wrapper">
+      <button class="slider-btn prev" data-slide-prev disabled><i class="bi bi-chevron-left"></i></button>
+      <div class="cafe-slider" id="cafeSlider">
+        ${slides}
+      </div>
+      <button class="slider-btn next" data-slide-next><i class="bi bi-chevron-right"></i></button>
+    </div>
+    <div class="slider-counter">
+      <strong id="sliderCurrent">1</strong> / <span id="sliderTotal">${allCafes.length}</span>
+    </div>
+    <div class="slider-dots">${dots}</div>
+  `;
+
+  if (!state.isUnlocked) {
+    html += `
+      <div class="unlock-banner">
+        <h5><i class="bi bi-unlock-fill me-2"></i>30 Cafe Lainnya Terkunci</h5>
+        <p>Isi survey singkat (3 pertanyaan) untuk membuka semua cafe di Ngafeeling!</p>
+        <button class="btn btn-warning" id="openSurveyBtn">
+          <i class="bi bi-clipboard-check me-1"></i>Unlock Sekarang — Isi Survey
+        </button>
+      </div>
+    `;
+  }
+
+  $('#quickResultGrid').innerHTML = html;
   $('#quickResult').classList.remove('d-none');
   $('#cafeDetailHome').innerHTML = '';
+
+  initSlider();
   scrollToEl($('#quickResult'));
 }
+
 function closeQuickResult() {
   $('#quickResult').classList.add('d-none');
   $('#cafeDetailHome').innerHTML = '';
   state.currentMoodQuick = null;
 }
-function showQuickResultSilent(mood) {
-  const group = MOOD_GROUPS.find(g => g.mood === mood);
-  if (!group) return;
-  const cafes = group.cafeIds.slice(0, 10).map(findCafe).filter(Boolean);
-  $('#quickResultGrid').innerHTML = cafes.map(quickCafeHTML).join('');
+
+/* ============================== SLIDER ============================== */
+function initSlider() {
+  const slider = $('#cafeSlider');
+  if (!slider) return;
+
+  const slides = slider.querySelectorAll('.cafe-slide');
+  sliderState.current = 0;
+  sliderState.total = slides.length;
+
+  updateSliderUI();
+
+  $$('[data-slide-prev]').forEach(btn => btn.onclick = () => moveSlider(-1));
+  $$('[data-slide-next]').forEach(btn => btn.onclick = () => moveSlider(1));
+  $$('[data-slide-to]').forEach(dot => { dot.onclick = () => goToSlide(parseInt(dot.dataset.slideTo)); });
+
+  slider.addEventListener('touchstart', sliderTouchStart, { passive: true });
+  slider.addEventListener('touchmove', sliderTouchMove, { passive: true });
+  slider.addEventListener('touchend', sliderTouchEnd);
+  slider.addEventListener('mousedown', sliderMouseDown);
 }
+
+function updateSliderUI() {
+  const slider = $('#cafeSlider');
+  if (!slider) return;
+  const width = slider.parentElement.clientWidth;
+  slider.style.transform = `translateX(-${sliderState.current * width}px)`;
+
+  const curr = $('#sliderCurrent');
+  if (curr) curr.textContent = sliderState.current + 1;
+
+  $$('.slider-dot').forEach((dot, idx) => {
+    dot.classList.toggle('active', idx === sliderState.current);
+  });
+
+  const prevBtn = $('[data-slide-prev]');
+  const nextBtn = $('[data-slide-next]');
+  if (prevBtn) prevBtn.disabled = sliderState.current === 0;
+  if (nextBtn) nextBtn.disabled = sliderState.current === sliderState.total - 1;
+}
+
+function moveSlider(dir) {
+  const next = sliderState.current + dir;
+  if (next < 0 || next >= sliderState.total) return;
+  sliderState.current = next;
+  updateSliderUI();
+}
+function goToSlide(idx) {
+  if (idx < 0 || idx >= sliderState.total) return;
+  sliderState.current = idx;
+  updateSliderUI();
+}
+
+function sliderTouchStart(e) { sliderState.startX = e.touches[0].clientX; }
+function sliderTouchMove(e) {
+  const diff = e.touches[0].clientX - sliderState.startX;
+  if (Math.abs(diff) > 50) {
+    if (diff < 0) moveSlider(1); else moveSlider(-1);
+    sliderState.startX = e.touches[0].clientX;
+  }
+}
+function sliderTouchEnd() { /* noop */ }
+
+function sliderMouseDown(e) {
+  if (e.target.closest('.slider-btn, .slider-dot, button, a, .favorite-icon')) return;
+  sliderState.isDragging = true;
+  sliderState.startX = e.clientX;
+  $('#cafeSlider')?.classList.add('dragging');
+}
+document.addEventListener('mousemove', (e) => {
+  if (!sliderState.isDragging) return;
+  const diff = e.clientX - sliderState.startX;
+  if (Math.abs(diff) > 80) {
+    if (diff < 0) moveSlider(1); else moveSlider(-1);
+    sliderState.startX = e.clientX;
+  }
+});
+document.addEventListener('mouseup', () => {
+  sliderState.isDragging = false;
+  $('#cafeSlider')?.classList.remove('dragging');
+});
+document.addEventListener('keydown', (e) => {
+  if ($('#quickResult').classList.contains('d-none')) return;
+  if (e.key === 'ArrowLeft') moveSlider(-1);
+  if (e.key === 'ArrowRight') moveSlider(1);
+});
+window.addEventListener('resize', () => {
+  if (!$('#quickResult').classList.contains('d-none')) updateSliderUI();
+});
 
 /* ============================== DETAIL ============================== */
 function renderCafeDetail(cafeId, source) {
@@ -703,38 +1192,46 @@ function renderCafeDetail(cafeId, source) {
   if (!cafe) return;
   state.stats.dilihat++;
   storage.saveStats();
+
   const isFav = state.favorites.includes(cafe.id);
+  const heroImg = cafeImage(cafe, 1200, 500);
+
   const menuItems = cafe.menu.map(m => `<li class="col-md-4 mb-1"><i class="bi bi-check-circle-fill me-2" style="color:${cafe.color};"></i>${escapeHtml(m)}</li>`).join('');
   const facBadges = cafe.facilities.map(f => {
     const fas = FASILITAS.find(x => x.id === f);
     if (!fas) return '';
     return `<span class="badge rounded-pill me-1 mb-1" style="background:#e6efff;color:${cafe.color};"><i class="bi bi-${fas.icon} me-1"></i>${fas.label}</span>`;
   }).join('');
+
   let targetId = '#cafeDetailHome';
   if (source === 'mood') targetId = '#cafeDetailMood';
   if (source === 'fav')  targetId = '#cafeDetailFav';
   const target = $(targetId);
   if (!target) return;
   ['#cafeDetailHome', '#cafeDetailMood', '#cafeDetailFav'].forEach(id => { if (id !== targetId) $(id).innerHTML = ''; });
+
   target.innerHTML = `
-    <div class="card p-4" style="border-left:8px solid ${cafe.color};">
-      <div class="d-flex justify-content-between align-items-start mb-2">
-        <div>
-          <h3 class="fw-bold mb-1">${escapeHtml(cafe.name)}</h3>
-          <p class="text-secondary mb-1"><i class="bi bi-geo-alt me-1"></i>${cafe.location} · Mood: ${cafe.mood}</p>
-          <p class="text-secondary small mb-0"><i class="bi bi-star-fill text-warning me-1"></i>${cafe.rating} · <i class="bi bi-clock ms-1 me-1"></i>${cafe.jamBuka}</p>
+    <div class="card p-0" style="border-left:8px solid ${cafe.color}; overflow:hidden;">
+      <img src="${heroImg}" class="detail-hero" alt="${escapeHtml(cafe.name)}" loading="lazy">
+      <div class="p-4">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <div>
+            <h3 class="fw-bold mb-1">${escapeHtml(cafe.name)}</h3>
+            <p class="text-secondary mb-1"><i class="bi bi-geo-alt me-1"></i>${cafe.location} · Mood: ${cafe.mood}</p>
+            <p class="text-secondary small mb-0"><i class="bi bi-star-fill text-warning me-1"></i>${cafe.rating} · <i class="bi bi-clock ms-1 me-1"></i>${cafe.jamBuka}</p>
+          </div>
+          <i class="bi bi-heart${isFav?'-fill':''} favorite-icon fs-2 ${isFav?'favorited':''}" data-favorite-id="${cafe.id}" role="button"></i>
         </div>
-        <i class="bi bi-heart${isFav?'-fill':''} favorite-icon fs-2 ${isFav?'favorited':''}" data-favorite-id="${cafe.id}" role="button"></i>
-      </div>
-      <p class="mt-2">${escapeHtml(cafe.desc)}</p>
-      <h6 class="mt-3 mb-2">Fasilitas</h6>
-      <div>${facBadges || '<span class="text-secondary small">Belum ada info fasilitas.</span>'}</div>
-      <h6 class="mt-4 mb-2">Menu Andalan</h6>
-      <ul class="list-unstyled row mb-3">${menuItems}</ul>
-      <div class="d-flex gap-2 flex-wrap">
-        <a href="#" class="btn btn-primary" data-order-id="${cafe.id}"><i class="bi bi-whatsapp me-1"></i>Kontak Pesan — ${escapeHtml(cafe.contact)}</a>
-        <a href="https://www.google.com/maps?q=${cafe.lat},${cafe.lng}" target="_blank" rel="noopener" class="btn btn-outline-primary"><i class="bi bi-geo-alt me-1"></i>Buka di Maps</a>
-        <button class="btn btn-outline-primary" data-close-detail="${targetId}"><i class="bi bi-x me-1"></i>Tutup</button>
+        <p class="mt-2">${escapeHtml(cafe.desc)}</p>
+        <h6 class="mt-3 mb-2">Fasilitas</h6>
+        <div>${facBadges || '<span class="text-secondary small">Belum ada info fasilitas.</span>'}</div>
+        <h6 class="mt-4 mb-2">Menu Andalan</h6>
+        <ul class="list-unstyled row mb-3">${menuItems}</ul>
+        <div class="d-flex gap-2 flex-wrap">
+          <a href="#" class="btn btn-primary" data-order-id="${cafe.id}"><i class="bi bi-whatsapp me-1"></i>Kontak Pesan — ${escapeHtml(cafe.contact)}</a>
+          <a href="https://www.google.com/maps?q=${cafe.lat},${cafe.lng}" target="_blank" rel="noopener" class="btn btn-outline-primary"><i class="bi bi-geo-alt me-1"></i>Buka di Maps</a>
+          <button class="btn btn-outline-primary" data-close-detail="${targetId}"><i class="bi bi-x me-1"></i>Tutup</button>
+        </div>
       </div>
     </div>
   `;
@@ -767,7 +1264,11 @@ function renderWizard() {
 /* ============================== HASIL ============================== */
 function getRecommendations() {
   const { mood, location, facilities } = state.filter;
-  return CAFES.map(cafe => {
+  const pool = state.isUnlocked
+    ? CAFES
+    : CAFES.filter(c => !LOCKED_CAFE_IDS.includes(c.id));
+
+  return pool.map(cafe => {
     let score = 0;
     if (cafe.mood === mood) score += 60;
     if (location && cafe.location === location) score += 25;
@@ -776,14 +1277,17 @@ function getRecommendations() {
       score += (cocok / facilities.length) * 15;
     } else { score += 15; }
     return { ...cafe, score: Math.round(score) };
-  }).filter(c => c.score > 0).sort((a, b) => b.score - a.score).slice(0, 10);
+  }).filter(c => c.score > 0).sort((a, b) => b.score - a.score).slice(0, 15);
 }
+
 function hasilCardHTML(cafe, idx) {
   const isFav = state.favorites.includes(cafe.id);
   const matchColor = cafe.score >= 90 ? '#10b981' : cafe.score >= 70 ? '#3b82f6' : '#f59e0b';
+  const img = cafeImage(cafe, 800, 450);
   return `
     <div class="col-md-6 col-lg-4">
       <div class="card cafe-card result-card" style="border-left-color:${cafe.color};">
+        <img src="${img}" class="cafe-image" alt="${escapeHtml(cafe.name)}" loading="lazy">
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start mb-1">
             <h6 class="card-title mb-0">${idx+1}. ${escapeHtml(cafe.name)}</h6>
@@ -802,6 +1306,7 @@ function hasilCardHTML(cafe, idx) {
     </div>
   `;
 }
+
 function renderHasil() {
   const list = getRecommendations();
   const summary = $('#hasilSummary');
@@ -823,6 +1328,7 @@ function renderHasil() {
   storage.saveStats();
   storage.saveHistory();
 }
+
 function renderHasilSilent() {
   const list = getRecommendations();
   if (list.length === 0) return;
@@ -837,9 +1343,12 @@ function renderFavorit() {
     grid.innerHTML = `<div class="col-12"><div class="empty-state"><i class="bi bi-heart"></i><h5>Belum ada cafe favorit</h5><p>Yuk cari cafe yang cocok dengan mood-mu!</p><a href="#" class="btn btn-primary mt-2" data-nav="app-mood"><i class="bi bi-magic me-1"></i>Cari Cafe</a></div></div>`;
     return;
   }
-  grid.innerHTML = list.map(cafe => `
+  grid.innerHTML = list.map(cafe => {
+    const img = cafeImage(cafe, 800, 450);
+    return `
     <div class="col-md-6 col-lg-4">
       <div class="card cafe-card" style="border-left-color:${cafe.color};">
+        <img src="${img}" class="cafe-image" alt="${escapeHtml(cafe.name)}" loading="lazy">
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start mb-1">
             <h6 class="card-title mb-0">${escapeHtml(cafe.name)}</h6>
@@ -854,7 +1363,8 @@ function renderFavorit() {
         </div>
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 }
 
 /* ============================== PROFIL ============================== */
@@ -879,40 +1389,36 @@ function renderProfil() {
   }
 }
 
-/* ============================== AKSI ============================== */
+/* ============================== AKSI USER ============================== */
 function toggleFavorite(cafeId) {
   const id = Number(cafeId);
+  if (isCafeLocked(id)) { openSurveyModal(); return; }
   const idx = state.favorites.indexOf(id);
   if (idx === -1) state.favorites.push(id);
   else state.favorites.splice(idx, 1);
   storage.saveFavorites();
-  if (state.currentMoodQuick && !$('#quickResult').classList.contains('d-none')) showQuickResultSilent(state.currentMoodQuick);
+
+  if (state.currentMoodQuick && !$('#quickResult').classList.contains('d-none')) {
+    const currentSlide = sliderState.current;
+    showQuickResult(state.currentMoodQuick);
+    goToSlide(currentSlide);
+  }
   if (state.currentPage === 'app-favorit') renderFavorit();
   if (state.currentPage === 'app-profil')  renderProfil();
   if (!$('#hasilRekomendasi').classList.contains('d-none')) renderHasilSilent();
-  ['#cafeDetailHome', '#cafeDetailMood', '#cafeDetailFav'].forEach(sel => {
-    const el = $(sel);
-    if (el && el.innerHTML.trim()) {
-      const nameEl = el.querySelector('h3');
-      if (nameEl) {
-        const cafe = CAFES.find(c => c.name === nameEl.textContent);
-        if (cafe) {
-          const src = sel === '#cafeDetailHome' ? 'home' : sel === '#cafeDetailMood' ? 'mood' : 'fav';
-          renderCafeDetail(cafe.id, src);
-        }
-      }
-    }
-  });
 }
+
 function handleOrder(cafeId) {
   const cafe = findCafe(cafeId);
   if (!cafe) return;
+  if (isCafeLocked(cafeId)) { openSurveyModal(); return; }
   state.stats.chat++;
   storage.saveStats();
   const message = `Halo ${cafe.name}, saya menemukan cafe ini lewat Ngafeeling (mood: ${cafe.mood}). Mohon info ketersediaan dan menu. Terima kasih!`;
   const phone = cafe.contact.replace(/\D/g, '').replace(/^0/, '62');
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
 }
+
 function pickMood(m) { state.filter.mood = m; renderWizard(); }
 function pickLoc(l)  { state.filter.location = l; renderWizard(); }
 function pickFac(f) {
@@ -938,11 +1444,327 @@ function prevStep() {
 }
 function submitWizard() { renderHasil(); }
 
+/* ============================== SURVEY ============================== */
+function openSurveyModal() {
+  state.surveyAnswers = { q1: null, q2: null, q3: null };
+  $$('.survey-option').forEach(el => el.classList.remove('selected'));
+  $('#surveyAlert').innerHTML = '';
+  $('#submitSurveyBtn').disabled = true;
+
+  const preview = LOCKED_CAFE_IDS.slice(0, 8).map(id => {
+    const c = findCafe(id);
+    return c ? `<img src="${cafeImage(c, 200, 200)}" alt="Terkunci">` : '';
+  }).join('');
+  $('#lockedPreview').innerHTML = preview;
+
+  new bootstrap.Modal($('#surveyModal')).show();
+}
+function handleSurveyClick(el) {
+  const group = el.dataset.surveyGroup;
+  const value = el.dataset.value;
+  state.surveyAnswers[group] = value;
+  $$(`.survey-option[data-survey-group="${group}"]`).forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  const filled = state.surveyAnswers.q1 && state.surveyAnswers.q2 && state.surveyAnswers.q3;
+  $('#submitSurveyBtn').disabled = !filled;
+}
+function submitSurvey() {
+  const answers = state.surveyAnswers;
+  if (!answers.q1 || !answers.q2 || !answers.q3) return;
+
+  storage.saveSurvey({ ...answers, submittedAt: new Date().toISOString() });
+  storage.saveUnlocked();
+  state.isUnlocked = true;
+
+  bootstrap.Modal.getInstance($('#surveyModal')).hide();
+  setTimeout(() => { new bootstrap.Modal($('#successModal')).show(); }, 300);
+
+  renderShortcutMood();
+  if (state.currentMoodQuick) showQuickResult(state.currentMoodQuick);
+  if (!$('#hasilRekomendasi').classList.contains('d-none')) renderHasil();
+}
+
+/* ============================== ADMIN ============================== */
+function renderAdmin() {
+  renderAdminDashboard();
+  renderAdminUsers();
+  renderAdminSurvey();
+}
+
+function renderAdminDashboard() {
+  const users = storage.loadUsers().filter(u => u.role !== 'admin');
+
+  let totalSearch = 0, totalFav = 0, totalUnlock = 0;
+  const activities = [];
+
+  users.forEach(u => {
+    const data = storage.getUserData(u.email);
+    totalSearch += data.stats.pencarian || 0;
+    totalFav += data.favorites.length;
+    if (data.unlocked) totalUnlock++;
+
+    data.history.forEach(h => {
+      activities.push({
+        name: u.name,
+        email: u.email,
+        type: 'search',
+        detail: `Cari "${h.mood}" di ${h.location}`,
+        time: h.time
+      });
+    });
+  });
+
+  $('#admTotalUsers').textContent = users.length;
+  $('#admTotalSearch').textContent = totalSearch;
+  $('#admTotalFav').textContent = totalFav;
+  $('#admTotalUnlock').textContent = totalUnlock;
+
+  // Aktivitas terbaru
+  activities.sort((a, b) => new Date(b.time) - new Date(a.time));
+  const recent = activities.slice(0, 10);
+
+  const el = $('#adminRecentActivity');
+  if (recent.length === 0) {
+    el.innerHTML = `<p class="text-secondary small mb-0">Belum ada aktivitas dari user.</p>`;
+  } else {
+    el.innerHTML = recent.map(a => {
+      const tgl = new Date(a.time).toLocaleString('id-ID', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' });
+      return `<div class="border-bottom py-2 small">
+        <i class="bi bi-search me-1 text-primary"></i>
+        <strong>${escapeHtml(a.name)}</strong> — ${escapeHtml(a.detail)}
+        <span class="text-secondary float-end">${tgl}</span>
+      </div>`;
+    }).join('');
+  }
+}
+
+function renderAdminUsers() {
+  const users = storage.loadUsers().filter(u => u.role !== 'admin');
+  const tbody = $('#adminUsersTable');
+
+  if (users.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="8" class="text-center text-secondary py-4">Belum ada user. Klik "Tambah User" untuk membuat akun baru.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = users.map(u => {
+    const data = storage.getUserData(u.email);
+    const unlockBadge = data.unlocked
+      ? '<span class="badge-unlock">✅ Unlock</span>'
+      : '<span class="badge-locked">🔒 Belum</span>';
+    return `
+      <tr>
+        <td><strong>${escapeHtml(u.email)}</strong></td>
+        <td>${escapeHtml(u.name)}</td>
+        <td class="text-center">${data.stats.pencarian || 0}</td>
+        <td class="text-center">${data.favorites.length}</td>
+        <td class="text-center">${data.stats.dilihat || 0}</td>
+        <td class="text-center">${data.stats.chat || 0}</td>
+        <td class="text-center">${unlockBadge}</td>
+        <td class="text-center">
+          <button class="btn btn-sm btn-outline-primary" data-admin-action="detail" data-email="${escapeHtml(u.email)}" title="Detail"><i class="bi bi-eye"></i></button>
+          <button class="btn btn-sm btn-outline-danger" data-admin-action="delete" data-email="${escapeHtml(u.email)}" title="Hapus"><i class="bi bi-trash"></i></button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function renderAdminSurvey() {
+  const users = storage.loadUsers().filter(u => u.role !== 'admin');
+  const rows = [];
+
+  users.forEach(u => {
+    const data = storage.getUserData(u.email);
+    if (data.survey) {
+      rows.push({ email: u.email, name: u.name, ...data.survey });
+    }
+  });
+
+  const tbody = $('#adminSurveyTable');
+  if (rows.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" class="text-center text-secondary py-4">Belum ada user yang mengisi survey.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = rows.map(r => {
+    const tgl = r.submittedAt ? new Date(r.submittedAt).toLocaleString('id-ID', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' }) : '-';
+    return `
+      <tr>
+        <td><strong>${escapeHtml(r.email)}</strong><br><small class="text-secondary">${escapeHtml(r.name)}</small></td>
+        <td>${escapeHtml(r.q1 || '-')}</td>
+        <td>${escapeHtml(r.q2 || '-')}</td>
+        <td>${escapeHtml(r.q3 || '-')}</td>
+        <td><small>${tgl}</small></td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function renderUserDetail(email) {
+  const users = storage.loadUsers();
+  const u = users.find(x => x.email === email);
+  if (!u) return;
+
+  const data = storage.getUserData(email);
+  const favCafes = data.favorites.map(findCafe).filter(Boolean);
+
+  $('#userDetailContent').innerHTML = `
+    <div class="mb-3">
+      <h5 class="fw-bold mb-1">${escapeHtml(u.name)}</h5>
+      <p class="text-secondary small mb-0">${escapeHtml(u.email)}</p>
+    </div>
+
+    <div class="row g-2 mb-3">
+      <div class="col-6 col-md-3"><div class="stat-box"><div class="num">${data.stats.pencarian || 0}</div><div class="label">Cari</div></div></div>
+      <div class="col-6 col-md-3"><div class="stat-box"><div class="num">${data.favorites.length}</div><div class="label">Favorit</div></div></div>
+      <div class="col-6 col-md-3"><div class="stat-box"><div class="num">${data.stats.dilihat || 0}</div><div class="label">Dilihat</div></div></div>
+      <div class="col-6 col-md-3"><div class="stat-box"><div class="num">${data.stats.chat || 0}</div><div class="label">Chat</div></div></div>
+    </div>
+
+    <div class="mb-3">
+      <h6 class="fw-semibold mb-2">Status</h6>
+      ${data.unlocked ? '<span class="badge-unlock">✅ Sudah unlock</span>' : '<span class="badge-locked">🔒 Belum unlock</span>'}
+    </div>
+
+    <div class="mb-3">
+      <h6 class="fw-semibold mb-2">Favorit (${favCafes.length})</h6>
+      ${favCafes.length === 0
+        ? '<p class="text-secondary small mb-0">Belum ada favorit.</p>'
+        : `<ul class="small mb-0">${favCafes.map(c => `<li>${escapeHtml(c.name)} — ${c.location}</li>`).join('')}</ul>`}
+    </div>
+
+    <div class="mb-3">
+      <h6 class="fw-semibold mb-2">Riwayat Pencarian (${data.history.length})</h6>
+      ${data.history.length === 0
+        ? '<p class="text-secondary small mb-0">Belum ada riwayat.</p>'
+        : data.history.slice(0, 10).map(h => {
+            const tgl = new Date(h.time).toLocaleString('id-ID', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' });
+            return `<div class="border-bottom py-1 small"><i class="bi bi-search me-1 text-primary"></i>${escapeHtml(h.mood || '-')} di ${escapeHtml(h.location || 'semua')}<span class="text-secondary float-end">${tgl}</span></div>`;
+          }).join('')}
+    </div>
+
+    ${data.survey ? `
+    <div class="mb-0">
+      <h6 class="fw-semibold mb-2">Jawaban Survey</h6>
+      <ul class="small mb-0">
+        <li><strong>Q1:</strong> ${escapeHtml(data.survey.q1)}</li>
+        <li><strong>Q2:</strong> ${escapeHtml(data.survey.q2)}</li>
+        <li><strong>Q3:</strong> ${escapeHtml(data.survey.q3)}</li>
+      </ul>
+    </div>` : ''}
+  `;
+
+  new bootstrap.Modal($('#userDetailModal')).show();
+}
+
+function deleteUser(email) {
+  if (!confirm(`Yakin ingin hapus user ${email}? Semua data user ini akan dihapus permanen.`)) return;
+  const users = storage.loadUsers().filter(u => u.email !== email);
+  storage.saveUsers(users);
+  storage.deleteUserData(email);
+  renderAdminUsers();
+  renderAdminDashboard();
+  renderAdminSurvey();
+  showAdminAlert('User berhasil dihapus.', 'success');
+}
+
+function addUser() {
+  const name = $('#newUserName').value.trim();
+  const email = $('#newUserEmail').value.trim().toLowerCase();
+  const password = $('#newUserPassword').value;
+
+  const showErr = (msg) => {
+    $('#addUserAlert').innerHTML = `<div class="alert-error mb-2">${escapeHtml(msg)}</div>`;
+  };
+  $('#addUserAlert').innerHTML = '';
+
+  if (name.length < 3) return showErr('Nama minimal 3 karakter.');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showErr('Format email tidak valid.');
+  if (password.length < 6) return showErr('Password minimal 6 karakter.');
+  if (email === ADMIN_ACCOUNT.email) return showErr('Email ini khusus admin.');
+
+  const users = storage.loadUsers();
+  if (users.some(u => u.email === email)) return showErr('Email sudah terdaftar.');
+
+  users.push({ name, email, password, role: 'user' });
+  storage.saveUsers(users);
+
+  // Reset data
+  storage.deleteUserData(email);
+
+  bootstrap.Modal.getInstance($('#addUserModal')).hide();
+  $('#newUserName').value = '';
+  $('#newUserEmail').value = '';
+  $('#newUserPassword').value = '';
+  renderAdminUsers();
+  renderAdminDashboard();
+  showAdminAlert(`User ${email} berhasil ditambahkan!`, 'success');
+}
+
+function showAdminAlert(msg, type = 'error') {
+  const cls = type === 'error' ? 'alert-error' : 'alert-success';
+  $('#adminAlert').innerHTML = `<div class="${cls} mb-3">${escapeHtml(msg)}</div>`;
+  setTimeout(() => { $('#adminAlert').innerHTML = ''; }, 4000);
+}
+
+function exportCSV() {
+  const users = storage.loadUsers().filter(u => u.role !== 'admin');
+  let csv = 'Email,Nama,Pencarian,Favorit,Dilihat,Chat,Unlock,Q1,Q2,Q3,WaktuSurvey\n';
+
+  users.forEach(u => {
+    const d = storage.getUserData(u.email);
+    const s = d.survey || {};
+    csv += [
+      `"${u.email}"`,
+      `"${u.name}"`,
+      d.stats.pencarian || 0,
+      d.favorites.length,
+      d.stats.dilihat || 0,
+      d.stats.chat || 0,
+      d.unlocked ? 'Ya' : 'Tidak',
+      `"${(s.q1 || '').replace(/"/g, '""')}"`,
+      `"${(s.q2 || '').replace(/"/g, '""')}"`,
+      `"${(s.q3 || '').replace(/"/g, '""')}"`,
+      s.submittedAt || ''
+    ].join(',') + '\n';
+  });
+
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `ngafeeling_users_${new Date().toISOString().slice(0,10)}.csv`;
+  link.click();
+}
+
 /* ============================== EVENTS ============================== */
 document.addEventListener('click', (e) => {
-  const t = e.target.closest('[data-nav],[data-cafe-id],[data-favorite-id],[data-order-id],[data-shortcut-mood],[data-mood-pick],[data-loc-pick],[data-fac-pick],[data-wizard],[data-close-detail],[data-auth-tab]');
+  const surveyOpt = e.target.closest('.survey-option');
+  if (surveyOpt) { e.preventDefault(); handleSurveyClick(surveyOpt); return; }
+
+  const t = e.target.closest('[data-nav],[data-cafe-id],[data-favorite-id],[data-order-id],[data-shortcut-mood],[data-mood-pick],[data-loc-pick],[data-fac-pick],[data-wizard],[data-close-detail],[data-locked-id],[data-admin-tab],[data-admin-action]');
   if (!t) return;
-  if (t.dataset.authTab) { e.preventDefault(); switchAuthTab(t.dataset.authTab); return; }
+
+  // Admin tabs
+  if (t.dataset.adminTab) {
+    e.preventDefault();
+    $$('.admin-tab-content').forEach(el => el.classList.add('d-none'));
+    $$('[data-admin-tab]').forEach(b => b.classList.remove('active'));
+    const tab = t.dataset.adminTab;
+    $('#adminTab' + tab.charAt(0).toUpperCase() + tab.slice(1))?.classList.remove('d-none');
+    t.classList.add('active');
+    return;
+  }
+
+  // Admin action
+  if (t.dataset.adminAction) {
+    e.preventDefault();
+    const email = t.dataset.email;
+    if (t.dataset.adminAction === 'detail') renderUserDetail(email);
+    if (t.dataset.adminAction === 'delete') deleteUser(email);
+    return;
+  }
+
   if (t.dataset.nav) {
     e.preventDefault();
     if (!state.user) { switchPage('app-login'); return; }
@@ -954,6 +1776,7 @@ document.addEventListener('click', (e) => {
   if (t.dataset.orderId) { e.preventDefault(); handleOrder(t.dataset.orderId); return; }
   if (t.dataset.cafeId) { e.preventDefault(); renderCafeDetail(t.dataset.cafeId, t.dataset.source || 'home'); return; }
   if (t.dataset.closeDetail) { e.preventDefault(); $(t.dataset.closeDetail).innerHTML = ''; return; }
+  if (t.dataset.lockedId) { e.preventDefault(); openSurveyModal(); return; }
   if (t.dataset.moodPick) { pickMood(t.dataset.moodPick); return; }
   if (t.dataset.locPick)  { pickLoc(t.dataset.locPick); return; }
   if (t.dataset.facPick)  { pickFac(t.dataset.facPick); return; }
@@ -967,28 +1790,56 @@ document.addEventListener('click', (e) => {
     return;
   }
 });
-document.addEventListener('submit', (e) => {
-  if (e.target.id === 'formLogin') { e.preventDefault(); handleLogin(e); }
-  if (e.target.id === 'formRegister') { e.preventDefault(); handleRegister(e); }
-});
+
 document.addEventListener('click', (e) => {
+  if (e.target.closest('#openSurveyBtn')) { e.preventDefault(); openSurveyModal(); }
+  if (e.target.closest('#submitSurveyBtn')) { e.preventDefault(); submitSurvey(); }
   if (e.target.closest('#logoutBtn')) { e.preventDefault(); handleLogout(); }
+  if (e.target.closest('#adminLogoutBtn')) { e.preventDefault(); handleLogout(); }
   if (e.target.closest('#closeQuickResult')) { e.preventDefault(); closeQuickResult(); }
   if (e.target.closest('#resetDataBtn')) {
-    if (confirm('Yakin ingin reset semua data? Favorit, riwayat, dan statistik akan dihapus.')) {
+    if (confirm('Yakin ingin reset semua data kamu?')) {
       storage.resetAll();
-      state.favorites = []; state.history = []; state.stats = { pencarian: 0, dilihat: 0, chat: 0 };
+      state.favorites = [];
+      state.history = [];
+      state.stats = { pencarian: 0, dilihat: 0, chat: 0 };
+      state.isUnlocked = false;
       renderProfil();
-      alert('Data berhasil direset.');
+      renderShortcutMood();
+      if (state.currentMoodQuick) showQuickResult(state.currentMoodQuick);
+      alert('Data kamu berhasil direset.');
     }
   }
+  if (e.target.closest('#adminAddUserBtn')) {
+    $('#addUserAlert').innerHTML = '';
+    new bootstrap.Modal($('#addUserModal')).show();
+  }
+  if (e.target.closest('#saveNewUserBtn')) { e.preventDefault(); addUser(); }
+  if (e.target.closest('#adminExportBtn')) { e.preventDefault(); exportCSV(); }
+});
+
+document.addEventListener('submit', (e) => {
+  if (e.target.id === 'formLogin') { e.preventDefault(); handleLogin(e); }
 });
 
 /* ============================== INIT ============================== */
 function init() {
+  // Pastikan user admin ada
+  storage.loadUsers();
+
   const session = storage.loadSession();
-  if (session) { state.user = session; enterApp(); }
-  else { showAppShell(false); switchPage('app-login'); }
+  if (session) {
+    state.user = session;
+    if (session.role === 'admin') {
+      state.isAdmin = true;
+      enterAdmin();
+    } else {
+      enterApp();
+    }
+  } else {
+    showAppShell(false);
+    switchPage('app-login');
+  }
   renderShortcutMood();
   renderWizard();
 }
