@@ -2,7 +2,8 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#1e3a8a">
 <title>Ngafeeling App — Mood-Mu, Cafe-Mu</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -13,241 +14,410 @@
   --primary-blue-light: #3b82f6;
   --bg-soft: #f0f7ff;
   --success: #10b981;
-  --success-dark: #065f46;
   --danger: #ef4444;
   --locked: #94a3b8;
   --admin-purple: #7e22ce;
+  --app-max: 480px;
 }
-* { font-family: 'Poppins', sans-serif; }
-body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
-@media (min-width: 992px) { body { padding-bottom: 100px; } }
+* { font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+html, body { overflow-x: hidden; }
+body {
+  background: #f8fafc;
+  color: #1e293b;
+  padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px));
+  font-size: 14px;
+  line-height: 1.5;
+}
 
-/* Navbar header */
-.navbar { background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.04); padding: 0.7rem 0; }
-.navbar-brand { font-weight: 700; font-size: 1.4rem; color: var(--primary-blue) !important; letter-spacing: -0.5px; margin-bottom: 0; }
-.navbar-brand span { background: var(--primary-blue); color: #fff; border-radius: 10px; padding: 0.1rem 0.5rem; margin-right: 0.3rem; font-size: 1.3rem; }
+/* ====== APP SHELL (max width mobile) ====== */
+.app-container {
+  max-width: var(--app-max);
+  margin: 0 auto;
+  padding: 0 14px;
+}
 
-.user-chip { background: var(--bg-soft); border-radius: 30px; padding: 0.35rem 0.9rem 0.35rem 0.4rem; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 500; }
-.user-chip .avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--primary-blue); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; }
+/* ====== NAVBAR ====== */
+.navbar {
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  padding: 0.55rem 0;
+  padding-top: calc(0.55rem + env(safe-area-inset-top, 0px));
+}
+.navbar .container { max-width: var(--app-max); padding: 0 14px; }
+.navbar-brand {
+  font-weight: 700; font-size: 1.15rem;
+  color: var(--primary-blue) !important;
+  letter-spacing: -0.5px; margin-bottom: 0;
+  display: flex; align-items: center;
+}
+.navbar-brand span {
+  background: var(--primary-blue); color: #fff;
+  border-radius: 8px; padding: 0.05rem 0.4rem;
+  margin-right: 0.3rem; font-size: 1rem;
+}
+.user-chip {
+  background: var(--bg-soft); border-radius: 30px;
+  padding: 0.28rem 0.7rem 0.28rem 0.3rem;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.78rem; font-weight: 500;
+}
+.user-chip .avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--primary-blue); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 700;
+}
 
-/* Bottom nav */
+/* ====== BOTTOM NAV ====== */
 .bottom-nav {
-  position: fixed; bottom: 0; left: 0; right: 0; background: #fff;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #fff;
   box-shadow: 0 -4px 24px rgba(0,0,0,0.08);
   display: flex; justify-content: space-around; align-items: stretch;
-  padding: 0.5rem 0 calc(0.5rem + env(safe-area-inset-bottom, 0px));
+  padding: 0.4rem 0 calc(0.4rem + env(safe-area-inset-bottom, 0px));
   z-index: 1030; border-top: 1px solid #e2e8f0;
-  max-width: 640px; margin: 0 auto; border-radius: 20px 20px 0 0;
+  max-width: var(--app-max); margin: 0 auto;
+  border-radius: 18px 18px 0 0;
 }
-.bottom-nav a { color: #94a3b8; text-decoration: none; text-align: center; font-size: 0.72rem; font-weight: 500; flex: 1; padding: 0.4rem 0.2rem; transition: all 0.2s; border-radius: 14px; margin: 0 0.15rem; }
-.bottom-nav a i { font-size: 1.35rem; display: block; margin-bottom: 0.15rem; transition: transform 0.2s; }
-.bottom-nav a:hover { color: var(--primary-blue); background: var(--bg-soft); }
+.bottom-nav a {
+  color: #94a3b8; text-decoration: none; text-align: center;
+  font-size: 0.65rem; font-weight: 500; flex: 1;
+  padding: 0.35rem 0.2rem; transition: all 0.2s;
+  border-radius: 12px; margin: 0 0.1rem;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.bottom-nav a i { font-size: 1.25rem; margin-bottom: 0.1rem; transition: transform 0.2s; }
 .bottom-nav a.active { color: var(--primary-blue); background: var(--bg-soft); font-weight: 600; }
 .bottom-nav a.active i { transform: scale(1.1); }
-@media (min-width: 992px) { .bottom-nav { padding: 0.7rem 0; max-width: 720px; } .bottom-nav a { font-size: 0.78rem; } .bottom-nav a i { font-size: 1.5rem; } }
 
-/* Buttons */
-.btn-primary { background: var(--primary-blue); border-color: var(--primary-blue); border-radius: 30px; font-weight: 500; padding: 0.5rem 1.4rem; }
-.btn-primary:hover { background: #152c6b; border-color: #152c6b; }
-.btn-outline-primary { border-color: var(--primary-blue); color: var(--primary-blue); border-radius: 30px; font-weight: 500; padding: 0.4rem 1.2rem; }
-.btn-outline-primary:hover { background: var(--primary-blue); color: #fff; }
-.btn-warning { background: #f59e0b; border-color: #f59e0b; color: #fff; border-radius: 30px; font-weight: 500; padding: 0.5rem 1.4rem; }
-.btn-warning:hover { background: #d97706; border-color: #d97706; color: #fff; }
+/* ====== BUTTONS ====== */
+.btn { font-size: 0.85rem; }
+.btn-primary {
+  background: var(--primary-blue); border-color: var(--primary-blue);
+  border-radius: 30px; font-weight: 500; padding: 0.55rem 1.3rem;
+}
+.btn-primary:hover, .btn-primary:active { background: #152c6b !important; border-color: #152c6b !important; }
+.btn-outline-primary {
+  border-color: var(--primary-blue); color: var(--primary-blue);
+  border-radius: 30px; font-weight: 500; padding: 0.5rem 1.1rem;
+}
+.btn-outline-primary:hover, .btn-outline-primary:active {
+  background: var(--primary-blue) !important; color: #fff !important;
+}
+.btn-warning {
+  background: #f59e0b; border-color: #f59e0b; color: #fff;
+  border-radius: 30px; font-weight: 500; padding: 0.55rem 1.3rem;
+}
+.btn-sm { padding: 0.4rem 0.9rem; font-size: 0.78rem; }
 
-/* Cards */
-.card { border: none; border-radius: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; background: #fff; overflow: hidden; }
-.card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,0.08); }
-.card-body { padding: 1.4rem; }
-.cafe-card { cursor: pointer; border-left: 5px solid var(--primary-blue); height: 100%; }
-.cafe-card .card-title { font-weight: 600; color: #0f172a; font-size: 1.05rem; margin-bottom: 0.3rem; }
-
-/* Thumbnail */
-.cafe-card .cafe-image { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #f1f5f9; display: block; transition: transform 0.3s; }
-.cafe-card:hover .cafe-image { transform: scale(1.03); }
+/* ====== CARDS ====== */
+.card {
+  border: none; border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+  background: #fff; overflow: hidden;
+}
+.card:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,0.09); }
+.card-body { padding: 1rem; }
+.cafe-card { cursor: pointer; border-left: 4px solid var(--primary-blue); height: 100%; }
+.cafe-card .card-title {
+  font-weight: 600; color: #0f172a;
+  font-size: 0.95rem; margin-bottom: 0.25rem;
+  line-height: 1.3;
+}
+.cafe-card .cafe-image {
+  width: 100%; aspect-ratio: 16 / 10; object-fit: cover;
+  background: #f1f5f9; display: block; transition: transform 0.3s;
+}
+.cafe-card:active .cafe-image { transform: scale(1.02); }
 
 /* Detail hero */
-.detail-hero { width: 100%; aspect-ratio: 21 / 9; object-fit: cover; background: #f1f5f9; display: block; }
-@media (max-width: 768px) { .detail-hero { aspect-ratio: 16 / 9; } }
+.detail-hero {
+  width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+  background: #f1f5f9; display: block;
+}
 
 /* Locked cafe */
 .cafe-card.locked { cursor: pointer; border-left-color: var(--locked); position: relative; }
 .cafe-card.locked .cafe-image { filter: blur(6px) grayscale(0.5); }
 .cafe-card.locked .card-body { filter: blur(4px); user-select: none; pointer-events: none; }
 .cafe-card.locked::after {
-  content: '\F47A';
-  font-family: 'bootstrap-icons';
+  content: '\F47A'; font-family: 'bootstrap-icons';
   position: absolute; top: 42%; left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 3rem; color: var(--primary-blue);
+  font-size: 2.5rem; color: var(--primary-blue);
   opacity: 0.9; text-shadow: 0 4px 12px rgba(0,0,0,0.15);
   pointer-events: none;
 }
 .cafe-card.locked .lock-label {
-  position: absolute; bottom: 12px; left: 50%;
+  position: absolute; bottom: 10px; left: 50%;
   transform: translateX(-50%); z-index: 2;
   background: rgba(30,58,138,0.95); color: #fff;
-  font-size: 0.75rem; font-weight: 600;
-  padding: 0.35rem 0.9rem; border-radius: 20px;
+  font-size: 0.7rem; font-weight: 600;
+  padding: 0.3rem 0.8rem; border-radius: 20px;
   white-space: nowrap;
 }
 
 /* Favorite */
-.favorite-icon { font-size: 1.4rem; cursor: pointer; color: #cbd5e1; transition: color 0.2s; }
+.favorite-icon { font-size: 1.3rem; cursor: pointer; color: #cbd5e1; transition: color 0.2s; padding: 0.2rem; }
 .favorite-icon.favorited { color: var(--danger); }
-.favorite-icon:hover { color: #f87171; }
 
 /* Section */
-.section-title { font-weight: 700; color: #0f172a; margin-bottom: 0.4rem; font-size: 1.7rem; }
-.section-subtitle { color: #475569; margin-bottom: 1.6rem; font-size: 1rem; }
+.section-title { font-weight: 700; color: #0f172a; margin-bottom: 0.3rem; font-size: 1.25rem; }
+.section-subtitle { color: #475569; margin-bottom: 1.1rem; font-size: 0.85rem; }
 .page-section { display: none; }
-.page-section.active { display: block; }
+.page-section.active { display: block; animation: fadeIn 0.3s; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Hero */
+.hero-home {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  color: #fff; border-radius: 20px; padding: 1.4rem; margin-bottom: 1.2rem;
+}
+.hero-home h1 { font-weight: 700; font-size: 1.2rem; margin-bottom: 0.4rem; line-height: 1.3; }
+.hero-home p { opacity: 0.9; margin-bottom: 1rem; font-size: 0.82rem; }
+.hero-home .btn { font-size: 0.82rem; padding: 0.5rem 1rem; }
 
 /* Mood */
-.mood-option { border: 2px solid #e2e8f0; border-radius: 20px; padding: 1.5rem 1rem; text-align: center; cursor: pointer; transition: all 0.2s; background: #fff; height: 100%; }
-.mood-option:hover { border-color: var(--primary-blue); background: var(--bg-soft); }
-.mood-option.selected { border-color: var(--primary-blue); background: var(--bg-soft); box-shadow: 0 4px 16px rgba(30,58,138,0.15); }
-.mood-option i { font-size: 2rem; margin-bottom: 0.5rem; }
-.mood-option h6 { font-weight: 600; margin-bottom: 0.3rem; }
-.mood-option p { font-size: 0.82rem; color: #64748b; margin-bottom: 0; }
+.mood-option {
+  border: 2px solid #e2e8f0; border-radius: 16px;
+  padding: 1rem 0.6rem; text-align: center; cursor: pointer;
+  transition: all 0.2s; background: #fff; height: 100%;
+}
+.mood-option:active { transform: scale(0.97); }
+.mood-option.selected { border-color: var(--primary-blue); background: var(--bg-soft); box-shadow: 0 4px 14px rgba(30,58,138,0.15); }
+.mood-option i { font-size: 1.6rem; margin-bottom: 0.4rem; }
+.mood-option h6 { font-weight: 600; margin-bottom: 0.25rem; font-size: 0.82rem; line-height: 1.2; }
+.mood-option p { font-size: 0.68rem; color: #64748b; margin-bottom: 0; line-height: 1.3; }
 
 /* Location */
-.loc-option { border: 2px solid #e2e8f0; border-radius: 16px; padding: 1rem; cursor: pointer; transition: all 0.2s; text-align: center; }
-.loc-option:hover { border-color: var(--primary-blue); background: var(--bg-soft); }
+.loc-option {
+  border: 2px solid #e2e8f0; border-radius: 14px;
+  padding: 0.8rem 0.5rem; cursor: pointer; transition: all 0.2s; text-align: center;
+}
+.loc-option:active { transform: scale(0.97); }
 .loc-option.selected { border-color: var(--primary-blue); background: var(--bg-soft); }
-.loc-option .count { font-size: 0.75rem; color: #94a3b8; }
+.loc-option .count { font-size: 0.68rem; color: #94a3b8; }
+.loc-option .fw-semibold { font-size: 0.82rem; }
 
 /* Facility */
-.fac-option { border: 2px solid #e2e8f0; border-radius: 14px; padding: 0.8rem 1rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.6rem; }
-.fac-option:hover { border-color: var(--primary-blue); background: var(--bg-soft); }
+.fac-option {
+  border: 2px solid #e2e8f0; border-radius: 12px;
+  padding: 0.65rem 0.7rem; cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.fac-option:active { transform: scale(0.97); }
 .fac-option.selected { border-color: var(--primary-blue); background: var(--bg-soft); }
-.fac-option i { font-size: 1.2rem; color: var(--primary-blue); }
+.fac-option i { font-size: 1rem; color: var(--primary-blue); flex-shrink: 0; }
+.fac-option .small { font-size: 0.72rem; line-height: 1.25; }
 
 /* Progress */
 .progress { height: 6px; border-radius: 10px; background: #e2e8f0; }
 .progress-bar { background: var(--primary-blue); transition: width 0.3s; }
 
 /* Result */
-.result-card { border-left: 5px solid var(--primary-blue); }
-.match-badge { background: var(--success); color: #fff; font-size: 0.75rem; padding: 0.25rem 0.7rem; border-radius: 20px; font-weight: 600; }
+.result-card { border-left: 4px solid var(--primary-blue); }
+.match-badge {
+  background: var(--success); color: #fff; font-size: 0.68rem;
+  padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: 600;
+  display: inline-block;
+}
 
 /* Profile */
-.profile-avatar { width: 90px; height: 90px; border-radius: 50%; background: var(--primary-blue); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 700; margin: 0 auto 1rem; }
-.stat-box { text-align: center; padding: 1rem; background: var(--bg-soft); border-radius: 16px; }
-.stat-box .num { font-size: 1.6rem; font-weight: 700; color: var(--primary-blue); }
-.stat-box .label { font-size: 0.8rem; color: #64748b; }
+.profile-avatar {
+  width: 76px; height: 76px; border-radius: 50%;
+  background: var(--primary-blue); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.9rem; font-weight: 700; margin: 0 auto 0.8rem;
+}
+.stat-box { text-align: center; padding: 0.75rem 0.4rem; background: var(--bg-soft); border-radius: 14px; }
+.stat-box .num { font-size: 1.3rem; font-weight: 700; color: var(--primary-blue); line-height: 1.1; }
+.stat-box .label { font-size: 0.68rem; color: #64748b; }
 
 /* Empty */
-.empty-state { text-align: center; padding: 3rem 1rem; color: #94a3b8; }
-.empty-state i { font-size: 3.5rem; margin-bottom: 1rem; display: block; color: #cbd5e1; }
-
-/* Hero */
-.hero-home { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: #fff; border-radius: 24px; padding: 2rem; margin-bottom: 1.5rem; }
-.hero-home h1 { font-weight: 700; font-size: 1.6rem; margin-bottom: 0.5rem; }
-.hero-home p { opacity: 0.9; margin-bottom: 1.2rem; font-size: 0.95rem; }
+.empty-state { text-align: center; padding: 2.2rem 1rem; color: #94a3b8; }
+.empty-state i { font-size: 2.8rem; margin-bottom: 0.8rem; display: block; color: #cbd5e1; }
+.empty-state h5 { font-size: 1rem; }
 
 /* Login */
-.login-wrapper { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 2rem 1rem; }
-.login-card { background: #fff; border-radius: 24px; padding: 2.5rem 2rem; max-width: 420px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
-.login-logo { text-align: center; margin-bottom: 1.5rem; }
-.login-logo .brand { font-weight: 700; font-size: 1.8rem; color: var(--primary-blue); }
-.login-logo .brand span { background: var(--primary-blue); color: #fff; border-radius: 12px; padding: 0.1rem 0.6rem; margin-right: 0.3rem; }
-.login-logo p { color: #64748b; font-size: 0.9rem; margin-top: 0.4rem; }
-.login-card .form-control { border-radius: 14px; padding: 0.7rem 1rem; border: 2px solid #e2e8f0; }
+.login-wrapper {
+  min-height: 100vh; min-height: 100dvh;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  padding: 1.5rem 1rem;
+}
+.login-card {
+  background: #fff; border-radius: 22px; padding: 2rem 1.4rem;
+  max-width: 380px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+.login-logo { text-align: center; margin-bottom: 1.3rem; }
+.login-logo .brand { font-weight: 700; font-size: 1.6rem; color: var(--primary-blue); }
+.login-logo .brand span { background: var(--primary-blue); color: #fff; border-radius: 10px; padding: 0.05rem 0.5rem; margin-right: 0.3rem; }
+.login-logo p { color: #64748b; font-size: 0.85rem; margin-top: 0.3rem; margin-bottom: 0; }
+.login-card .form-control { border-radius: 12px; padding: 0.65rem 0.9rem; border: 2px solid #e2e8f0; font-size: 0.88rem; }
 .login-card .form-control:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 0.2rem rgba(30,58,138,0.1); }
-.login-toggle { text-align: center; margin-top: 1.2rem; font-size: 0.9rem; color: #64748b; }
+.login-card .form-label { font-size: 0.78rem; }
+.login-toggle { text-align: center; margin-top: 1rem; font-size: 0.82rem; color: #64748b; }
 .login-toggle a { color: var(--primary-blue); font-weight: 600; text-decoration: none; cursor: pointer; }
-.alert-error { background: #fee2e2; color: #991b1b; border: none; border-radius: 12px; padding: 0.7rem 1rem; font-size: 0.88rem; }
-.alert-success { background: #d1fae5; color: #065f46; border: none; border-radius: 12px; padding: 0.7rem 1rem; font-size: 0.88rem; }
-
-/* Unlock banner */
-.unlock-banner { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px dashed #f59e0b; border-radius: 20px; padding: 1.5rem; text-align: center; margin: 1.5rem 0; }
-.unlock-banner h5 { color: #92400e; font-weight: 700; margin-bottom: 0.4rem; }
-.unlock-banner p { color: #78350f; font-size: 0.9rem; margin-bottom: 1rem; }
+.alert-error { background: #fee2e2; color: #991b1b; border: none; border-radius: 12px; padding: 0.65rem 0.9rem; font-size: 0.82rem; }
+.alert-success { background: #d1fae5; color: #065f46; border: none; border-radius: 12px; padding: 0.65rem 0.9rem; font-size: 0.82rem; }
 
 /* Survey */
-.survey-question { background: #f8fafc; border-radius: 16px; padding: 1rem 1.2rem; margin-bottom: 1rem; }
-.survey-question p { font-weight: 600; margin-bottom: 0.7rem; font-size: 0.95rem; }
-.survey-option { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.9rem; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; transition: all 0.2s; margin-bottom: 0.4rem; font-size: 0.9rem; }
-.survey-option:hover { border-color: var(--primary-blue); background: var(--bg-soft); }
+.survey-question { background: #f8fafc; border-radius: 14px; padding: 0.9rem 1rem; margin-bottom: 0.9rem; }
+.survey-question p { font-weight: 600; margin-bottom: 0.6rem; font-size: 0.88rem; }
+.survey-option {
+  display: flex; align-items: center; gap: 0.55rem;
+  padding: 0.55rem 0.8rem; border: 2px solid #e2e8f0;
+  border-radius: 10px; cursor: pointer; transition: all 0.2s;
+  margin-bottom: 0.35rem; font-size: 0.82rem;
+}
+.survey-option:active { transform: scale(0.98); }
 .survey-option.selected { border-color: var(--primary-blue); background: var(--bg-soft); }
-.survey-option .dot { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #cbd5e1; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.survey-option .dot {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid #cbd5e1; display: flex;
+  align-items: center; justify-content: center; flex-shrink: 0;
+}
 .survey-option.selected .dot { border-color: var(--primary-blue); }
-.survey-option.selected .dot::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--primary-blue); }
+.survey-option.selected .dot::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--primary-blue); }
 
-/* Locked preview di modal */
-.locked-preview { display: flex; gap: 0.5rem; margin-bottom: 1.2rem; overflow-x: auto; padding-bottom: 0.5rem; }
-.locked-preview img { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; filter: blur(4px) grayscale(0.4); flex-shrink: 0; }
+/* Locked preview */
+.locked-preview { display: flex; gap: 0.4rem; margin-bottom: 1rem; overflow-x: auto; padding-bottom: 0.4rem; -webkit-overflow-scrolling: touch; }
+.locked-preview img { width: 64px; height: 64px; border-radius: 10px; object-fit: cover; filter: blur(4px) grayscale(0.4); flex-shrink: 0; }
 
 /* Success icon */
-.success-icon { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #10b981, #059669); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 1rem; animation: pop 0.4s ease; }
+.success-icon {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: linear-gradient(135deg, #10b981, #059669); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.2rem; margin: 0 auto 0.8rem; animation: pop 0.4s ease;
+}
 @keyframes pop { 0% { transform: scale(0); } 70% { transform: scale(1.15); } 100% { transform: scale(1); } }
 
-/* Slider */
-.cafe-slider-wrapper { position: relative; overflow: hidden; border-radius: 20px; }
-.cafe-slider { display: flex; transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1); cursor: grab; user-select: none; }
-.cafe-slider:active { cursor: grabbing; }
-.cafe-slider.dragging { transition: none; }
-.cafe-slide { min-width: 100%; flex-shrink: 0; padding: 0 0.25rem; box-sizing: border-box; }
+/* ====== SLIDER REKOMENDASI ====== */
+.cafe-slider-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #f8fafc;
+}
+
+.cafe-slider {
+  display: flex;
+  transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+  user-select: none;
+  touch-action: pan-y;
+  gap: 0; 
+}
+
+.cafe-slider.dragging {
+  transition: none;
+}
+
+.cafe-slide {
+  min-width: 100%;
+  width: 100%;
+  flex-shrink: 0;
+  padding: 0 4px; 
+  box-sizing: border-box;
+}
+
+.cafe-slide .card {
+  height: 100%;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 16px;
+  box-sizing: border-box;
+}
+
+.cafe-slide .cafe-image {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 16px 16px 0 0;
+}
 
 .slider-btn {
-  position: absolute; top: 50%; transform: translateY(-50%);
-  width: 44px; height: 44px; border-radius: 50%;
-  background: #fff; border: 2px solid var(--primary-blue); color: var(--primary-blue);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; z-index: 5;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-  transition: all 0.2s; font-size: 1.2rem;
+  position: absolute;
+  top: 35%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--primary-blue);
+  color: var(--primary-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+  transition: all 0.2s;
+  font-size: 1rem;
 }
-.slider-btn:hover { background: var(--primary-blue); color: #fff; transform: translateY(-50%) scale(1.08); }
-.slider-btn.prev { left: -8px; }
-.slider-btn.next { right: -8px; }
-.slider-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: translateY(-50%); }
-@media (max-width: 768px) {
-  .slider-btn { width: 38px; height: 38px; font-size: 1rem; }
-  .slider-btn.prev { left: 4px; }
-  .slider-btn.next { right: 4px; }
-}
+.slider-btn.prev { left: 8px; }
+.slider-btn.next { right: 8px; }
+.slider-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
-.slider-dots { display: flex; justify-content: center; gap: 0.4rem; margin-top: 1rem; flex-wrap: wrap; }
-.slider-dot { width: 8px; height: 8px; border-radius: 50%; background: #cbd5e1; cursor: pointer; transition: all 0.2s; }
-.slider-dot.active { background: var(--primary-blue); width: 24px; border-radius: 4px; }
+.slider-dots { display: flex; justify-content: center; gap: 0.35rem; margin-top: 0.8rem; flex-wrap: wrap; }
+.slider-dot { width: 7px; height: 7px; border-radius: 50%; background: #cbd5e1; cursor: pointer; transition: all 0.2s; }
+.slider-dot.active { background: var(--primary-blue); width: 20px; border-radius: 4px; }
 
-.slider-counter { text-align: center; font-size: 0.85rem; color: #64748b; margin-top: 0.5rem; font-weight: 500; }
+.slider-counter { text-align: center; font-size: 0.78rem; color: #64748b; margin-top: 0.4rem; font-weight: 500; }
 .slider-counter strong { color: var(--primary-blue); }
 
-.cafe-slide .card { height: 100%; }
-.cafe-slide .cafe-image { aspect-ratio: 16/9; }
+#quickResultGrid {
+  padding: 0 2px;
+}
 
-/* ===== ADMIN PANEL ===== */
-.admin-header { background: linear-gradient(135deg, var(--admin-purple), #a855f7); color: #fff; padding: 1.5rem 0; margin-bottom: 1.5rem; border-radius: 20px; }
-.admin-stat { text-align: center; padding: 1.2rem; border-radius: 16px; color: #fff; }
+/* ====== ADMIN ====== */
+.admin-header {
+  background: linear-gradient(135deg, var(--admin-purple), #a855f7);
+  color: #fff; padding: 1.2rem; margin-bottom: 1.2rem; border-radius: 18px;
+}
+.admin-header h3 { font-size: 1.15rem; }
+.admin-header .admin-nav-btn {
+  background: rgba(255,255,255,0.15); border: none; color: #fff;
+  padding: 0.4rem 0.8rem; border-radius: 20px; font-weight: 500;
+  font-size: 0.75rem; transition: background 0.2s;
+}
+.admin-header .admin-nav-btn.active { background: rgba(255,255,255,0.35); }
+.admin-stat { text-align: center; padding: 0.9rem 0.5rem; border-radius: 14px; color: #fff; }
 .admin-stat.blue { background: linear-gradient(135deg, #1e3a8a, #3b82f6); }
 .admin-stat.green { background: linear-gradient(135deg, #059669, #10b981); }
 .admin-stat.orange { background: linear-gradient(135deg, #d97706, #f59e0b); }
 .admin-stat.purple { background: linear-gradient(135deg, #7e22ce, #a855f7); }
-.admin-stat .num { font-size: 1.8rem; font-weight: 700; }
-.admin-stat .label { font-size: 0.8rem; opacity: 0.9; }
+.admin-stat .num { font-size: 1.4rem; font-weight: 700; line-height: 1.1; }
+.admin-stat .label { font-size: 0.68rem; opacity: 0.9; }
 
-.admin-table { width: 100%; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.05); }
-.admin-table th { background: #f8fafc; font-weight: 600; padding: 0.9rem 1rem; text-align: left; font-size: 0.85rem; color: #475569; }
-.admin-table td { padding: 0.9rem 1rem; border-top: 1px solid #f1f5f9; font-size: 0.88rem; vertical-align: middle; }
-.admin-table tr:hover td { background: #f8fafc; }
-
-.badge-unlock { background: #d1fae5; color: #065f46; padding: 0.25rem 0.7rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
-.badge-locked { background: #fee2e2; color: #991b1b; padding: 0.25rem 0.7rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
-
-.admin-nav-btn { background: transparent; border: none; color: #fff; padding: 0.5rem 1rem; border-radius: 30px; font-weight: 500; transition: background 0.2s; }
-.admin-nav-btn:hover, .admin-nav-btn.active { background: rgba(255,255,255,0.2); }
-
-/* Page animation */
-.page-section.active { animation: fadeIn 0.3s; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-@media (max-width: 768px) {
-  .section-title { font-size: 1.4rem; }
-  .hero-home h1 { font-size: 1.3rem; }
-  .admin-table th, .admin-table td { padding: 0.6rem 0.5rem; font-size: 0.78rem; }
+.admin-user-card {
+  background: #fff; border-radius: 14px; padding: 0.9rem 1rem;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.05); margin-bottom: 0.7rem;
 }
+.admin-user-card .u-email { font-weight: 600; font-size: 0.82rem; word-break: break-all; }
+.admin-user-card .u-name { font-size: 0.75rem; color: #64748b; }
+.admin-user-card .u-stats { display: flex; gap: 0.35rem; margin: 0.6rem 0; flex-wrap: wrap; }
+.admin-user-card .u-stat { background: var(--bg-soft); border-radius: 8px; padding: 0.3rem 0.55rem; font-size: 0.68rem; color: #475569; font-weight: 500; }
+.admin-user-card .u-stat strong { color: var(--primary-blue); }
+
+.badge-unlock { background: #d1fae5; color: #065f46; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.68rem; font-weight: 600; white-space: nowrap; }
+.badge-locked { background: #fee2e2; color: #991b1b; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.68rem; font-weight: 600; white-space: nowrap; }
+
+/* Modal mobile */
+.modal-content { border-radius: 20px !important; border: none !important; }
+.modal-header { padding: 1rem 1.1rem 0.5rem; }
+.modal-body { padding: 0.8rem 1.1rem; }
+.modal-footer { padding: 0.5rem 1.1rem 1rem; }
+.modal-title { font-size: 1rem; }
+.modal-dialog { margin: 0.6rem; }
+@media (min-width: 576px) { .modal-dialog { margin: 1.75rem auto; } }
+
+/* Small tweaks */
+.text-small { font-size: 0.78rem; }
+.gap-2-mobile { gap: 0.5rem !important; }
+.row-tight { --bs-gutter-x: 0.6rem; --bs-gutter-y: 0.6rem; }
 </style>
 </head>
 <body>
@@ -265,12 +435,12 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
 
       <form id="formLogin">
         <div class="mb-3">
-          <label class="form-label small fw-semibold">Email</label>
-          <input type="email" class="form-control" id="loginEmail" placeholder="nama@email.com" required>
+          <label class="form-label fw-semibold">Email</label>
+          <input type="email" class="form-control" id="loginEmail" placeholder="nama@email.com" required autocomplete="email">
         </div>
         <div class="mb-3">
-          <label class="form-label small fw-semibold">Password</label>
-          <input type="password" class="form-control" id="loginPassword" placeholder="Minimal 6 karakter" required>
+          <label class="form-label fw-semibold">Password</label>
+          <input type="password" class="form-control" id="loginPassword" placeholder="Minimal 6 karakter" required autocomplete="current-password">
         </div>
         <button type="submit" class="btn btn-primary w-100 py-2">
           <i class="bi bi-box-arrow-in-right me-1"></i>Masuk
@@ -278,7 +448,7 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
       </form>
 
       <div class="login-toggle">
-        <a data-auth-tab="admin" style="font-size: 0.8rem; opacity: 0.7;"><i class="bi bi-shield-lock me-1"></i>Login Admin</a>
+        <a data-auth-tab="admin" style="font-size: 0.75rem; opacity: 0.7;"><i class="bi bi-shield-lock me-1"></i>Login Admin</a>
       </div>
     </div>
   </div>
@@ -290,14 +460,14 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
     <a class="navbar-brand mb-0" href="#" data-nav="app-home"><span>Nf</span> Ngafeeling</a>
     <span class="user-chip">
       <span class="avatar" id="navAvatar">U</span>
-      <span id="navUserName" class="d-none d-md-inline">User</span>
+      <span id="navUserName" class="d-none d-sm-inline">User</span>
     </span>
   </div>
 </nav>
 
 <!-- ============ PAGE: APP-HOME ============ -->
 <section id="page-app-home" class="page-section">
-  <div class="container py-4">
+  <div class="app-container py-3">
     <div class="hero-home">
       <h1><i class="bi bi-cup-hot me-2"></i>Hai, <span id="heroName">User</span>! 👋</h1>
       <p>Lagi pengin suasana apa hari ini? Pilih mood, kami tunjukkan cafe terbaik.</p>
@@ -305,126 +475,128 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
     </div>
 
     <h3 class="section-title">Pilih Mood Cepat</h3>
-    <p class="section-subtitle">Klik salah satu mood, langsung tampil rekomendasi cafe.</p>
-    <div class="row g-3 mb-4" id="shortcutMood"></div>
+    <p class="section-subtitle">Tap salah satu mood, langsung tampil rekomendasi cafe.</p>
+    <div class="row row-tight mb-4" id="shortcutMood"></div>
 
     <div id="quickResult" class="d-none">
-      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+      <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
         <div>
-          <h4 class="fw-bold mb-0" id="quickResultTitle">Rekomendasi</h4>
-          <p class="text-secondary small mb-0" id="quickResultSubtitle"></p>
+          <h4 class="fw-bold mb-0" id="quickResultTitle" style="font-size:1.1rem;">Rekomendasi</h4>
+          <p class="text-secondary small mb-0" id="quickResultSubtitle" style="font-size:0.78rem;"></p>
         </div>
         <button class="btn btn-outline-primary btn-sm" id="closeQuickResult"><i class="bi bi-x me-1"></i>Tutup</button>
       </div>
       <div id="quickResultGrid"></div>
     </div>
 
-    <div id="cafeDetailHome" class="mt-4"></div>
+    <div id="cafeDetailHome" class="mt-3"></div>
   </div>
 </section>
 
 <!-- ============ PAGE: APP-MOOD ============ -->
 <section id="page-app-mood" class="page-section">
-  <div class="container py-4">
+  <div class="app-container py-3">
     <h2 class="section-title">Cari Cafe Sesuai Mood</h2>
     <p class="section-subtitle">Isi mood dan lokasimu, kami carikan cafe paling cocok.</p>
 
-    <div class="progress mb-4"><div class="progress-bar" id="wizardProgress" style="width:33%;"></div></div>
-    <p class="text-secondary small mb-3" id="wizardStepLabel">Langkah 1 dari 3</p>
+    <div class="progress mb-2"><div class="progress-bar" id="wizardProgress" style="width:33%;"></div></div>
+    <p class="text-secondary small mb-3" id="wizardStepLabel" style="font-size:0.78rem;">Langkah 1 dari 3</p>
 
     <div class="wizard-step" data-step="1">
-      <h5 class="fw-semibold mb-3">1. Lagi pengin suasana apa?</h5>
-      <div class="row g-3" id="moodOptions"></div>
-      <div class="mt-4"><button class="btn btn-primary" data-wizard="next" id="btnNext1" disabled>Lanjut <i class="bi bi-arrow-right"></i></button></div>
+      <h5 class="fw-semibold mb-3" style="font-size:1rem;">1. Lagi pengin suasana apa?</h5>
+      <div class="row row-tight" id="moodOptions"></div>
+      <div class="mt-4"><button class="btn btn-primary w-100" data-wizard="next" id="btnNext1" disabled>Lanjut <i class="bi bi-arrow-right"></i></button></div>
     </div>
 
     <div class="wizard-step d-none" data-step="2">
-      <h5 class="fw-semibold mb-3">2. Mau cari di mana?</h5>
-      <div class="row g-3" id="locationOptions"></div>
+      <h5 class="fw-semibold mb-3" style="font-size:1rem;">2. Mau cari di mana?</h5>
+      <div class="row row-tight" id="locationOptions"></div>
       <div class="mt-4 d-flex gap-2">
-        <button class="btn btn-outline-primary" data-wizard="prev"><i class="bi bi-arrow-left"></i> Kembali</button>
-        <button class="btn btn-primary" data-wizard="next" id="btnNext2" disabled>Lanjut <i class="bi bi-arrow-right"></i></button>
+        <button class="btn btn-outline-primary flex-fill" data-wizard="prev"><i class="bi bi-arrow-left"></i> Kembali</button>
+        <button class="btn btn-primary flex-fill" data-wizard="next" id="btnNext2" disabled>Lanjut <i class="bi bi-arrow-right"></i></button>
       </div>
     </div>
 
     <div class="wizard-step d-none" data-step="3">
-      <h5 class="fw-semibold mb-3">3. Fasilitas penting? <small class="text-secondary fw-normal">(opsional)</small></h5>
-      <div class="row g-3" id="facilityOptions"></div>
+      <h5 class="fw-semibold mb-3" style="font-size:1rem;">3. Fasilitas penting? <small class="text-secondary fw-normal">(opsional)</small></h5>
+      <div class="row row-tight" id="facilityOptions"></div>
       <div class="mt-4 d-flex gap-2">
-        <button class="btn btn-outline-primary" data-wizard="prev"><i class="bi bi-arrow-left"></i> Kembali</button>
-        <button class="btn btn-primary" data-wizard="submit"><i class="bi bi-search"></i> Tampilkan Rekomendasi</button>
+        <button class="btn btn-outline-primary flex-fill" data-wizard="prev"><i class="bi bi-arrow-left"></i> Kembali</button>
+        <button class="btn btn-primary flex-fill" data-wizard="submit"><i class="bi bi-search"></i> Cari</button>
       </div>
     </div>
 
-    <div id="hasilRekomendasi" class="mt-5 d-none">
-      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <div id="hasilRekomendasi" class="mt-4 d-none">
+      <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
         <div>
-          <h4 class="fw-bold mb-0">Hasil untukmu</h4>
-          <p class="text-secondary small mb-0" id="hasilSummary"></p>
+          <h4 class="fw-bold mb-0" style="font-size:1.1rem;">Hasil untukmu</h4>
+          <p class="text-secondary small mb-0" id="hasilSummary" style="font-size:0.78rem;"></p>
         </div>
         <button class="btn btn-outline-primary btn-sm" data-wizard="reset"><i class="bi bi-arrow-counterclockwise me-1"></i>Cari Lagi</button>
       </div>
-      <div class="row g-3" id="hasilGrid"></div>
+      <div class="row row-tight" id="hasilGrid"></div>
     </div>
 
-    <div id="cafeDetailMood" class="mt-4"></div>
+    <div id="cafeDetailMood" class="mt-3"></div>
   </div>
 </section>
 
 <!-- ============ PAGE: APP-FAVORIT ============ -->
 <section id="page-app-favorit" class="page-section">
-  <div class="container py-4">
+  <div class="app-container py-3">
     <h2 class="section-title">Favorit Saya</h2>
     <p class="section-subtitle">Cafe yang sudah kamu simpan.</p>
-    <div class="row g-3" id="favoritGrid"></div>
-    <div id="cafeDetailFav" class="mt-4"></div>
+    <div class="row row-tight" id="favoritGrid"></div>
+    <div id="cafeDetailFav" class="mt-3"></div>
   </div>
 </section>
 
 <!-- ============ PAGE: APP-PROFIL ============ -->
 <section id="page-app-profil" class="page-section">
-  <div class="container py-4">
+  <div class="app-container py-3">
     <h2 class="section-title">Profil</h2>
     <p class="section-subtitle">Data dan preferensimu tersimpan di perangkat ini.</p>
 
-    <div class="row g-3">
-      <div class="col-lg-4">
-        <div class="card p-4 text-center">
+    <div class="row row-tight">
+      <div class="col-12 mb-2">
+        <div class="card p-3 text-center">
           <div class="profile-avatar" id="profileAvatar">U</div>
-          <h5 class="fw-semibold mb-0" id="profileName">User</h5>
-          <p class="text-secondary small mb-3" id="profileEmail">email@example.com</p>
+          <h5 class="fw-semibold mb-0" id="profileName" style="font-size:1rem;">User</h5>
+          <p class="text-secondary small mb-2" id="profileEmail" style="font-size:0.78rem;">email@example.com</p>
           <button class="btn btn-outline-danger btn-sm" id="logoutBtn"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
         </div>
       </div>
 
-      <div class="col-lg-8">
-        <div class="row g-3">
-          <div class="col-6 col-md-3"><div class="stat-box"><div class="num" id="statFavorit">0</div><div class="label">Favorit</div></div></div>
-          <div class="col-6 col-md-3"><div class="stat-box"><div class="num" id="statPencarian">0</div><div class="label">Pencarian</div></div></div>
-          <div class="col-6 col-md-3"><div class="stat-box"><div class="num" id="statDilihat">0</div><div class="label">Dilihat</div></div></div>
-          <div class="col-6 col-md-3"><div class="stat-box"><div class="num" id="statChat">0</div><div class="label">Chat WA</div></div></div>
+      <div class="col-12">
+        <div class="row row-tight">
+          <div class="col-6 col-md-3 mb-1"><div class="stat-box"><div class="num" id="statFavorit">0</div><div class="label">Favorit</div></div></div>
+          <div class="col-6 col-md-3 mb-1"><div class="stat-box"><div class="num" id="statPencarian">0</div><div class="label">Pencarian</div></div></div>
+          <div class="col-6 col-md-3 mb-1"><div class="stat-box"><div class="num" id="statDilihat">0</div><div class="label">Dilihat</div></div></div>
+          <div class="col-6 col-md-3 mb-1"><div class="stat-box"><div class="num" id="statChat">0</div><div class="label">Chat WA</div></div></div>
         </div>
 
         <div class="card mt-3">
           <div class="card-body">
-            <h5 class="fw-semibold mb-3"><i class="bi bi-clock-history me-1"></i>Riwayat Pencarian</h5>
+            <h5 class="fw-semibold mb-2" style="font-size:0.95rem;"><i class="bi bi-clock-history me-1"></i>Riwayat Pencarian</h5>
             <div id="riwayatPencarian"></div>
           </div>
         </div>
 
         <div class="card mt-3">
           <div class="card-body">
-            <h5 class="fw-semibold mb-3"><i class="bi bi-gear me-1"></i>Pengaturan</h5>
-            <button class="btn btn-outline-danger btn-sm" id="resetDataBtn"><i class="bi bi-trash me-1"></i>Reset Semua Data Saya</button>
+            <h5 class="fw-semibold mb-2" style="font-size:0.95rem;"><i class="bi bi-gear me-1"></i>Pengaturan</h5>
+            <button class="btn btn-outline-danger btn-sm w-100" id="resetDataBtn"><i class="bi bi-trash me-1"></i>Reset Semua Data Saya</button>
           </div>
         </div>
 
-        <div class="card mt-3">
+        <div class="card mt-3 mb-3">
           <div class="card-body">
-            <h5 class="fw-semibold mb-3"><i class="bi bi-info-circle me-1"></i>Tentang & Kontak</h5>
-            <p class="small text-secondary mb-2">Ngafeeling — kurasi cafe berbasis mood untuk Soloraya.</p>
-            <a href="https://wa.me/6287705339063" target="_blank" rel="noopener" class="btn btn-primary btn-sm me-1 mb-1"><i class="bi bi-whatsapp me-1"></i>WhatsApp</a>
-            <a href="https://instagram.com/ngafeeling.mu" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm mb-1"><i class="bi bi-instagram me-1"></i>Instagram</a>
+            <h5 class="fw-semibold mb-2" style="font-size:0.95rem;"><i class="bi bi-info-circle me-1"></i>Tentang & Kontak</h5>
+            <p class="small text-secondary mb-2" style="font-size:0.78rem;">Ngafeeling — kurasi cafe berbasis mood untuk Soloraya.</p>
+            <div class="d-flex gap-2 flex-wrap">
+              <a href="https://wa.me/6287705339063" target="_blank" rel="noopener" class="btn btn-primary btn-sm flex-fill"><i class="bi bi-whatsapp me-1"></i>WhatsApp</a>
+              <a href="https://instagram.com/ngafeeling.mu" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm flex-fill"><i class="bi bi-instagram me-1"></i>Instagram</a>
+            </div>
           </div>
         </div>
       </div>
@@ -434,19 +606,19 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
 
 <!-- ============ PAGE: ADMIN PANEL ============ -->
 <section id="page-admin" class="page-section">
-  <div class="container py-4">
-    <div class="admin-header p-4">
-      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+  <div class="app-container py-3">
+    <div class="admin-header">
+      <div class="d-flex justify-content-between align-items-start mb-2 gap-2 flex-wrap">
         <div>
-          <h3 class="fw-bold mb-1"><i class="bi bi-shield-lock me-2"></i>Admin Panel</h3>
-          <p class="mb-0 small opacity-75">Rekap semua aktivitas pengguna Ngafeeling</p>
+          <h3 class="fw-bold mb-1"><i class="bi bi-shield-lock me-1"></i>Admin Panel</h3>
+          <p class="mb-0 small opacity-75" style="font-size:0.75rem;">Rekap aktivitas pengguna Ngafeeling</p>
         </div>
-        <div class="d-flex gap-2 flex-wrap">
-          <button class="admin-nav-btn active" data-admin-tab="dashboard"><i class="bi bi-graph-up me-1"></i>Dashboard</button>
-          <button class="admin-nav-btn" data-admin-tab="users"><i class="bi bi-people me-1"></i>User</button>
-          <button class="admin-nav-btn" data-admin-tab="survey"><i class="bi bi-clipboard-check me-1"></i>Survey</button>
-          <button class="btn btn-light btn-sm" id="adminLogoutBtn"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
-        </div>
+        <button class="btn btn-light btn-sm" id="adminLogoutBtn"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
+      </div>
+      <div class="d-flex gap-1 flex-wrap mt-2">
+        <button class="admin-nav-btn active" data-admin-tab="dashboard"><i class="bi bi-graph-up me-1"></i>Dashboard</button>
+        <button class="admin-nav-btn" data-admin-tab="users"><i class="bi bi-people me-1"></i>User</button>
+        <button class="admin-nav-btn" data-admin-tab="survey"><i class="bi bi-clipboard-check me-1"></i>Survey</button>
       </div>
     </div>
 
@@ -454,16 +626,16 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
 
     <!-- Tab Dashboard -->
     <div id="adminTabDashboard" class="admin-tab-content">
-      <div class="row g-3 mb-4">
-        <div class="col-6 col-md-3"><div class="admin-stat blue"><div class="num" id="admTotalUsers">0</div><div class="label">Total User</div></div></div>
-        <div class="col-6 col-md-3"><div class="admin-stat green"><div class="num" id="admTotalSearch">0</div><div class="label">Total Pencarian</div></div></div>
-        <div class="col-6 col-md-3"><div class="admin-stat orange"><div class="num" id="admTotalFav">0</div><div class="label">Total Favorit</div></div></div>
-        <div class="col-6 col-md-3"><div class="admin-stat purple"><div class="num" id="admTotalUnlock">0</div><div class="label">User Unlock</div></div></div>
+      <div class="row row-tight mb-3">
+        <div class="col-6 mb-1"><div class="admin-stat blue"><div class="num" id="admTotalUsers">0</div><div class="label">Total User</div></div></div>
+        <div class="col-6 mb-1"><div class="admin-stat green"><div class="num" id="admTotalSearch">0</div><div class="label">Pencarian</div></div></div>
+        <div class="col-6"><div class="admin-stat orange"><div class="num" id="admTotalFav">0</div><div class="label">Favorit</div></div></div>
+        <div class="col-6"><div class="admin-stat purple"><div class="num" id="admTotalUnlock">0</div><div class="label">User Unlock</div></div></div>
       </div>
 
-      <div class="card">
+      <div class="card mb-3">
         <div class="card-body">
-          <h5 class="fw-semibold mb-3"><i class="bi bi-clock-history me-1"></i>Aktivitas Terbaru (Semua User)</h5>
+          <h5 class="fw-semibold mb-2" style="font-size:0.95rem;"><i class="bi bi-clock-history me-1"></i>Aktivitas Terbaru</h5>
           <div id="adminRecentActivity"></div>
         </div>
       </div>
@@ -471,50 +643,20 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
 
     <!-- Tab Users -->
     <div id="adminTabUsers" class="admin-tab-content d-none">
-      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-        <h5 class="fw-bold mb-0"><i class="bi bi-people me-1"></i>Daftar User</h5>
-        <div class="d-flex gap-2">
-          <button class="btn btn-primary btn-sm" id="adminAddUserBtn"><i class="bi bi-plus-circle me-1"></i>Tambah User</button>
-          <button class="btn btn-outline-primary btn-sm" id="adminExportBtn"><i class="bi bi-download me-1"></i>Export CSV</button>
+      <div class="d-flex justify-content-between align-items-center mb-2 gap-2 flex-wrap">
+        <h5 class="fw-bold mb-0" style="font-size:1rem;"><i class="bi bi-people me-1"></i>Daftar User</h5>
+        <div class="d-flex gap-1">
+          <button class="btn btn-primary btn-sm" id="adminAddUserBtn"><i class="bi bi-plus-circle"></i></button>
+          <button class="btn btn-outline-primary btn-sm" id="adminExportBtn"><i class="bi bi-download"></i></button>
         </div>
       </div>
-
-      <div class="table-responsive">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Email</th>
-              <th>Nama</th>
-              <th class="text-center">Pencarian</th>
-              <th class="text-center">Favorit</th>
-              <th class="text-center">Dilihat</th>
-              <th class="text-center">Chat</th>
-              <th class="text-center">Unlock</th>
-              <th class="text-center">Aksi</th>
-            </tr>
-          </thead>
-          <tbody id="adminUsersTable"></tbody>
-        </table>
-      </div>
+      <div id="adminUsersList"></div>
     </div>
 
     <!-- Tab Survey -->
     <div id="adminTabSurvey" class="admin-tab-content d-none">
-      <h5 class="fw-bold mb-3"><i class="bi bi-clipboard-check me-1"></i>Jawaban Survey (Unlock)</h5>
-      <div class="table-responsive">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Email</th>
-              <th>Q1 (Sering ngafe)</th>
-              <th>Q2 (Prioritas)</th>
-              <th>Q3 (Sumber tahu)</th>
-              <th>Waktu</th>
-            </tr>
-          </thead>
-          <tbody id="adminSurveyTable"></tbody>
-        </table>
-      </div>
+      <h5 class="fw-bold mb-2" style="font-size:1rem;"><i class="bi bi-clipboard-check me-1"></i>Jawaban Survey (Unlock)</h5>
+      <div id="adminSurveyList"></div>
     </div>
   </div>
 </section>
@@ -522,9 +664,9 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
 <!-- ============ MODAL: TAMBAH USER ============ -->
 <div class="modal fade" id="addUserModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="border-radius: 24px; border: none;">
+    <div class="modal-content">
       <div class="modal-header border-0">
-        <h5 class="modal-title fw-bold"><i class="bi bi-person-plus text-primary me-2"></i>Tambah User Baru</h5>
+        <h5 class="modal-title fw-bold"><i class="bi bi-person-plus text-primary me-2"></i>Tambah User</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
@@ -553,7 +695,7 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
 <!-- ============ MODAL: DETAIL USER ============ -->
 <div class="modal fade" id="userDetailModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content" style="border-radius: 24px; border: none;">
+    <div class="modal-content">
       <div class="modal-header border-0">
         <h5 class="modal-title fw-bold"><i class="bi bi-person-circle text-primary me-2"></i>Detail User</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -566,13 +708,13 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
 <!-- ============ MODAL SURVEY (USER) ============ -->
 <div class="modal fade" id="surveyModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content" style="border-radius: 24px; border: none;">
+    <div class="modal-content">
       <div class="modal-header border-0 pb-0">
-        <h5 class="modal-title fw-bold"><i class="bi bi-clipboard-check text-warning me-2"></i>Unlock 30 Cafe Lainnya</h5>
+        <h5 class="modal-title fw-bold"><i class="bi bi-clipboard-check text-warning me-2"></i>Buka Rekomendasi Cafe</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body pt-2">
-        <p class="text-secondary small mb-3">Jawab 3 pertanyaan singkat ini untuk membuka akses ke 30 cafe lainnya di Ngafeeling. 🎁</p>
+        <p class="text-secondary small mb-3">Jawab 3 pertanyaan singkat ini untuk membuka akses rekomendasi cafe sesuai mood-mu. 🎁</p>
 
         <div class="locked-preview" id="lockedPreview"></div>
 
@@ -603,8 +745,8 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
         <div id="surveyAlert" class="mb-2"></div>
       </div>
       <div class="modal-footer border-0">
-        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Nanti Saja</button>
-        <button type="button" class="btn btn-warning" id="submitSurveyBtn" disabled><i class="bi bi-unlock me-1"></i>Unlock Sekarang</button>
+        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Nanti</button>
+        <button type="button" class="btn btn-warning" id="submitSurveyBtn" disabled><i class="bi bi-unlock me-1"></i>Unlock</button>
       </div>
     </div>
   </div>
@@ -613,11 +755,11 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
 <!-- ============ MODAL SUCCESS ============ -->
 <div class="modal fade" id="successModal" tabindex="-1" data-bs-backdrop="static">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center" style="border-radius: 24px; border: none; padding: 1.5rem;">
+    <div class="modal-content text-center" style="padding: 1rem;">
       <div class="modal-body">
         <div class="success-icon"><i class="bi bi-unlock-fill"></i></div>
-        <h4 class="fw-bold mb-2">Selamat! 🎉</h4>
-        <p class="text-secondary mb-4">Kamu berhasil membuka <strong>30 cafe lainnya</strong>.<br>Selamat menjelajah!</p>
+        <h4 class="fw-bold mb-2" style="font-size:1.1rem;">Selamat! 🎉</h4>
+        <p class="text-secondary mb-3" style="font-size:0.85rem;">Kamu berhasil membuka akses <strong>rekomendasi cafe</strong>.<br>Selamat menjelajah!</p>
         <button type="button" class="btn btn-primary w-100 py-2" data-bs-dismiss="modal"><i class="bi bi-compass me-1"></i>Mulai Jelajah</button>
       </div>
     </div>
@@ -627,7 +769,7 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
 <!-- ============ BOTTOM NAV ============ -->
 <nav class="bottom-nav" id="bottomNav" style="display:none;">
   <a href="#" data-nav="app-home" class="active" id="bn-app-home"><i class="bi bi-house-door"></i>Home</a>
-  <a href="#" data-nav="app-mood" id="bn-app-mood"><i class="bi bi-magic"></i>Cari Cafe</a>
+  <a href="#" data-nav="app-mood" id="bn-app-mood"><i class="bi bi-magic"></i>Cari</a>
   <a href="#" data-nav="app-favorit" id="bn-app-favorit"><i class="bi bi-heart"></i>Favorit</a>
   <a href="#" data-nav="app-profil" id="bn-app-profil"><i class="bi bi-person"></i>Profil</a>
 </nav>
@@ -635,7 +777,7 @@ body { background: #f8fafc; color: #1e293b; padding-bottom: 90px; }
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 /* ============================== KONFIG ============================== */
-const CONFIG = { whatsappNumber: '6287705339063', scrollOffset: 90 };
+const CONFIG = { whatsappNumber: '6287705339063', scrollOffset: 70 };
 
 const ADMIN_ACCOUNT = {
   email: 'ngafeelingmu@gmail.com',
@@ -654,85 +796,48 @@ const STORAGE_KEYS = {
 };
 
 /* ============================== HELPER GAMBAR ============================== */
-function cafeImage(cafe, width = 800, height = 450) {
+function cafeImage(cafe, width = 600, height = 375) {
   if (cafe.image) return cafe.image;
   const seed = `${cafe.id}-${cafe.name.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
   return `https://picsum.photos/seed/${seed}/${width}/${height}`;
 }
 
-/* ============================== DATA 40 CAFE ============================== */
+/* ============================== DATA 10 CAFE ============================== */
 const CAFES = [
   { id:1,  name:'Odds',             location:'Solo',        mood:'Fokus kerja', color:'#1e3a8a', desc:'Buka 24 jam, tangga spiral kuning ikonik. Cocok WFC kapan saja.',            menu:['Americano Peach 25k','Manual Brew 30k','Signature Latte 28k'], contact:'0812-1111-0001', facilities:['colokan','wifi','senyap','24jam','parkir'], rating:4.8, jamBuka:'24 Jam', lat:-7.5652, lng:110.8295 },
   { id:2,  name:'Loske',            location:'Solo',        mood:'Fokus kerja', color:'#1e3a8a', desc:'Gaya industrial vintage, buka dari pagi. Menu Los Leboys terkenal.',          menu:['Los Leboys 22k','Kopi Susu 20k','Croissant 18k'], contact:'0812-1111-0002', facilities:['colokan','wifi','parkir','nonkopi'], rating:4.7, jamBuka:'08.00–23.00', lat:-7.5681, lng:110.8241 },
   { id:3,  name:'Eighteen Grounds', location:'Solo',        mood:'Fokus kerja', color:'#1e3a8a', desc:'Dua lantai, banyak colokan, AC dingin. Ada photobox konsep lift.',            menu:['Espresso 15k','Latte 22k','Donat 10k'], contact:'0812-1111-0003', facilities:['colokan','wifi','senyap','parkir'], rating:4.6, jamBuka:'10.00–22.00', lat:-7.5591, lng:110.8189 },
-  { id:4,  name:'Headroom',         location:'Karanganyar', mood:'Fokus kerja', color:'#1e3a8a', desc:'Kafe modern dengan suasana tenang, cocok untuk kerja fokus.',                 menu:['Kopi Susu 20k','Americano 18k','Croffle 22k'], contact:'0812-1111-0004', facilities:['colokan','wifi','senyap'], rating:4.5, jamBuka:'09.00–22.00', lat:-7.5960, lng:110.9500 },
-  { id:5,  name:'28 Coffee',        location:'Solo',        mood:'Fokus kerja', color:'#1e3a8a', desc:'Kafe modern dengan WiFi stabil, cocok produktif seharian.',                   menu:['Latte 20k','Es Kopi Susu 18k','Roti Bakar 15k'], contact:'0812-1111-0005', facilities:['colokan','wifi','parkir'], rating:4.5, jamBuka:'08.00–23.00', lat:-7.5645, lng:110.8300 },
-  { id:6,  name:'Tetra',            location:'Solo',        mood:'Fokus kerja', color:'#1e3a8a', desc:'Suasana tenang, sering jadi tempat kerja remote worker.',                     menu:['Cappuccino 22k','Matcha Latte 25k','Pasta 30k'], contact:'0812-1111-0006', facilities:['colokan','wifi','senyap','nonkopi'], rating:4.6, jamBuka:'10.00–22.00', lat:-7.5600, lng:110.8250 },
-  { id:7,  name:'Sekutu Kopi',      location:'Solo',        mood:'Fokus kerja', color:'#1e3a8a', desc:'Konsep coworking-friendly, cocok untuk meeting atau kerja santai.',           menu:['Kopi Tubruk 12k','Es Kopi 18k','Pisang Goreng 10k'], contact:'0812-1111-0007', facilities:['colokan','wifi','parkir'], rating:4.4, jamBuka:'08.00–22.00', lat:-7.5670, lng:110.8210 },
-  { id:8,  name:'Mikerkoe Coffee',  location:'Tawangmangu', mood:'Fokus kerja', color:'#1e3a8a', desc:'Kafe dengan suasana cozy untuk kerja santai.',                                menu:['Kopi Susu 18k','Americano 17k','Donat 8k'], contact:'0812-1111-0008', facilities:['colokan','wifi','outdoor'], rating:4.4, jamBuka:'09.00–22.00', lat:-7.6690, lng:111.1290 },
-  { id:9,  name:'Demograficoffee',  location:'Karanganyar', mood:'Fokus kerja', color:'#1e3a8a', desc:'Konsep modern, WiFi stabil, cocok untuk produktif.',                          menu:['Latte 22k','Cold Brew 25k','Croissant 18k'], contact:'0812-1111-0009', facilities:['colokan','wifi','parkir','nonkopi'], rating:4.6, jamBuka:'08.00–23.00', lat:-7.5985, lng:110.9530 },
-  { id:10, name:'Heika Kopi',       location:'Solo',        mood:'Fokus kerja', color:'#1e3a8a', desc:'Tempat tenang untuk fokus kerja atau belajar.',                               menu:['Kopi Susu 18k','Matcha 22k','Roti Bakar 12k'], contact:'0812-1111-0010', facilities:['colokan','wifi','senyap'], rating:4.5, jamBuka:'09.00–22.00', lat:-7.5615, lng:110.8245 },
-  { id:11, name:'Joyoux',                   location:'Solo',        mood:'Healing sendiri', color:'#0f766e', desc:'Kafe kecil yang tenang, cocok untuk me time. Menu ropang mulai 5 ribuan.', menu:['Kopi Susu 18k','Ropang 5k','Matcha 22k'], contact:'0812-2222-0011', facilities:['wifi','senyap','nonkopi'], rating:4.7, jamBuka:'10.00–22.00', lat:-7.5660, lng:110.8280 },
-  { id:12, name:'MH Cafe (Mitis Highland)', location:'Tawangmangu', mood:'Healing sendiri', color:'#0f766e', desc:'Akses kereta gantung, view hijau pegunungan. Kopi pekat.',                  menu:['Kopi Hitam 15k','Latte 20k','Singkong 10k'], contact:'0812-2222-0012', facilities:['outdoor','parkir','nonkopi'], rating:4.6, jamBuka:'08.00–21.00', lat:-7.6690, lng:111.1290 },
-  { id:13, name:'2020mdpl',                 location:'Tawangmangu', mood:'Healing sendiri', color:'#0f766e', desc:'Kafe di ketinggian 2.020 mdpl, ada jembatan kaca. View Lawu.',              menu:['Kopi Jahe 20k','Wedang Uwuh 15k','Pisang Bakar 12k'], contact:'0812-2222-0013', facilities:['outdoor','parkir','nonkopi'], rating:4.7, jamBuka:'07.00–21.00', lat:-7.6710, lng:111.1320 },
-  { id:14, name:'Swargi',                   location:'Solo',        mood:'Healing sendiri', color:'#0f766e', desc:'Kafe dengan suasana menenangkan untuk refleksi diri.',                      menu:['Kopi Susu 20k','Teh Herbal 18k','Pisang Goreng 12k'], contact:'0812-2222-0014', facilities:['wifi','senyap','nonkopi'], rating:4.5, jamBuka:'08.00–20.00', lat:-7.5680, lng:110.8270 },
-  { id:15, name:'Tepi Langit',              location:'Tawangmangu', mood:'Healing sendiri', color:'#0f766e', desc:'Kafe di ketinggian dengan view langit & gunung, cocok healing.',            menu:['Kopi Hitam 18k','Wedang Jahe 15k','Singkong Goreng 12k'], contact:'0812-2222-0015', facilities:['outdoor','parkir'], rating:4.6, jamBuka:'07.00–21.00', lat:-7.6720, lng:111.1300 },
-  { id:16, name:'Lintang Lawu',             location:'Tawangmangu', mood:'Healing sendiri', color:'#0f766e', desc:'View Gunung Lawu, suasana tenang untuk me time.',                            menu:['Kopi Susu 20k','Teh Tarik 18k','Roti Bakar 15k'], contact:'0812-2222-0016', facilities:['outdoor','parkir'], rating:4.5, jamBuka:'08.00–21.00', lat:-7.6700, lng:111.1280 },
-  { id:17, name:'Latar Lawu',               location:'Tawangmangu', mood:'Healing sendiri', color:'#0f766e', desc:'Pemandangan Gunung Lawu, cocok untuk refleksi diri.',                        menu:['Kopi Hitam 15k','Latte 20k','Pisang Bakar 12k'], contact:'0812-2222-0017', facilities:['outdoor','parkir'], rating:4.5, jamBuka:'08.00–20.00', lat:-7.6695, lng:111.1265 },
-  { id:18, name:'Lawu Break',               location:'Tawangmangu', mood:'Healing sendiri', color:'#0f766e', desc:'Tempat rehat dengan view Lawu, cocok lepas penat.',                          menu:['Kopi Susu 18k','Wedang Uwuh 15k','Mendoan 10k'], contact:'0812-2222-0018', facilities:['outdoor','parkir','nonkopi'], rating:4.4, jamBuka:'08.00–21.00', lat:-7.6715, lng:111.1295 },
-  { id:19, name:'Sareh Coffee',             location:'Solo',        mood:'Healing sendiri', color:'#0f766e', desc:'"Sareh" berarti tenang/sabar — suasana kafe mendukung mindfulness.',          menu:['Kopi Susu 18k','Matcha 22k','Roti Bakar 12k'], contact:'0812-2222-0019', facilities:['wifi','senyap'], rating:4.6, jamBuka:'10.00–22.00', lat:-7.5640, lng:110.8265 },
-  { id:20, name:'Kopi Oemah Tentrem',       location:'Karanganyar', mood:'Healing sendiri', color:'#0f766e', desc:'"Tentrem" = damai. Suasana homey seperti di rumah sendiri.',                menu:['Kopi Tubruk 12k','Es Kopi 18k','Pisang Goreng 10k'], contact:'0812-2222-0020', facilities:['wifi','senyap','nonkopi'], rating:4.5, jamBuka:'09.00–22.00', lat:-7.5975, lng:110.9515 },
-  { id:21, name:'Kopikoperasi', location:'Karanganyar', mood:'Nongkrong rame', color:'#b45309', desc:'Suasana santai untuk ngobrol bareng teman.',           menu:['Kopi Tubruk 12k','Es Kopi 18k','Pisang Goreng 10k'], contact:'0812-3333-0021', facilities:['wifi','parkir','nonkopi'], rating:4.5, jamBuka:'10.00–24.00', lat:-7.5950, lng:110.9480 },
-  { id:22, name:'Vinz',         location:'Karanganyar', mood:'Nongkrong rame', color:'#b45309', desc:'Cocok untuk kumpul bareng teman, suasana hidup.',      menu:['Kopi Susu 18k','Mocktail 28k','French Fries 20k'], contact:'0812-3333-0022', facilities:['wifi','parkir','nonkopi'], rating:4.6, jamBuka:'11.00–24.00', lat:-7.5965, lng:110.9495 },
-  { id:23, name:'Whims',        location:'Solo',        mood:'Nongkrong rame', color:'#b45309', desc:'Konsep playful & colorful, cocok untuk kumpul rame-rame.', menu:['Kopi Susu 20k','Matcha 25k','Donat 12k'], contact:'0812-3333-0023', facilities:['wifi','parkir'], rating:4.5, jamBuka:'10.00–23.00', lat:-7.5610, lng:110.8290 },
-  { id:24, name:'Margi',        location:'Solo',        mood:'Nongkrong rame', color:'#b45309', desc:'Tempat luas, cocok untuk grup besar atau komunitas.',  menu:['Kopi Susu 18k','Es Teh 10k','Pisang Goreng 12k'], contact:'0812-3333-0024', facilities:['wifi','parkir','nonkopi'], rating:4.4, jamBuka:'10.00–23.00', lat:-7.5675, lng:110.8255 },
-  { id:25, name:'Slari Coffee', location:'Solo',        mood:'Nongkrong rame', color:'#b45309', desc:'Nama "Slari" (Solo Raya) — cocok jadi base komunitas.', menu:['Kopi Tubruk 12k','Es Kopi 18k','Roti Bakar 15k'], contact:'0812-3333-0025', facilities:['wifi','parkir'], rating:4.4, jamBuka:'10.00–23.00', lat:-7.5655, lng:110.8260 },
-  { id:26, name:'Almamater',    location:'Solo',        mood:'Nongkrong rame', color:'#b45309', desc:'Dekat area kampus, cocok untuk mahasiswa nongkrong.',  menu:['Kopi Susu 15k','Es Teh 8k','Indomie 12k'], contact:'0812-3333-0026', facilities:['wifi','parkir','nonkopi'], rating:4.5, jamBuka:'09.00–24.00', lat:-7.5600, lng:110.8230 },
-  { id:27, name:'Anak Panah',   location:'Solo',        mood:'Nongkrong rame', color:'#b45309', desc:'Konsep komunitas, sering ada event & live music.',     menu:['Kopi Susu 20k','Mocktail 25k','French Fries 18k'], contact:'0812-3333-0027', facilities:['wifi','parkir','nonkopi'], rating:4.6, jamBuka:'15.00–24.00', lat:-7.5635, lng:110.8250 },
-  { id:28, name:'Seperdua',     location:'Solo',        mood:'Nongkrong rame', color:'#b45309', desc:'Cocok untuk grup kecil hingga menengah.',              menu:['Kopi Susu 18k','Es Kopi 18k','Pisang Goreng 10k'], contact:'0812-3333-0028', facilities:['wifi','parkir'], rating:4.4, jamBuka:'10.00–23.00', lat:-7.5620, lng:110.8275 },
-  { id:29, name:'Teman Coffee', location:'Karanganyar', mood:'Nongkrong rame', color:'#b45309', desc:'"Teman" — tempat nongkrong bareng sahabat.',           menu:['Kopi Susu 18k','Es Teh 10k','Pisang Goreng 12k'], contact:'0812-3333-0029', facilities:['wifi','parkir','nonkopi'], rating:4.5, jamBuka:'10.00–24.00', lat:-7.5970, lng:110.9500 },
-  { id:30, name:'Ankara Cafe',  location:'Karanganyar', mood:'Nongkrong rame', color:'#b45309', desc:'Konsep hangat & intimate, cocok untuk kumpul bareng.', menu:['Latte 22k','Coklat 22k','Roti Bakar 15k'], contact:'0812-3333-0030', facilities:['wifi','parkir','nonkopi'], rating:4.6, jamBuka:'10.00–23.00', lat:-7.5980, lng:110.9490 },
-  { id:31, name:'Lekas Ngopi',     location:'Karanganyar', mood:'Quality time', color:'#7e22ce', desc:'Tempat hangat untuk ngobrol berdua.',              menu:['Latte 20k','Coklat 22k','Roti Bakar 15k'], contact:'0812-4444-0031', facilities:['wifi','senyap','nonkopi'], rating:4.6, jamBuka:'10.00–23.00', lat:-7.5955, lng:110.9485 },
-  { id:32, name:'Lawu Kala Senja', location:'Tawangmangu', mood:'Quality time', color:'#7e22ce', desc:'View 360° Gunung Lawu, bangunan piramida. Sunset terbaik.', menu:['Thai Tea 18k','Chicken Katsu 25k','Blackpepper Beef 30k'], contact:'0812-4444-0032', facilities:['outdoor','parkir','nonkopi'], rating:4.8, jamBuka:'10.00–21.00', lat:-7.6730, lng:111.1310 },
-  { id:33, name:'Lavana',          location:'Solo',        mood:'Quality time', color:'#7e22ce', desc:'Kafe dengan konsep elegan, cocok untuk quality time.', menu:['Latte 22k','Matcha 25k','Croissant 20k'], contact:'0812-4444-0033', facilities:['wifi','senyap','nonkopi'], rating:4.6, jamBuka:'10.00–22.00', lat:-7.5630, lng:110.8280 },
-  { id:34, name:'The Bridge',      location:'Tawangmangu', mood:'Quality time', color:'#7e22ce', desc:'View jembatan & alam, suasana romantis.',          menu:['Kopi Susu 20k','Thai Tea 18k','Chicken Wings 25k'], contact:'0812-4444-0034', facilities:['outdoor','parkir','nonkopi'], rating:4.6, jamBuka:'09.00–21.00', lat:-7.6705, lng:111.1285 },
-  { id:35, name:"Cold'n Brew",     location:'Tawangmangu', mood:'Quality time', color:'#7e22ce', desc:'Suasana modern & cozy untuk berdua.',              menu:['Cold Brew 25k','Latte 22k','Croissant 18k'], contact:'0812-4444-0035', facilities:['wifi','outdoor','parkir'], rating:4.5, jamBuka:'10.00–22.00', lat:-7.6700, lng:111.1275 },
-  { id:36, name:'Cruasan',         location:'Tawangmangu', mood:'Quality time', color:'#7e22ce', desc:'Konsep bakery-cafe, cocok untuk date santai.',     menu:['Latte 20k','Croissant 18k','Pain au Chocolat 20k'], contact:'0812-4444-0036', facilities:['wifi','outdoor','nonkopi'], rating:4.6, jamBuka:'08.00–21.00', lat:-7.6685, lng:111.1290 },
-  { id:37, name:'Terasenja',       location:'Tawangmangu', mood:'Quality time', color:'#7e22ce', desc:'"Teras Senja" — suasana romantis saat matahari terbenam.', menu:['Kopi Susu 18k','Thai Tea 18k','Pisang Goreng 12k'], contact:'0812-4444-0037', facilities:['outdoor','wifi','nonkopi'], rating:4.5, jamBuka:'15.00–23.00', lat:-7.6695, lng:111.1280 },
-  { id:38, name:'Hagia Coffee',    location:'Karanganyar', mood:'Quality time', color:'#7e22ce', desc:'"Hagia" (suci) — suasana tenang & khidmat.',       menu:['Kopi Susu 18k','Matcha 22k','Donat 10k'], contact:'0812-4444-0038', facilities:['wifi','senyap'], rating:4.5, jamBuka:'10.00–22.00', lat:-7.5960, lng:110.9505 },
-  { id:39, name:'Duor',            location:'Karanganyar', mood:'Quality time', color:'#7e22ce', desc:'"Duor" (duo) — dirancang untuk pengalaman berdua.', menu:['Latte 22k','Coklat 22k','Croissant 18k'], contact:'0812-4444-0039', facilities:['wifi','senyap','nonkopi'], rating:4.6, jamBuka:'10.00–22.00', lat:-7.5945, lng:110.9470 },
-  { id:40, name:'Bons Coffee',     location:'Kemuning',    mood:'Quality time', color:'#7e22ce', desc:'Tempat santai untuk kumpul bareng dengan view alam Kemuning.', menu:['Kopi Tubruk 12k','Es Kopi 18k','Roti Bakar 12k'], contact:'0812-4444-0040', facilities:['outdoor','parkir','nonkopi'], rating:4.4, jamBuka:'09.00–21.00', lat:-7.6280, lng:111.1230 }
+  { id:4,  name:'Joyoux',                   location:'Solo',        mood:'Healing sendiri', color:'#0f766e', desc:'Kafe kecil yang tenang, cocok untuk me time. Menu ropang mulai 5 ribuan.', menu:['Kopi Susu 18k','Ropang 5k','Matcha 22k'], contact:'0812-2222-0011', facilities:['wifi','senyap','nonkopi'], rating:4.7, jamBuka:'10.00–22.00', lat:-7.5660, lng:110.8280 },
+  { id:5,  name:'MH Cafe (Mitis Highland)', location:'Tawangmangu', mood:'Healing sendiri', color:'#0f766e', desc:'Akses kereta gantung, view hijau pegunungan. Kopi pekat.',                  menu:['Kopi Hitam 15k','Latte 20k','Singkong 10k'], contact:'0812-2222-0012', facilities:['outdoor','parkir','nonkopi'], rating:4.6, jamBuka:'08.00–21.00', lat:-7.6690, lng:111.1290 },
+  { id:6,  name:'2020mdpl',                 location:'Tawangmangu', mood:'Healing sendiri', color:'#0f766e', desc:'Kafe di ketinggian 2.020 mdpl, ada jembatan kaca. View Lawu.',              menu:['Kopi Jahe 20k','Wedang Uwuh 15k','Pisang Bakar 12k'], contact:'0812-2222-0013', facilities:['outdoor','parkir','nonkopi'], rating:4.7, jamBuka:'07.00–21.00', lat:-7.6710, lng:111.1320 },
+  { id:7,  name:'Kopikoperasi', location:'Karanganyar', mood:'Nongkrong rame', color:'#b45309', desc:'Suasana santai untuk ngobrol bareng teman.',           menu:['Kopi Tubruk 12k','Es Kopi 18k','Pisang Goreng 10k'], contact:'0812-3333-0021', facilities:['wifi','parkir','nonkopi'], rating:4.5, jamBuka:'10.00–24.00', lat:-7.5950, lng:110.9480 },
+  { id:8,  name:'Vinz',         location:'Karanganyar', mood:'Nongkrong rame', color:'#b45309', desc:'Cocok untuk kumpul bareng teman, suasana hidup.',      menu:['Kopi Susu 18k','Mocktail 28k','French Fries 20k'], contact:'0812-3333-0022', facilities:['wifi','parkir','nonkopi'], rating:4.6, jamBuka:'11.00–24.00', lat:-7.5965, lng:110.9495 },
+  { id:9,  name:'Lekas Ngopi',     location:'Karanganyar', mood:'Quality time', color:'#7e22ce', desc:'Tempat hangat untuk ngobrol berdua.',              menu:['Latte 20k','Coklat 22k','Roti Bakar 15k'], contact:'0812-4444-0031', facilities:['wifi','senyap','nonkopi'], rating:4.6, jamBuka:'10.00–23.00', lat:-7.5955, lng:110.9485 },
+  { id:10, name:'Lawu Kala Senja', location:'Tawangmangu', mood:'Quality time', color:'#7e22ce', desc:'View 360° Gunung Lawu, bangunan piramida. Sunset terbaik.', menu:['Thai Tea 18k','Chicken Katsu 25k','Blackpepper Beef 30k'], contact:'0812-4444-0032', facilities:['outdoor','parkir','nonkopi'], rating:4.8, jamBuka:'10.00–21.00', lat:-7.6730, lng:111.1310 }
 ];
 
 const MOOD_GROUPS = [
   { mood:'Fokus kerja',     color:'#1e3a8a', icon:'laptop', desc:'Area senyap, colokan banyak, WiFi cepat.',           cafeIds:[1, 3, 2] },
-  { mood:'Healing sendiri', color:'#0f766e', icon:'moon',   desc:'Musik pelan, cahaya hangat, meja tunggal.',          cafeIds:[11, 13, 12] },
-  { mood:'Nongkrong rame',  color:'#b45309', icon:'people', desc:'Meja besar, jam tutup larut, parkir luas.',          cafeIds:[21, 22] },
-  { mood:'Quality time',    color:'#7e22ce', icon:'heart',  desc:'Meja berjarak, tenang, menu non-kopi lengkap.',      cafeIds:[31, 32] }
-];
-
-const LOCKED_CAFE_IDS = [
-  4, 5, 6, 7, 8, 9, 10,
-  14, 15, 16, 17, 18, 19, 20,
-  23, 24, 25, 26, 27, 28, 29, 30,
-  33, 34, 35, 36, 37, 38, 39, 40
+  { mood:'Healing sendiri', color:'#0f766e', icon:'moon',   desc:'Musik pelan, cahaya hangat, meja tunggal.',          cafeIds:[4, 6, 5] },
+  { mood:'Nongkrong rame',  color:'#b45309', icon:'people', desc:'Meja besar, jam tutup larut, parkir luas.',          cafeIds:[7, 8] },
+  { mood:'Quality time',    color:'#7e22ce', icon:'heart',  desc:'Meja berjarak, tenang, menu non-kopi lengkap.',      cafeIds:[9, 10] }
 ];
 
 const WILAYAH = [
-  { id:'solo',        label:'Solo',        count:18 },
-  { id:'karanganyar', label:'Karanganyar', count:11 },
-  { id:'tawangmangu', label:'Tawangmangu', count:10 },
-  { id:'kemuning',    label:'Kemuning',    count:1  }
+  { id:'solo',        label:'Solo',        count:4 },
+  { id:'karanganyar', label:'Karanganyar', count:3 },
+  { id:'tawangmangu', label:'Tawangmangu', count:3 },
+  { id:'kemuning',    label:'Kemuning',    count:0 }
 ];
 
 const FASILITAS = [
   { id:'colokan', label:'Colokan listrik',       icon:'plug' },
-  { id:'wifi',    label:'WiFi cepat (>40 Mbps)', icon:'wifi' },
+  { id:'wifi',    label:'WiFi cepat',            icon:'wifi' },
   { id:'senyap',  label:'Area senyap',           icon:'volume-mute' },
   { id:'24jam',   label:'Buka 24 jam',           icon:'clock' },
   { id:'parkir',  label:'Parkir luas',           icon:'car-front' },
   { id:'outdoor', label:'Outdoor / view alam',   icon:'tree' },
-  { id:'nonkopi', label:'Menu non-kopi lengkap', icon:'cup-straw' }
+  { id:'nonkopi', label:'Menu non-kopi',         icon:'cup-straw' }
 ];
 
 /* ============================== STATE ============================== */
@@ -756,7 +861,7 @@ let sliderState = { current: 0, total: 0, startX: 0, isDragging: false };
 const $  = (s, c = document) => c.querySelector(s);
 const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 const findCafe = id => CAFES.find(c => c.id === Number(id));
-const isCafeLocked = id => !state.isUnlocked && LOCKED_CAFE_IDS.includes(Number(id));
+const isCafeLocked = id => !state.isUnlocked; // Semua cafe terkunci jika belum unlock
 const escapeHtml = str => String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 
 function scrollToEl(el, offset = CONFIG.scrollOffset) {
@@ -782,7 +887,6 @@ const storage = {
   loadUsers() {
     try {
       const raw = JSON.parse(localStorage.getItem(STORAGE_KEYS.users) || '[]');
-      // pastikan admin selalu ada
       if (!raw.some(u => u.email === ADMIN_ACCOUNT.email)) {
         raw.push({ name: ADMIN_ACCOUNT.name, email: ADMIN_ACCOUNT.email, password: ADMIN_ACCOUNT.password, role: 'admin' });
         localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(raw));
@@ -822,7 +926,6 @@ const storage = {
     });
   },
 
-  // Untuk admin: ambil data semua user
   getUserData(email) {
     return {
       favorites: JSON.parse(localStorage.getItem(STORAGE_KEYS.favorites(email)) || '[]'),
@@ -859,7 +962,6 @@ function handleLogin(e) {
   resetState();
   state.user = { name: user.name, email: user.email };
 
-  // Admin?
   if (user.role === 'admin' || email === ADMIN_ACCOUNT.email) {
     state.isAdmin = true;
     storage.saveSession({ name: user.name, email: user.email, role: 'admin' });
@@ -902,9 +1004,7 @@ function showAppShell(show) {
   $('#navbarTop').style.display = show ? '' : 'none';
   $('#bottomNav').style.display = show ? '' : 'none';
 }
-function showAdminShell(show) {
-  // admin tidak pakai navbar/bottomnav, hanya page
-}
+function showAdminShell(show) {}
 
 function enterApp() {
   const currentUser = state.user;
@@ -965,16 +1065,17 @@ function switchPage(page) {
 
 /* ============================== HOME (USER) ============================== */
 function shortcutMoodHTML(group) {
-  const total = group.cafeIds.length;
-  const totalLocked = LOCKED_CAFE_IDS.length;
+  const statusText = state.isUnlocked 
+    ? `${group.cafeIds.length} cafe tersedia` 
+    : `🔒 Kuis untuk buka`;
   return `
-    <div class="col-6 col-md-3">
+    <div class="col-6">
       <div class="mood-option" data-shortcut-mood="${group.mood}">
         <i class="bi bi-${group.icon}" style="color:${group.color};"></i>
         <h6 style="color:${group.color};">${group.mood}</h6>
         <p>${group.desc}</p>
-        <p class="small mt-2 mb-0" style="color:${group.color};font-weight:600;">
-          ${total} cafe terbuka${state.isUnlocked ? '' : ` · ${totalLocked} terkunci`}
+        <p class="mt-1 mb-0" style="color:${group.color};font-weight:600;font-size:0.68rem;">
+          ${statusText}
         </p>
       </div>
     </div>
@@ -988,39 +1089,37 @@ function renderShortcutMood() {
 function quickCafeHTML(cafe, idx) {
   const isFav = state.favorites.includes(cafe.id);
   const locked = isCafeLocked(cafe.id);
-  const img = cafeImage(cafe, 1000, 560);
+  const img = cafeImage(cafe, 800, 500);
 
   if (locked) {
     return `
-      <div class="card cafe-card locked" data-locked-id="${cafe.id}">
+      <div class="card cafe-card locked" data-locked-id="${cafe.id}" style="width:100%;">
         <img src="${img}" class="cafe-image" alt="Cafe terkunci" loading="lazy">
         <div class="card-body">
-          <div class="d-flex justify-content-between align-items-start mb-1">
-            <h6 class="card-title mb-0">${idx+1}. ${escapeHtml(cafe.name)}</h6>
-          </div>
+          <h6 class="card-title mb-0">${idx+1}. ${escapeHtml(cafe.name)}</h6>
           <p class="text-secondary small mb-1">${cafe.location} · ${cafe.mood}</p>
-          <p class="small mb-2">${escapeHtml(cafe.desc)}</p>
+          <p class="small mb-0">${escapeHtml(cafe.desc)}</p>
         </div>
-        <div class="lock-label">🔒 Klik untuk unlock</div>
+        <div class="lock-label">🔒 Tap untuk buka kuis</div>
       </div>
     `;
   }
 
   return `
-    <div class="card cafe-card" style="border-left-color:${cafe.color};">
+    <div class="card cafe-card" style="border-left-color:${cafe.color}; width:100%;">
       <img src="${img}" class="cafe-image" alt="${escapeHtml(cafe.name)}" loading="lazy">
       <div class="card-body">
-        <div class="d-flex justify-content-between align-items-start mb-1">
+        <div class="d-flex justify-content-between align-items-start mb-1 gap-2">
           <h6 class="card-title mb-0">${idx+1}. ${escapeHtml(cafe.name)}</h6>
           <i class="bi bi-heart${isFav?'-fill':''} favorite-icon ${isFav?'favorited':''}"
              data-favorite-id="${cafe.id}" role="button"></i>
         </div>
-        <p class="text-secondary small mb-1"><i class="bi bi-geo-alt me-1"></i>${cafe.location} · ${cafe.mood}</p>
-        <p class="text-secondary small mb-2"><i class="bi bi-star-fill text-warning me-1"></i>${cafe.rating} · <i class="bi bi-clock ms-1 me-1"></i>${cafe.jamBuka}</p>
-        <p class="small mb-2">${escapeHtml(cafe.desc)}</p>
+        <p class="text-secondary small mb-1" style="font-size:0.75rem;"><i class="bi bi-geo-alt me-1"></i>${cafe.location} · ${cafe.mood}</p>
+        <p class="text-secondary small mb-2" style="font-size:0.75rem;"><i class="bi bi-star-fill text-warning me-1"></i>${cafe.rating} · <i class="bi bi-clock ms-1 me-1"></i>${cafe.jamBuka}</p>
+        <p class="small mb-2" style="font-size:0.78rem;">${escapeHtml(cafe.desc)}</p>
         <div class="d-flex gap-2">
-          <button class="btn btn-sm btn-primary" data-order-id="${cafe.id}"><i class="bi bi-whatsapp"></i> Pesan</button>
-          <button class="btn btn-sm btn-outline-primary" data-cafe-id="${cafe.id}" data-source="home">Detail</button>
+          <button class="btn btn-sm btn-primary flex-fill" data-order-id="${cafe.id}"><i class="bi bi-whatsapp"></i> Pesan</button>
+          <button class="btn btn-sm btn-outline-primary flex-fill" data-cafe-id="${cafe.id}" data-source="home">Detail</button>
         </div>
       </div>
     </div>
@@ -1033,27 +1132,24 @@ function showQuickResult(mood) {
   state.currentMoodQuick = mood;
 
   const cafes = group.cafeIds.map(findCafe).filter(Boolean);
-  const lockedCafes = state.isUnlocked ? [] : LOCKED_CAFE_IDS.map(findCafe).filter(Boolean);
+  const unlockedCount = state.isUnlocked ? cafes.length : 0;
+  const lockedCount = cafes.length - unlockedCount;
 
-  const allCafes = [...cafes, ...lockedCafes];
-  const unlockedCount = cafes.filter(c => !isCafeLocked(c.id)).length;
-  const lockedCount = allCafes.length - unlockedCount;
-
-  $('#quickResultTitle').innerHTML = `<i class="bi bi-${group.icon} me-2" style="color:${group.color};"></i>${group.mood}`;
+  $('#quickResultTitle').innerHTML = `<i class="bi bi-${group.icon} me-1" style="color:${group.color};"></i>${group.mood}`;
 
   if (state.isUnlocked) {
-    $('#quickResultSubtitle').textContent = `${allCafes.length} cafe tersedia untuk mood "${group.mood}".`;
+    $('#quickResultSubtitle').textContent = `${cafes.length} cafe tersedia untuk mood "${group.mood}".`;
   } else {
-    $('#quickResultSubtitle').textContent = `${unlockedCount} cafe terbuka · 🔒 ${lockedCount} cafe terkunci`;
+    $('#quickResultSubtitle').textContent = `🔒 ${lockedCount} cafe terkunci. Isi kuis untuk membuka.`;
   }
 
-  const slides = allCafes.map((cafe, idx) => `
+  const slides = cafes.map((cafe, idx) => `
     <div class="cafe-slide" data-slide-index="${idx}">
       ${quickCafeHTML(cafe, idx)}
     </div>
   `).join('');
 
-  const dots = allCafes.map((_, idx) => 
+  const dots = cafes.map((_, idx) => 
     `<div class="slider-dot ${idx === 0 ? 'active' : ''}" data-slide-to="${idx}"></div>`
   ).join('');
 
@@ -1066,22 +1162,10 @@ function showQuickResult(mood) {
       <button class="slider-btn next" data-slide-next><i class="bi bi-chevron-right"></i></button>
     </div>
     <div class="slider-counter">
-      <strong id="sliderCurrent">1</strong> / <span id="sliderTotal">${allCafes.length}</span>
+      <strong id="sliderCurrent">1</strong> / <span id="sliderTotal">${cafes.length}</span>
     </div>
     <div class="slider-dots">${dots}</div>
   `;
-
-  if (!state.isUnlocked) {
-    html += `
-      <div class="unlock-banner">
-        <h5><i class="bi bi-unlock-fill me-2"></i>30 Cafe Lainnya Terkunci</h5>
-        <p>Isi survey singkat (3 pertanyaan) untuk membuka semua cafe di Ngafeeling!</p>
-        <button class="btn btn-warning" id="openSurveyBtn">
-          <i class="bi bi-clipboard-check me-1"></i>Unlock Sekarang — Isi Survey
-        </button>
-      </div>
-    `;
-  }
 
   $('#quickResultGrid').innerHTML = html;
   $('#quickResult').classList.remove('d-none');
@@ -1113,7 +1197,6 @@ function initSlider() {
   $$('[data-slide-to]').forEach(dot => { dot.onclick = () => goToSlide(parseInt(dot.dataset.slideTo)); });
 
   slider.addEventListener('touchstart', sliderTouchStart, { passive: true });
-  slider.addEventListener('touchmove', sliderTouchMove, { passive: true });
   slider.addEventListener('touchend', sliderTouchEnd);
   slider.addEventListener('mousedown', sliderMouseDown);
 }
@@ -1121,7 +1204,8 @@ function initSlider() {
 function updateSliderUI() {
   const slider = $('#cafeSlider');
   if (!slider) return;
-  const width = slider.parentElement.clientWidth;
+  
+  const width = slider.parentElement.offsetWidth; 
   slider.style.transform = `translateX(-${sliderState.current * width}px)`;
 
   const curr = $('#sliderCurrent');
@@ -1150,14 +1234,13 @@ function goToSlide(idx) {
 }
 
 function sliderTouchStart(e) { sliderState.startX = e.touches[0].clientX; }
-function sliderTouchMove(e) {
-  const diff = e.touches[0].clientX - sliderState.startX;
+function sliderTouchEnd(e) {
+  const endX = e.changedTouches[0].clientX;
+  const diff = endX - sliderState.startX;
   if (Math.abs(diff) > 50) {
     if (diff < 0) moveSlider(1); else moveSlider(-1);
-    sliderState.startX = e.touches[0].clientX;
   }
 }
-function sliderTouchEnd() { /* noop */ }
 
 function sliderMouseDown(e) {
   if (e.target.closest('.slider-btn, .slider-dot, button, a, .favorite-icon')) return;
@@ -1190,17 +1273,19 @@ window.addEventListener('resize', () => {
 function renderCafeDetail(cafeId, source) {
   const cafe = findCafe(cafeId);
   if (!cafe) return;
+  if (isCafeLocked(cafe.id)) { openSurveyModal(); return; }
+
   state.stats.dilihat++;
   storage.saveStats();
 
   const isFav = state.favorites.includes(cafe.id);
-  const heroImg = cafeImage(cafe, 1200, 500);
+  const heroImg = cafeImage(cafe, 800, 450);
 
-  const menuItems = cafe.menu.map(m => `<li class="col-md-4 mb-1"><i class="bi bi-check-circle-fill me-2" style="color:${cafe.color};"></i>${escapeHtml(m)}</li>`).join('');
+  const menuItems = cafe.menu.map(m => `<li class="col-6 mb-1" style="font-size:0.78rem;"><i class="bi bi-check-circle-fill me-1" style="color:${cafe.color};"></i>${escapeHtml(m)}</li>`).join('');
   const facBadges = cafe.facilities.map(f => {
     const fas = FASILITAS.find(x => x.id === f);
     if (!fas) return '';
-    return `<span class="badge rounded-pill me-1 mb-1" style="background:#e6efff;color:${cafe.color};"><i class="bi bi-${fas.icon} me-1"></i>${fas.label}</span>`;
+    return `<span class="badge rounded-pill me-1 mb-1" style="background:#e6efff;color:${cafe.color};font-size:0.68rem;"><i class="bi bi-${fas.icon} me-1"></i>${fas.label}</span>`;
   }).join('');
 
   let targetId = '#cafeDetailHome';
@@ -1211,26 +1296,30 @@ function renderCafeDetail(cafeId, source) {
   ['#cafeDetailHome', '#cafeDetailMood', '#cafeDetailFav'].forEach(id => { if (id !== targetId) $(id).innerHTML = ''; });
 
   target.innerHTML = `
-    <div class="card p-0" style="border-left:8px solid ${cafe.color}; overflow:hidden;">
+    <div class="card p-0" style="border-left:6px solid ${cafe.color}; overflow:hidden;">
       <img src="${heroImg}" class="detail-hero" alt="${escapeHtml(cafe.name)}" loading="lazy">
-      <div class="p-4">
-        <div class="d-flex justify-content-between align-items-start mb-2">
+      <div class="p-3">
+        <div class="d-flex justify-content-between align-items-start mb-2 gap-2">
           <div>
-            <h3 class="fw-bold mb-1">${escapeHtml(cafe.name)}</h3>
-            <p class="text-secondary mb-1"><i class="bi bi-geo-alt me-1"></i>${cafe.location} · Mood: ${cafe.mood}</p>
-            <p class="text-secondary small mb-0"><i class="bi bi-star-fill text-warning me-1"></i>${cafe.rating} · <i class="bi bi-clock ms-1 me-1"></i>${cafe.jamBuka}</p>
+            <h3 class="fw-bold mb-1" style="font-size:1.1rem;">${escapeHtml(cafe.name)}</h3>
+            <p class="text-secondary mb-1" style="font-size:0.78rem;"><i class="bi bi-geo-alt me-1"></i>${cafe.location} · Mood: ${cafe.mood}</p>
+            <p class="text-secondary mb-0" style="font-size:0.75rem;"><i class="bi bi-star-fill text-warning me-1"></i>${cafe.rating} · <i class="bi bi-clock ms-1 me-1"></i>${cafe.jamBuka}</p>
           </div>
-          <i class="bi bi-heart${isFav?'-fill':''} favorite-icon fs-2 ${isFav?'favorited':''}" data-favorite-id="${cafe.id}" role="button"></i>
+          <i class="bi bi-heart${isFav?'-fill':''} favorite-icon ${isFav?'favorited':''}" data-favorite-id="${cafe.id}" role="button" style="font-size:1.5rem;"></i>
         </div>
-        <p class="mt-2">${escapeHtml(cafe.desc)}</p>
-        <h6 class="mt-3 mb-2">Fasilitas</h6>
+        <p class="mt-2 mb-2" style="font-size:0.82rem;">${escapeHtml(cafe.desc)}</p>
+        <h6 class="mt-2 mb-1" style="font-size:0.85rem;">Fasilitas</h6>
         <div>${facBadges || '<span class="text-secondary small">Belum ada info fasilitas.</span>'}</div>
-        <h6 class="mt-4 mb-2">Menu Andalan</h6>
-        <ul class="list-unstyled row mb-3">${menuItems}</ul>
-        <div class="d-flex gap-2 flex-wrap">
-          <a href="#" class="btn btn-primary" data-order-id="${cafe.id}"><i class="bi bi-whatsapp me-1"></i>Kontak Pesan — ${escapeHtml(cafe.contact)}</a>
-          <a href="https://www.google.com/maps?q=${cafe.lat},${cafe.lng}" target="_blank" rel="noopener" class="btn btn-outline-primary"><i class="bi bi-geo-alt me-1"></i>Buka di Maps</a>
-          <button class="btn btn-outline-primary" data-close-detail="${targetId}"><i class="bi bi-x me-1"></i>Tutup</button>
+        <h6 class="mt-3 mb-1" style="font-size:0.85rem;">Menu Andalan</h6>
+        <ul class="list-unstyled row mb-3 gx-2">${menuItems}</ul>
+        
+        <div class="d-flex flex-column gap-2 mt-3">
+          <button class="btn btn-primary w-100" data-order-id="${cafe.id}"><i class="bi bi-whatsapp me-1"></i>Pesan via Cafe (${escapeHtml(cafe.contact)})</button>
+          <button class="btn btn-outline-primary w-100" data-order-admin-id="${cafe.id}"><i class="bi bi-headset me-1"></i>Reservasi via Admin Ngafeeling</button>
+          <div class="d-flex gap-2 mt-1">
+            <a href="https://www.google.com/maps?q=${cafe.lat},${cafe.lng}" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm flex-fill"><i class="bi bi-geo-alt me-1"></i>Buka Maps</a>
+            <button class="btn btn-outline-primary btn-sm flex-fill" data-close-detail="${targetId}"><i class="bi bi-x me-1"></i>Tutup</button>
+          </div>
         </div>
       </div>
     </div>
@@ -1240,14 +1329,14 @@ function renderCafeDetail(cafeId, source) {
 
 /* ============================== WIZARD ============================== */
 function moodOptionHTML(group) {
-  return `<div class="col-6 col-md-3"><div class="mood-option ${state.filter.mood === group.mood ? 'selected' : ''}" data-mood-pick="${group.mood}"><i class="bi bi-${group.icon}" style="color:${group.color};"></i><h6 style="color:${group.color};">${group.mood}</h6><p>${group.desc}</p></div></div>`;
+  return `<div class="col-6"><div class="mood-option ${state.filter.mood === group.mood ? 'selected' : ''}" data-mood-pick="${group.mood}"><i class="bi bi-${group.icon}" style="color:${group.color};"></i><h6 style="color:${group.color};">${group.mood}</h6><p>${group.desc}</p></div></div>`;
 }
 function locOptionHTML(w) {
-  return `<div class="col-6 col-md-3"><div class="loc-option ${state.filter.location === w.label ? 'selected' : ''}" data-loc-pick="${w.label}"><div class="fw-semibold">${w.label}</div><div class="count">${w.count} cafe</div></div></div>`;
+  return `<div class="col-6"><div class="loc-option ${state.filter.location === w.label ? 'selected' : ''}" data-loc-pick="${w.label}"><div class="fw-semibold">${w.label}</div><div class="count">${w.count} cafe</div></div></div>`;
 }
 function facOptionHTML(f) {
   const sel = state.filter.facilities.includes(f.id);
-  return `<div class="col-6 col-md-4"><div class="fac-option ${sel ? 'selected' : ''}" data-fac-pick="${f.id}"><i class="bi bi-${f.icon}"></i><span class="small">${f.label}</span></div></div>`;
+  return `<div class="col-6"><div class="fac-option ${sel ? 'selected' : ''}" data-fac-pick="${f.id}"><i class="bi bi-${f.icon}"></i><span class="small">${f.label}</span></div></div>`;
 }
 function renderWizard() {
   $('#moodOptions').innerHTML     = MOOD_GROUPS.map(moodOptionHTML).join('');
@@ -1264,9 +1353,7 @@ function renderWizard() {
 /* ============================== HASIL ============================== */
 function getRecommendations() {
   const { mood, location, facilities } = state.filter;
-  const pool = state.isUnlocked
-    ? CAFES
-    : CAFES.filter(c => !LOCKED_CAFE_IDS.includes(c.id));
+  const pool = CAFES;
 
   return pool.map(cafe => {
     let score = 0;
@@ -1283,23 +1370,52 @@ function getRecommendations() {
 function hasilCardHTML(cafe, idx) {
   const isFav = state.favorites.includes(cafe.id);
   const matchColor = cafe.score >= 90 ? '#10b981' : cafe.score >= 70 ? '#3b82f6' : '#f59e0b';
-  const img = cafeImage(cafe, 800, 450);
-  return `
-    <div class="col-md-6 col-lg-4">
-      <div class="card cafe-card result-card" style="border-left-color:${cafe.color};">
-        <img src="${img}" class="cafe-image" alt="${escapeHtml(cafe.name)}" loading="lazy">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-start mb-1">
-            <h6 class="card-title mb-0">${idx+1}. ${escapeHtml(cafe.name)}</h6>
-            <i class="bi bi-heart${isFav?'-fill':''} favorite-icon ${isFav?'favorited':''}" data-favorite-id="${cafe.id}" role="button"></i>
+  const img = cafeImage(cafe, 600, 375);
+  const locked = isCafeLocked(cafe.id);
+
+  if (locked) {
+    return `
+    <div class="col-12 mb-2">
+      <div class="card cafe-card locked" data-locked-id="${cafe.id}">
+        <div class="row g-0">
+          <div class="col-4">
+            <img src="${img}" style="width:100%;height:100%;object-fit:cover;aspect-ratio:1/1;" alt="Cafe terkunci" loading="lazy">
           </div>
-          <span class="match-badge" style="background:${matchColor};"><i class="bi bi-graph-up-arrow me-1"></i>${cafe.score}% cocok</span>
-          <p class="text-secondary small mt-2 mb-1"><i class="bi bi-geo-alt me-1"></i>${cafe.location} · ${cafe.mood}</p>
-          <p class="text-secondary small mb-2"><i class="bi bi-star-fill text-warning me-1"></i>${cafe.rating}</p>
-          <p class="small mb-2">${escapeHtml(cafe.desc)}</p>
-          <div class="d-flex gap-2">
-            <button class="btn btn-sm btn-primary" data-order-id="${cafe.id}"><i class="bi bi-whatsapp"></i> Pesan</button>
-            <button class="btn btn-sm btn-outline-primary" data-cafe-id="${cafe.id}" data-source="mood">Detail</button>
+          <div class="col-8">
+            <div class="p-2 p-sm-3">
+              <h6 class="card-title mb-1" style="font-size:0.85rem;">${idx+1}. ${escapeHtml(cafe.name)}</h6>
+              <span class="match-badge"><i class="bi bi-graph-up-arrow me-1"></i>${cafe.score}%</span>
+              <p class="text-secondary small mt-1 mb-1" style="font-size:0.72rem;"><i class="bi bi-geo-alt me-1"></i>${cafe.location} · ${cafe.mood}</p>
+            </div>
+          </div>
+        </div>
+        <div class="lock-label">🔒 Tap untuk buka kuis</div>
+      </div>
+    </div>
+  `;
+  }
+
+  return `
+    <div class="col-12 mb-2">
+      <div class="card cafe-card result-card" style="border-left-color:${cafe.color};">
+        <div class="row g-0">
+          <div class="col-4">
+            <img src="${img}" style="width:100%;height:100%;object-fit:cover;aspect-ratio:1/1;" alt="${escapeHtml(cafe.name)}" loading="lazy">
+          </div>
+          <div class="col-8">
+            <div class="p-2 p-sm-3">
+              <div class="d-flex justify-content-between align-items-start mb-1 gap-1">
+                <h6 class="card-title mb-0" style="font-size:0.85rem;">${idx+1}. ${escapeHtml(cafe.name)}</h6>
+                <i class="bi bi-heart${isFav?'-fill':''} favorite-icon ${isFav?'favorited':''}" data-favorite-id="${cafe.id}" role="button" style="font-size:1.1rem;"></i>
+              </div>
+              <span class="match-badge"><i class="bi bi-graph-up-arrow me-1"></i>${cafe.score}%</span>
+              <p class="text-secondary small mt-1 mb-1" style="font-size:0.72rem;"><i class="bi bi-geo-alt me-1"></i>${cafe.location} · ${cafe.mood}</p>
+              <p class="text-secondary small mb-1" style="font-size:0.72rem;"><i class="bi bi-star-fill text-warning me-1"></i>${cafe.rating}</p>
+              <div class="d-flex gap-1 mt-2">
+                <button class="btn btn-sm btn-primary flex-fill" data-order-id="${cafe.id}" style="font-size:0.7rem;padding:0.3rem 0.5rem;"><i class="bi bi-whatsapp"></i> Cafe</button>
+                <button class="btn btn-sm btn-outline-primary flex-fill" data-cafe-id="${cafe.id}" data-source="mood" style="font-size:0.7rem;padding:0.3rem 0.5rem;">Detail</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1313,10 +1429,16 @@ function renderHasil() {
   const grid = $('#hasilGrid');
   const moodText = state.filter.mood || 'semua mood';
   const locText  = state.filter.location || 'semua wilayah';
-  const facText  = state.filter.facilities.length > 0 ? state.filter.facilities.length + ' fasilitas dipilih' : 'tanpa filter fasilitas';
-  summary.textContent = `${list.length} cafe untuk mood "${moodText}" di ${locText} (${facText}).`;
+  const facText  = state.filter.facilities.length > 0 ? state.filter.facilities.length + ' fasilitas' : 'tanpa filter';
+  
+  if (!state.isUnlocked) {
+    summary.textContent = `${list.length} cafe mood "${moodText}". 🔒 Isi kuis untuk membuka detail.`;
+  } else {
+    summary.textContent = `${list.length} cafe mood "${moodText}" di ${locText} (${facText}).`;
+  }
+
   if (list.length === 0) {
-    grid.innerHTML = `<div class="col-12"><div class="empty-state"><i class="bi bi-emoji-frown"></i><p>Belum ada cafe yang cocok. Coba ubah mood atau lokasi.</p></div></div>`;
+    grid.innerHTML = `<div class="col-12"><div class="empty-state"><i class="bi bi-emoji-frown"></i><p>Coba ubah mood atau lokasi.</p></div></div>`;
   } else {
     grid.innerHTML = list.map(hasilCardHTML).join('');
   }
@@ -1340,25 +1462,30 @@ function renderFavorit() {
   const grid = $('#favoritGrid');
   const list = state.favorites.map(findCafe).filter(Boolean);
   if (list.length === 0) {
-    grid.innerHTML = `<div class="col-12"><div class="empty-state"><i class="bi bi-heart"></i><h5>Belum ada cafe favorit</h5><p>Yuk cari cafe yang cocok dengan mood-mu!</p><a href="#" class="btn btn-primary mt-2" data-nav="app-mood"><i class="bi bi-magic me-1"></i>Cari Cafe</a></div></div>`;
+    grid.innerHTML = `<div class="col-12"><div class="empty-state"><i class="bi bi-heart"></i><h5>Belum ada cafe favorit</h5><p style="font-size:0.82rem;">Yuk cari cafe yang cocok dengan mood-mu!</p><a href="#" class="btn btn-primary btn-sm mt-2" data-nav="app-mood"><i class="bi bi-magic me-1"></i>Cari Cafe</a></div></div>`;
     return;
   }
   grid.innerHTML = list.map(cafe => {
-    const img = cafeImage(cafe, 800, 450);
+    const img = cafeImage(cafe, 600, 375);
     return `
-    <div class="col-md-6 col-lg-4">
+    <div class="col-12 mb-2">
       <div class="card cafe-card" style="border-left-color:${cafe.color};">
-        <img src="${img}" class="cafe-image" alt="${escapeHtml(cafe.name)}" loading="lazy">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-start mb-1">
-            <h6 class="card-title mb-0">${escapeHtml(cafe.name)}</h6>
-            <i class="bi bi-heart-fill favorite-icon favorited" data-favorite-id="${cafe.id}" role="button"></i>
+        <div class="row g-0">
+          <div class="col-4">
+            <img src="${img}" style="width:100%;height:100%;object-fit:cover;aspect-ratio:1/1;" alt="${escapeHtml(cafe.name)}" loading="lazy">
           </div>
-          <p class="text-secondary small mb-1"><i class="bi bi-geo-alt me-1"></i>${cafe.location} · ${cafe.mood}</p>
-          <p class="small mb-3">${escapeHtml(cafe.desc)}</p>
-          <div class="d-flex gap-2">
-            <button class="btn btn-sm btn-primary" data-order-id="${cafe.id}"><i class="bi bi-whatsapp"></i> Pesan</button>
-            <button class="btn btn-sm btn-outline-primary" data-cafe-id="${cafe.id}" data-source="fav">Detail</button>
+          <div class="col-8">
+            <div class="p-2">
+              <div class="d-flex justify-content-between align-items-start mb-1 gap-1">
+                <h6 class="card-title mb-0" style="font-size:0.88rem;">${escapeHtml(cafe.name)}</h6>
+                <i class="bi bi-heart-fill favorite-icon favorited" data-favorite-id="${cafe.id}" role="button" style="font-size:1.1rem;"></i>
+              </div>
+              <p class="text-secondary small mb-1" style="font-size:0.72rem;"><i class="bi bi-geo-alt me-1"></i>${cafe.location} · ${cafe.mood}</p>
+              <div class="d-flex gap-1 mt-2">
+                <button class="btn btn-sm btn-primary flex-fill" data-order-id="${cafe.id}" style="font-size:0.7rem;padding:0.3rem 0.5rem;"><i class="bi bi-whatsapp"></i> Cafe</button>
+                <button class="btn btn-sm btn-outline-primary flex-fill" data-cafe-id="${cafe.id}" data-source="fav" style="font-size:0.7rem;padding:0.3rem 0.5rem;">Detail</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1384,7 +1511,7 @@ function renderProfil() {
     hist.innerHTML = state.history.slice(0, 5).map(h => {
       const tgl = new Date(h.time).toLocaleString('id-ID', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' });
       const fas = h.facilities.length ? ` · ${h.facilities.length} fasilitas` : '';
-      return `<div class="border-bottom py-2 small"><i class="bi bi-search me-1 text-primary"></i><strong>${escapeHtml(h.mood || '-')}</strong> di ${escapeHtml(h.location || 'semua')}${fas}<span class="text-secondary float-end">${tgl}</span></div>`;
+      return `<div class="border-bottom py-2 small" style="font-size:0.78rem;"><i class="bi bi-search me-1 text-primary"></i><strong>${escapeHtml(h.mood || '-')}</strong> di ${escapeHtml(h.location || 'semua')}${fas}<span class="text-secondary float-end" style="font-size:0.7rem;">${tgl}</span></div>`;
     }).join('');
   }
 }
@@ -1408,14 +1535,27 @@ function toggleFavorite(cafeId) {
   if (!$('#hasilRekomendasi').classList.contains('d-none')) renderHasilSilent();
 }
 
-function handleOrder(cafeId) {
+function handleOrder(cafeId, isAdmin = false) {
   const cafe = findCafe(cafeId);
   if (!cafe) return;
   if (isCafeLocked(cafeId)) { openSurveyModal(); return; }
   state.stats.chat++;
   storage.saveStats();
-  const message = `Halo ${cafe.name}, saya menemukan cafe ini lewat Ngafeeling (mood: ${cafe.mood}). Mohon info ketersediaan dan menu. Terima kasih!`;
-  const phone = cafe.contact.replace(/\D/g, '').replace(/^0/, '62');
+  
+  let phone = '';
+  let message = '';
+
+  // Template Form Reservasi
+  const formReservasi = `\nNama:\nHari & Tanggal:\nJam Kedatangan:\nJumlah Tamu:\nArea Pilihan: Indoor/ Outdoor\nPesanan: pesan disini/ pesan langsung di outlet\nApakah untuk jadwal tersebut slotnya masih tersedia? Terima kasih!`;
+
+  if (isAdmin) {
+    phone = CONFIG.whatsappNumber;
+    message = `Halo Admin Ngafeeling, saya ingin reservasi/pesan di *${cafe.name}* (${cafe.location}). Mohon dibantu prosesnya ya.${formReservasi}`;
+  } else {
+    phone = cafe.contact.replace(/\D/g, '').replace(/^0/, '62');
+    message = `Halo *${cafe.name}*, saya menemukan cafe ini lewat Ngafeeling (mood: ${cafe.mood}) dan ingin melakukan reservasi/pesan.${formReservasi}`;
+  }
+
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
 }
 
@@ -1451,7 +1591,7 @@ function openSurveyModal() {
   $('#surveyAlert').innerHTML = '';
   $('#submitSurveyBtn').disabled = true;
 
-  const preview = LOCKED_CAFE_IDS.slice(0, 8).map(id => {
+  const preview = [1, 3, 4, 5, 6, 7, 8, 9].map(id => {
     const c = findCafe(id);
     return c ? `<img src="${cafeImage(c, 200, 200)}" alt="Terkunci">` : '';
   }).join('');
@@ -1519,20 +1659,19 @@ function renderAdminDashboard() {
   $('#admTotalFav').textContent = totalFav;
   $('#admTotalUnlock').textContent = totalUnlock;
 
-  // Aktivitas terbaru
   activities.sort((a, b) => new Date(b.time) - new Date(a.time));
   const recent = activities.slice(0, 10);
 
   const el = $('#adminRecentActivity');
   if (recent.length === 0) {
-    el.innerHTML = `<p class="text-secondary small mb-0">Belum ada aktivitas dari user.</p>`;
+    el.innerHTML = `<p class="text-secondary small mb-0">Belum ada aktivitas.</p>`;
   } else {
     el.innerHTML = recent.map(a => {
       const tgl = new Date(a.time).toLocaleString('id-ID', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' });
-      return `<div class="border-bottom py-2 small">
+      return `<div class="border-bottom py-2 small" style="font-size:0.78rem;">
         <i class="bi bi-search me-1 text-primary"></i>
         <strong>${escapeHtml(a.name)}</strong> — ${escapeHtml(a.detail)}
-        <span class="text-secondary float-end">${tgl}</span>
+        <span class="text-secondary float-end" style="font-size:0.7rem;">${tgl}</span>
       </div>`;
     }).join('');
   }
@@ -1540,32 +1679,38 @@ function renderAdminDashboard() {
 
 function renderAdminUsers() {
   const users = storage.loadUsers().filter(u => u.role !== 'admin');
-  const tbody = $('#adminUsersTable');
+  const container = $('#adminUsersList');
 
   if (users.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="8" class="text-center text-secondary py-4">Belum ada user. Klik "Tambah User" untuk membuat akun baru.</td></tr>`;
+    container.innerHTML = `<div class="card"><div class="card-body text-center text-secondary small py-4">Belum ada user. Tap tombol + untuk membuat akun.</div></div>`;
     return;
   }
 
-  tbody.innerHTML = users.map(u => {
+  container.innerHTML = users.map(u => {
     const data = storage.getUserData(u.email);
     const unlockBadge = data.unlocked
       ? '<span class="badge-unlock">✅ Unlock</span>'
       : '<span class="badge-locked">🔒 Belum</span>';
     return `
-      <tr>
-        <td><strong>${escapeHtml(u.email)}</strong></td>
-        <td>${escapeHtml(u.name)}</td>
-        <td class="text-center">${data.stats.pencarian || 0}</td>
-        <td class="text-center">${data.favorites.length}</td>
-        <td class="text-center">${data.stats.dilihat || 0}</td>
-        <td class="text-center">${data.stats.chat || 0}</td>
-        <td class="text-center">${unlockBadge}</td>
-        <td class="text-center">
-          <button class="btn btn-sm btn-outline-primary" data-admin-action="detail" data-email="${escapeHtml(u.email)}" title="Detail"><i class="bi bi-eye"></i></button>
-          <button class="btn btn-sm btn-outline-danger" data-admin-action="delete" data-email="${escapeHtml(u.email)}" title="Hapus"><i class="bi bi-trash"></i></button>
-        </td>
-      </tr>
+      <div class="admin-user-card">
+        <div class="d-flex justify-content-between align-items-start gap-2 mb-1">
+          <div style="min-width:0;">
+            <div class="u-email">${escapeHtml(u.email)}</div>
+            <div class="u-name">${escapeHtml(u.name)}</div>
+          </div>
+          <div>${unlockBadge}</div>
+        </div>
+        <div class="u-stats">
+          <span class="u-stat">🔍 <strong>${data.stats.pencarian || 0}</strong></span>
+          <span class="u-stat">❤️ <strong>${data.favorites.length}</strong></span>
+          <span class="u-stat">👁️ <strong>${data.stats.dilihat || 0}</strong></span>
+          <span class="u-stat">💬 <strong>${data.stats.chat || 0}</strong></span>
+        </div>
+        <div class="d-flex gap-1 mt-2">
+          <button class="btn btn-outline-primary btn-sm flex-fill" data-admin-action="detail" data-email="${escapeHtml(u.email)}"><i class="bi bi-eye me-1"></i>Detail</button>
+          <button class="btn btn-outline-danger btn-sm" data-admin-action="delete" data-email="${escapeHtml(u.email)}"><i class="bi bi-trash"></i></button>
+        </div>
+      </div>
     `;
   }).join('');
 }
@@ -1581,22 +1726,25 @@ function renderAdminSurvey() {
     }
   });
 
-  const tbody = $('#adminSurveyTable');
+  const container = $('#adminSurveyList');
   if (rows.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="5" class="text-center text-secondary py-4">Belum ada user yang mengisi survey.</td></tr>`;
+    container.innerHTML = `<div class="card"><div class="card-body text-center text-secondary small py-4">Belum ada user yang mengisi survey.</div></div>`;
     return;
   }
 
-  tbody.innerHTML = rows.map(r => {
+  container.innerHTML = rows.map(r => {
     const tgl = r.submittedAt ? new Date(r.submittedAt).toLocaleString('id-ID', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' }) : '-';
     return `
-      <tr>
-        <td><strong>${escapeHtml(r.email)}</strong><br><small class="text-secondary">${escapeHtml(r.name)}</small></td>
-        <td>${escapeHtml(r.q1 || '-')}</td>
-        <td>${escapeHtml(r.q2 || '-')}</td>
-        <td>${escapeHtml(r.q3 || '-')}</td>
-        <td><small>${tgl}</small></td>
-      </tr>
+      <div class="admin-user-card">
+        <div class="u-email mb-1">${escapeHtml(r.email)}</div>
+        <div class="u-name mb-2">${escapeHtml(r.name)}</div>
+        <div style="font-size:0.75rem;">
+          <div class="mb-1"><strong>Q1:</strong> ${escapeHtml(r.q1 || '-')}</div>
+          <div class="mb-1"><strong>Q2:</strong> ${escapeHtml(r.q2 || '-')}</div>
+          <div class="mb-1"><strong>Q3:</strong> ${escapeHtml(r.q3 || '-')}</div>
+          <div class="text-secondary" style="font-size:0.7rem;"><i class="bi bi-clock me-1"></i>${tgl}</div>
+        </div>
+      </div>
     `;
   }).join('');
 }
@@ -1611,11 +1759,11 @@ function renderUserDetail(email) {
 
   $('#userDetailContent').innerHTML = `
     <div class="mb-3">
-      <h5 class="fw-bold mb-1">${escapeHtml(u.name)}</h5>
-      <p class="text-secondary small mb-0">${escapeHtml(u.email)}</p>
+      <h5 class="fw-bold mb-1" style="font-size:1rem;">${escapeHtml(u.name)}</h5>
+      <p class="text-secondary small mb-0" style="font-size:0.78rem;">${escapeHtml(u.email)}</p>
     </div>
 
-    <div class="row g-2 mb-3">
+    <div class="row row-tight mb-3">
       <div class="col-6 col-md-3"><div class="stat-box"><div class="num">${data.stats.pencarian || 0}</div><div class="label">Cari</div></div></div>
       <div class="col-6 col-md-3"><div class="stat-box"><div class="num">${data.favorites.length}</div><div class="label">Favorit</div></div></div>
       <div class="col-6 col-md-3"><div class="stat-box"><div class="num">${data.stats.dilihat || 0}</div><div class="label">Dilihat</div></div></div>
@@ -1623,31 +1771,31 @@ function renderUserDetail(email) {
     </div>
 
     <div class="mb-3">
-      <h6 class="fw-semibold mb-2">Status</h6>
+      <h6 class="fw-semibold mb-2" style="font-size:0.85rem;">Status</h6>
       ${data.unlocked ? '<span class="badge-unlock">✅ Sudah unlock</span>' : '<span class="badge-locked">🔒 Belum unlock</span>'}
     </div>
 
     <div class="mb-3">
-      <h6 class="fw-semibold mb-2">Favorit (${favCafes.length})</h6>
+      <h6 class="fw-semibold mb-2" style="font-size:0.85rem;">Favorit (${favCafes.length})</h6>
       ${favCafes.length === 0
         ? '<p class="text-secondary small mb-0">Belum ada favorit.</p>'
-        : `<ul class="small mb-0">${favCafes.map(c => `<li>${escapeHtml(c.name)} — ${c.location}</li>`).join('')}</ul>`}
+        : `<ul class="small mb-0 ps-3">${favCafes.map(c => `<li>${escapeHtml(c.name)} — ${c.location}</li>`).join('')}</ul>`}
     </div>
 
     <div class="mb-3">
-      <h6 class="fw-semibold mb-2">Riwayat Pencarian (${data.history.length})</h6>
+      <h6 class="fw-semibold mb-2" style="font-size:0.85rem;">Riwayat Pencarian (${data.history.length})</h6>
       ${data.history.length === 0
         ? '<p class="text-secondary small mb-0">Belum ada riwayat.</p>'
         : data.history.slice(0, 10).map(h => {
             const tgl = new Date(h.time).toLocaleString('id-ID', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' });
-            return `<div class="border-bottom py-1 small"><i class="bi bi-search me-1 text-primary"></i>${escapeHtml(h.mood || '-')} di ${escapeHtml(h.location || 'semua')}<span class="text-secondary float-end">${tgl}</span></div>`;
+            return `<div class="border-bottom py-1 small" style="font-size:0.75rem;"><i class="bi bi-search me-1 text-primary"></i>${escapeHtml(h.mood || '-')} di ${escapeHtml(h.location || 'semua')}<span class="text-secondary float-end" style="font-size:0.68rem;">${tgl}</span></div>`;
           }).join('')}
     </div>
 
     ${data.survey ? `
     <div class="mb-0">
-      <h6 class="fw-semibold mb-2">Jawaban Survey</h6>
-      <ul class="small mb-0">
+      <h6 class="fw-semibold mb-2" style="font-size:0.85rem;">Jawaban Survey</h6>
+      <ul class="small mb-0 ps-3">
         <li><strong>Q1:</strong> ${escapeHtml(data.survey.q1)}</li>
         <li><strong>Q2:</strong> ${escapeHtml(data.survey.q2)}</li>
         <li><strong>Q3:</strong> ${escapeHtml(data.survey.q3)}</li>
@@ -1659,7 +1807,7 @@ function renderUserDetail(email) {
 }
 
 function deleteUser(email) {
-  if (!confirm(`Yakin ingin hapus user ${email}? Semua data user ini akan dihapus permanen.`)) return;
+  if (!confirm(`Yakin ingin hapus user ${email}?`)) return;
   const users = storage.loadUsers().filter(u => u.email !== email);
   storage.saveUsers(users);
   storage.deleteUserData(email);
@@ -1689,8 +1837,6 @@ function addUser() {
 
   users.push({ name, email, password, role: 'user' });
   storage.saveUsers(users);
-
-  // Reset data
   storage.deleteUserData(email);
 
   bootstrap.Modal.getInstance($('#addUserModal')).hide();
@@ -1742,10 +1888,9 @@ document.addEventListener('click', (e) => {
   const surveyOpt = e.target.closest('.survey-option');
   if (surveyOpt) { e.preventDefault(); handleSurveyClick(surveyOpt); return; }
 
-  const t = e.target.closest('[data-nav],[data-cafe-id],[data-favorite-id],[data-order-id],[data-shortcut-mood],[data-mood-pick],[data-loc-pick],[data-fac-pick],[data-wizard],[data-close-detail],[data-locked-id],[data-admin-tab],[data-admin-action]');
+  const t = e.target.closest('[data-nav],[data-cafe-id],[data-favorite-id],[data-order-id],[data-order-admin-id],[data-shortcut-mood],[data-mood-pick],[data-loc-pick],[data-fac-pick],[data-wizard],[data-close-detail],[data-locked-id],[data-admin-tab],[data-admin-action]');
   if (!t) return;
 
-  // Admin tabs
   if (t.dataset.adminTab) {
     e.preventDefault();
     $$('.admin-tab-content').forEach(el => el.classList.add('d-none'));
@@ -1756,7 +1901,6 @@ document.addEventListener('click', (e) => {
     return;
   }
 
-  // Admin action
   if (t.dataset.adminAction) {
     e.preventDefault();
     const email = t.dataset.email;
@@ -1773,7 +1917,10 @@ document.addEventListener('click', (e) => {
   }
   if (t.dataset.shortcutMood) { e.preventDefault(); showQuickResult(t.dataset.shortcutMood); return; }
   if (t.dataset.favoriteId) { e.preventDefault(); e.stopPropagation(); toggleFavorite(t.dataset.favoriteId); return; }
-  if (t.dataset.orderId) { e.preventDefault(); handleOrder(t.dataset.orderId); return; }
+  
+  if (t.dataset.orderId) { e.preventDefault(); handleOrder(t.dataset.orderId, false); return; }
+  if (t.dataset.orderAdminId) { e.preventDefault(); handleOrder(t.dataset.orderAdminId, true); return; }
+  
   if (t.dataset.cafeId) { e.preventDefault(); renderCafeDetail(t.dataset.cafeId, t.dataset.source || 'home'); return; }
   if (t.dataset.closeDetail) { e.preventDefault(); $(t.dataset.closeDetail).innerHTML = ''; return; }
   if (t.dataset.lockedId) { e.preventDefault(); openSurveyModal(); return; }
@@ -1824,7 +1971,6 @@ document.addEventListener('submit', (e) => {
 
 /* ============================== INIT ============================== */
 function init() {
-  // Pastikan user admin ada
   storage.loadUsers();
 
   const session = storage.loadSession();
