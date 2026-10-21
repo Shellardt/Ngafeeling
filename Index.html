@@ -785,6 +785,20 @@ const ADMIN_ACCOUNT = {
   name: 'Admin Ngafeeling'
 };
 
+const DEFAULT_USERS = [
+  { name: 'Anissa', email: 'anissa@gmail.com', password: 'Anissa123' },
+  { name: 'Latifah', email: 'latifah@gmail.com', password: 'Latifah123' },
+  { name: 'Nandhira', email: 'nandhira@gmail.com', password: 'Nandhira123' },
+  { name: 'Kevin', email: 'kevin@gmail.com', password: 'Kevin123' },
+  { name: 'Angela', email: 'angela@gmail.com', password: 'Angela123' },
+  { name: 'Elisabet', email: 'elisabet@gmail.com', password: 'Eli123' },
+  { name: 'Oddy', email: 'oddy@gmail.com', password: 'Oddy123' },
+  { name: 'Vero', email: 'vero@gmail.com', password: 'Vero123' },
+  { name: 'Imanuel', email: 'imanuel@gmail.com', password: 'Imanu123' },
+  { name: 'Tegar', email: 'tegar@gmail.com', password: 'Tegar123' },
+  { name: 'Shella', email: 'shella@gmail.com', password: 'Shella123' }
+];
+
 const STORAGE_KEYS = {
   users: 'ngafeeling_users',
   session: 'ngafeeling_session',
@@ -804,16 +818,16 @@ function cafeImage(cafe, width = 600, height = 375) {
 
 /* ============================== DATA 10 CAFE ============================== */
 const CAFES = [
-  { id:1,  name:'Odds',             location:'Solo',        mood:'Fokus kerja', color:'#1e3a8a', desc:'Buka 24 jam, tangga spiral kuning ikonik. Cocok WFC kapan saja.',            menu:['Americano Peach 25k','Manual Brew 30k','Signature Latte 28k'], contact:'0812-1111-0001', facilities:['colokan','wifi','senyap','24jam','parkir'], rating:4.8, jamBuka:'24 Jam', lat:-7.5652, lng:110.8295 },
-  { id:2,  name:'Loske',            location:'Solo',        mood:'Fokus kerja', color:'#1e3a8a', desc:'Gaya industrial vintage, buka dari pagi. Menu Los Leboys terkenal.',          menu:['Los Leboys 22k','Kopi Susu 20k','Croissant 18k'], contact:'0812-1111-0002', facilities:['colokan','wifi','parkir','nonkopi'], rating:4.7, jamBuka:'08.00–23.00', lat:-7.5681, lng:110.8241 },
-  { id:3,  name:'Eighteen Grounds', location:'Solo',        mood:'Fokus kerja', color:'#1e3a8a', desc:'Dua lantai, banyak colokan, AC dingin. Ada photobox konsep lift.',            menu:['Espresso 15k','Latte 22k','Donat 10k'], contact:'0812-1111-0003', facilities:['colokan','wifi','senyap','parkir'], rating:4.6, jamBuka:'10.00–22.00', lat:-7.5591, lng:110.8189 },
-  { id:4,  name:'Joyoux',                   location:'Solo',        mood:'Healing sendiri', color:'#0f766e', desc:'Kafe kecil yang tenang, cocok untuk me time. Menu ropang mulai 5 ribuan.', menu:['Kopi Susu 18k','Ropang 5k','Matcha 22k'], contact:'0812-2222-0011', facilities:['wifi','senyap','nonkopi'], rating:4.7, jamBuka:'10.00–22.00', lat:-7.5660, lng:110.8280 },
-  { id:5,  name:'MH Cafe (Mitis Highland)', location:'Tawangmangu', mood:'Healing sendiri', color:'#0f766e', desc:'Akses kereta gantung, view hijau pegunungan. Kopi pekat.',                  menu:['Kopi Hitam 15k','Latte 20k','Singkong 10k'], contact:'0812-2222-0012', facilities:['outdoor','parkir','nonkopi'], rating:4.6, jamBuka:'08.00–21.00', lat:-7.6690, lng:111.1290 },
-  { id:6,  name:'2020mdpl',                 location:'Tawangmangu', mood:'Healing sendiri', color:'#0f766e', desc:'Kafe di ketinggian 2.020 mdpl, ada jembatan kaca. View Lawu.',              menu:['Kopi Jahe 20k','Wedang Uwuh 15k','Pisang Bakar 12k'], contact:'0812-2222-0013', facilities:['outdoor','parkir','nonkopi'], rating:4.7, jamBuka:'07.00–21.00', lat:-7.6710, lng:111.1320 },
-  { id:7,  name:'Kopikoperasi', location:'Karanganyar', mood:'Nongkrong rame', color:'#b45309', desc:'Suasana santai untuk ngobrol bareng teman.',           menu:['Kopi Tubruk 12k','Es Kopi 18k','Pisang Goreng 10k'], contact:'0812-3333-0021', facilities:['wifi','parkir','nonkopi'], rating:4.5, jamBuka:'10.00–24.00', lat:-7.5950, lng:110.9480 },
-  { id:8,  name:'Vinz',         location:'Karanganyar', mood:'Nongkrong rame', color:'#b45309', desc:'Cocok untuk kumpul bareng teman, suasana hidup.',      menu:['Kopi Susu 18k','Mocktail 28k','French Fries 20k'], contact:'0812-3333-0022', facilities:['wifi','parkir','nonkopi'], rating:4.6, jamBuka:'11.00–24.00', lat:-7.5965, lng:110.9495 },
-  { id:9,  name:'Lekas Ngopi',     location:'Karanganyar', mood:'Quality time', color:'#7e22ce', desc:'Tempat hangat untuk ngobrol berdua.',              menu:['Latte 20k','Coklat 22k','Roti Bakar 15k'], contact:'0812-4444-0031', facilities:['wifi','senyap','nonkopi'], rating:4.6, jamBuka:'10.00–23.00', lat:-7.5955, lng:110.9485 },
-  { id:10, name:'Lawu Kala Senja', location:'Tawangmangu', mood:'Quality time', color:'#7e22ce', desc:'View 360° Gunung Lawu, bangunan piramida. Sunset terbaik.', menu:['Thai Tea 18k','Chicken Katsu 25k','Blackpepper Beef 30k'], contact:'0812-4444-0032', facilities:['outdoor','parkir','nonkopi'], rating:4.8, jamBuka:'10.00–21.00', lat:-7.6730, lng:111.1310 }
+  { id:1,  name:'Odds',             location:'Solo',        mood:'Fokus kerja', color:'#1e3a8a', image:'asset/asset 1.jpeg', desc:'Buka 24 jam, tangga spiral kuning ikonik. Cocok WFC kapan saja.',            menu:['Americano Peach 25k','Manual Brew 30k','Signature Latte 28k'], contact:'0812-1111-0001', facilities:['colokan','wifi','senyap','24jam','parkir'], rating:4.8, jamBuka:'24 Jam', lat:-7.5652, lng:110.8295 },
+  { id:2,  name:'Loske',            location:'Solo',        mood:'Fokus kerja', color:'#1e3a8a', image:'asset/asset 3.jpeg', desc:'Gaya industrial vintage, buka dari pagi. Menu Los Leboys terkenal.',          menu:['Los Leboys 22k','Kopi Susu 20k','Croissant 18k'], contact:'0812-1111-0002', facilities:['colokan','wifi','parkir','nonkopi'], rating:4.7, jamBuka:'08.00–23.00', lat:-7.5681, lng:110.8241 },
+  { id:3,  name:'Eighteen Grounds', location:'Solo',        mood:'Fokus kerja', color:'#1e3a8a', image:'asset/asset 2.jpeg', desc:'Dua lantai, banyak colokan, AC dingin. Ada photobox konsep lift.',            menu:['Espresso 15k','Latte 22k','Donat 10k'], contact:'0812-1111-0003', facilities:['colokan','wifi','senyap','parkir'], rating:4.6, jamBuka:'10.00–22.00', lat:-7.5591, lng:110.8189 },
+  { id:4,  name:'Joyoux',                   location:'Solo',        mood:'Healing sendiri', color:'#0f766e', image:'asset/asset 4.jpeg', desc:'Kafe kecil yang tenang, cocok untuk me time. Menu ropang mulai 5 ribuan.', menu:['Kopi Susu 18k','Ropang 5k','Matcha 22k'], contact:'0812-2222-0011', facilities:['wifi','senyap','nonkopi'], rating:4.7, jamBuka:'10.00–22.00', lat:-7.5660, lng:110.8280 },
+  { id:5,  name:'MH Cafe (Mitis Highland)', location:'Tawangmangu', mood:'Healing sendiri', color:'#0f766e', image:'asset/asset 6.jpeg', desc:'Akses kereta gantung, view hijau pegunungan. Kopi pekat.',                  menu:['Kopi Hitam 15k','Latte 20k','Singkong 10k'], contact:'0812-2222-0012', facilities:['outdoor','parkir','nonkopi'], rating:4.6, jamBuka:'08.00–21.00', lat:-7.6690, lng:111.1290 },
+  { id:6,  name:'2020mdpl',                 location:'Tawangmangu', mood:'Healing sendiri', color:'#0f766e', image:'asset/asset 5.jpeg', desc:'Kafe di ketinggian 2.020 mdpl, ada jembatan kaca. View Lawu.',              menu:['Kopi Jahe 20k','Wedang Uwuh 15k','Pisang Bakar 12k'], contact:'0812-2222-0013', facilities:['outdoor','parkir','nonkopi'], rating:4.7, jamBuka:'07.00–21.00', lat:-7.6710, lng:111.1320 },
+  { id:7,  name:'Kopikoperasi', location:'Karanganyar', mood:'Nongkrong rame', color:'#b45309', image:'asset/asset 7.jpeg', desc:'Suasana santai untuk ngobrol bareng teman.',           menu:['Kopi Tubruk 12k','Es Kopi 18k','Pisang Goreng 10k'], contact:'0812-3333-0021', facilities:['wifi','parkir','nonkopi'], rating:4.5, jamBuka:'10.00–24.00', lat:-7.5950, lng:110.9480 },
+  { id:8,  name:'Vinz',         location:'Karanganyar', mood:'Nongkrong rame', color:'#b45309', image:'asset/asset 8.jpeg', desc:'Cocok untuk kumpul bareng teman, suasana hidup.',      menu:['Kopi Susu 18k','Mocktail 28k','French Fries 20k'], contact:'0812-3333-0022', facilities:['wifi','parkir','nonkopi'], rating:4.6, jamBuka:'11.00–24.00', lat:-7.5965, lng:110.9495 },
+  { id:9,  name:'Lekas Ngopi',     location:'Karanganyar', mood:'Quality time', color:'#7e22ce', image:'asset/asset 9.jpeg', desc:'Tempat hangat untuk ngobrol berdua.',              menu:['Latte 20k','Coklat 22k','Roti Bakar 15k'], contact:'0812-4444-0031', facilities:['wifi','senyap','nonkopi'], rating:4.6, jamBuka:'10.00–23.00', lat:-7.5955, lng:110.9485 },
+  { id:10, name:'Lawu Kala Senja', location:'Tawangmangu', mood:'Quality time', color:'#7e22ce', image:'asset/asset 10.jpeg', desc:'View 360° Gunung Lawu, bangunan piramida. Sunset terbaik.', menu:['Thai Tea 18k','Chicken Katsu 25k','Blackpepper Beef 30k'], contact:'0812-4444-0032', facilities:['outdoor','parkir','nonkopi'], rating:4.8, jamBuka:'10.00–21.00', lat:-7.6730, lng:111.1310 }
 ];
 
 const MOOD_GROUPS = [
@@ -886,11 +900,21 @@ function resetState() {
 const storage = {
   loadUsers() {
     try {
-      const raw = JSON.parse(localStorage.getItem(STORAGE_KEYS.users) || '[]');
+      let raw = JSON.parse(localStorage.getItem(STORAGE_KEYS.users) || '[]');
+      
+      // Pastikan admin selalu ada
       if (!raw.some(u => u.email === ADMIN_ACCOUNT.email)) {
         raw.push({ name: ADMIN_ACCOUNT.name, email: ADMIN_ACCOUNT.email, password: ADMIN_ACCOUNT.password, role: 'admin' });
-        localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(raw));
       }
+
+      // Suntikkan default users jika belum ada
+      DEFAULT_USERS.forEach(du => {
+        if (!raw.some(u => u.email === du.email)) {
+          raw.push({ ...du, role: 'user' });
+        }
+      });
+
+      localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(raw));
       return raw;
     } catch { return []; }
   },
@@ -956,7 +980,7 @@ function handleLogin(e) {
   const password = $('#loginPassword').value;
   const users = storage.loadUsers();
 
-  const user = users.find(u => u.email === email && u.password === password);
+  const user = users.find(u => u.email.toLowerCase() === email && u.password === password);
   if (!user) return showAuthAlert('Email atau password salah.');
 
   resetState();
