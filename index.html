@@ -584,6 +584,13 @@ body {
 
         <div class="card mt-3">
           <div class="card-body">
+            <h5 class="fw-semibold mb-2" style="font-size:0.95rem;"><i class="bi bi-receipt me-1"></i>Riwayat Reservasi/Pesan</h5>
+            <div id="riwayatReservasi"></div>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
             <h5 class="fw-semibold mb-2" style="font-size:0.95rem;"><i class="bi bi-gear me-1"></i>Pengaturan</h5>
             <button class="btn btn-outline-danger btn-sm w-100" id="resetDataBtn"><i class="bi bi-trash me-1"></i>Reset Semua Data Saya</button>
           </div>
@@ -619,6 +626,7 @@ body {
         <button class="admin-nav-btn active" data-admin-tab="dashboard"><i class="bi bi-graph-up me-1"></i>Dashboard</button>
         <button class="admin-nav-btn" data-admin-tab="users"><i class="bi bi-people me-1"></i>User</button>
         <button class="admin-nav-btn" data-admin-tab="survey"><i class="bi bi-clipboard-check me-1"></i>Survey</button>
+        <button class="admin-nav-btn" data-admin-tab="reservasi"><i class="bi bi-receipt me-1"></i>Reservasi</button>
       </div>
     </div>
 
@@ -657,6 +665,12 @@ body {
     <div id="adminTabSurvey" class="admin-tab-content d-none">
       <h5 class="fw-bold mb-2" style="font-size:1rem;"><i class="bi bi-clipboard-check me-1"></i>Jawaban Survey (Unlock)</h5>
       <div id="adminSurveyList"></div>
+    </div>
+
+    <!-- Tab Reservasi -->
+    <div id="adminTabReservasi" class="admin-tab-content d-none">
+      <h5 class="fw-bold mb-2" style="font-size:1rem;"><i class="bi bi-receipt me-1"></i>Rekap Reservasi via Admin</h5>
+      <div id="adminReservasiList"></div>
     </div>
   </div>
 </section>
@@ -813,7 +827,8 @@ const STORAGE_KEYS = {
   history:   (email) => `ngafeeling_history_${email}`,
   stats:     (email) => `ngafeeling_stats_${email}`,
   unlocked:  (email) => `ngafeeling_unlocked_${email}`,
-  survey:    (email) => `ngafeeling_survey_${email}`
+  survey:    (email) => `ngafeeling_survey_${email}`,
+  reservations: (email) => `ngafeeling_reservations_${email}`
 };
 
 /* ============================== HELPER GAMBAR ============================== */
@@ -866,6 +881,7 @@ const state = {
   user: null,
   favorites: [],
   history: [],
+  reservations: [],
   stats: { pencarian: 0, dilihat: 0, chat: 0 },
   filter: { mood: null, location: null, facilities: [] },
   wizardStep: 1,
@@ -894,6 +910,7 @@ function scrollToEl(el, offset = CONFIG.scrollOffset) {
 function resetState() {
   state.favorites = [];
   state.history = [];
+  state.reservations = [];
   state.stats = { pencarian: 0, dilihat: 0, chat: 0 };
   state.filter = { mood: null, location: null, facilities: [] };
   state.wizardStep = 1;
@@ -942,6 +959,9 @@ const storage = {
   loadHistory() { try { const r = localStorage.getItem(this._key('history')); state.history = r ? JSON.parse(r) : []; } catch { state.history = []; } },
   saveHistory() { localStorage.setItem(this._key('history'), JSON.stringify(state.history.slice(0, 10))); },
 
+  loadReservations() { try { const r = localStorage.getItem(this._key('reservations')); state.reservations = r ? JSON.parse(r) : []; } catch { state.reservations = []; } },
+  saveReservations() { localStorage.setItem(this._key('reservations'), JSON.stringify(state.reservations.slice(0, 15))); },
+
   loadStats() { try { const r = localStorage.getItem(this._key('stats')); state.stats = r ? JSON.parse(r) : { pencarian: 0, dilihat: 0, chat: 0 }; } catch { state.stats = { pencarian: 0, dilihat: 0, chat: 0 }; } },
   saveStats() { localStorage.setItem(this._key('stats'), JSON.stringify(state.stats)); },
 
@@ -952,7 +972,7 @@ const storage = {
   saveSurvey(data) { localStorage.setItem(this._key('survey'), JSON.stringify(data)); },
 
   resetAll() {
-    ['favorites', 'history', 'stats', 'unlocked', 'survey'].forEach(type => {
+    ['favorites', 'history', 'reservations', 'stats', 'unlocked', 'survey'].forEach(type => {
       localStorage.removeItem(this._key(type));
     });
   },
@@ -961,6 +981,7 @@ const storage = {
     return {
       favorites: JSON.parse(localStorage.getItem(STORAGE_KEYS.favorites(email)) || '[]'),
       history: JSON.parse(localStorage.getItem(STORAGE_KEYS.history(email)) || '[]'),
+      reservations: JSON.parse(localStorage.getItem(STORAGE_KEYS.reservations(email)) || '[]'),
       stats: JSON.parse(localStorage.getItem(STORAGE_KEYS.stats(email)) || '{"pencarian":0,"dilihat":0,"chat":0}'),
       unlocked: localStorage.getItem(STORAGE_KEYS.unlocked(email)) === 'true',
       survey: JSON.parse(localStorage.getItem(STORAGE_KEYS.survey(email)) || 'null')
@@ -968,7 +989,7 @@ const storage = {
   },
 
   deleteUserData(email) {
-    ['favorites', 'history', 'stats', 'unlocked', 'survey'].forEach(type => {
+    ['favorites', 'history', 'reservations', 'stats', 'unlocked', 'survey'].forEach(type => {
       localStorage.removeItem(STORAGE_KEYS[type](email));
     });
   }
@@ -1044,6 +1065,7 @@ function enterApp() {
 
   storage.loadFavorites();
   storage.loadHistory();
+  storage.loadReservations();
   storage.loadStats();
   state.isUnlocked = storage.loadUnlocked();
 
@@ -1535,6 +1557,7 @@ function renderProfil() {
   $('#statPencarian').textContent = state.stats.pencarian;
   $('#statDilihat').textContent   = state.stats.dilihat;
   $('#statChat').textContent      = state.stats.chat;
+  
   const hist = $('#riwayatPencarian');
   if (state.history.length === 0) {
     hist.innerHTML = `<p class="text-secondary small mb-0">Belum ada riwayat pencarian.</p>`;
@@ -1543,6 +1566,19 @@ function renderProfil() {
       const tgl = new Date(h.time).toLocaleString('id-ID', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' });
       const fas = h.facilities.length ? ` · ${h.facilities.length} fasilitas` : '';
       return `<div class="border-bottom py-2 small" style="font-size:0.78rem;"><i class="bi bi-search me-1 text-primary"></i><strong>${escapeHtml(h.mood || '-')}</strong> di ${escapeHtml(h.location || 'semua')}${fas}<span class="text-secondary float-end" style="font-size:0.7rem;">${tgl}</span></div>`;
+    }).join('');
+  }
+
+  const resv = $('#riwayatReservasi');
+  if (state.reservations.length === 0) {
+    resv.innerHTML = `<p class="text-secondary small mb-0">Belum ada riwayat reservasi/pesan.</p>`;
+  } else {
+    resv.innerHTML = state.reservations.map(r => {
+      const tgl = new Date(r.time).toLocaleString('id-ID', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' });
+      return `<div class="border-bottom py-2 small" style="font-size:0.78rem;">
+        <strong>${escapeHtml(r.cafeName)}</strong> — <span class="${r.isAdmin ? 'text-warning fw-bold' : 'text-primary fw-bold'}">${r.type}</span>
+        <span class="text-secondary float-end" style="font-size:0.7rem;">${tgl}</span>
+      </div>`;
     }).join('');
   }
 }
@@ -1570,9 +1606,25 @@ function handleOrder(cafeId, isAdmin = false) {
   const cafe = findCafe(cafeId);
   if (!cafe) return;
   if (isCafeLocked(cafeId)) { openSurveyModal(); return; }
+  
+  // Simpan rekap reservasi ke akun user
+  const typeStr = isAdmin ? 'Reservasi via Admin' : 'Pesan via Cafe';
+  state.reservations.unshift({ 
+    cafeId: cafe.id, 
+    cafeName: cafe.name, 
+    type: typeStr, 
+    isAdmin: isAdmin, 
+    time: new Date().toISOString() 
+  });
+  storage.saveReservations();
+  
+  // Update statistik chat
   state.stats.chat++;
   storage.saveStats();
   
+  // Refresh profil jika sedang di halaman profil
+  if (state.currentPage === 'app-profil') renderProfil();
+
   let phone = '';
   let message = '';
 
@@ -1660,6 +1712,7 @@ function renderAdmin() {
   renderAdminDashboard();
   renderAdminUsers();
   renderAdminSurvey();
+  renderAdminReservasi();
 }
 
 function renderAdminDashboard() {
@@ -1780,6 +1833,55 @@ function renderAdminSurvey() {
   }).join('');
 }
 
+function renderAdminReservasi() {
+  const users = storage.loadUsers().filter(u => u.role !== 'admin');
+  const resvList = [];
+
+  users.forEach(u => {
+    const data = storage.getUserData(u.email);
+    if (data.reservations) {
+      data.reservations.forEach(r => {
+        if (r.isAdmin) { // Hanya tampilkan yang via Admin
+          resvList.push({ 
+            userName: u.name, 
+            userEmail: u.email, 
+            cafeName: r.cafeName, 
+            time: r.time 
+          });
+        }
+      });
+    }
+  });
+
+  // Urutkan dari yang terbaru
+  resvList.sort((a, b) => new Date(b.time) - new Date(a.time));
+
+  const container = $('#adminReservasiList');
+  if (resvList.length === 0) {
+    container.innerHTML = `<div class="card"><div class="card-body text-center text-secondary small py-4">Belum ada user yang reservasi via Admin.</div></div>`;
+    return;
+  }
+
+  container.innerHTML = resvList.map(r => {
+    const tgl = new Date(r.time).toLocaleString('id-ID', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+    return `
+      <div class="admin-user-card" style="border-left: 4px solid var(--admin-purple);">
+        <div class="d-flex justify-content-between align-items-start mb-1">
+          <div>
+            <div class="u-name fw-bold text-dark" style="font-size:0.88rem;">${escapeHtml(r.userName)}</div>
+            <div class="u-email text-secondary" style="font-size:0.72rem;">${escapeHtml(r.userEmail)}</div>
+          </div>
+          <span class="badge bg-warning text-dark" style="font-size:0.65rem;">Reservasi</span>
+        </div>
+        <div class="mt-2 p-2 rounded bg-light" style="border: 1px solid #e2e8f0;">
+          <div class="fw-semibold" style="font-size:0.85rem; color:var(--primary-blue);"><i class="bi bi-shop me-1"></i>${escapeHtml(r.cafeName)}</div>
+        </div>
+        <div class="text-secondary mt-2 text-end" style="font-size:0.7rem;"><i class="bi bi-clock me-1"></i>${tgl}</div>
+      </div>
+    `;
+  }).join('');
+}
+
 function renderUserDetail(email) {
   const users = storage.loadUsers();
   const u = users.find(x => x.email === email);
@@ -1845,6 +1947,7 @@ function deleteUser(email) {
   renderAdminUsers();
   renderAdminDashboard();
   renderAdminSurvey();
+  renderAdminReservasi();
   showAdminAlert('User berhasil dihapus.', 'success');
 }
 
@@ -1980,6 +2083,7 @@ document.addEventListener('click', (e) => {
       storage.resetAll();
       state.favorites = [];
       state.history = [];
+      state.reservations = [];
       state.stats = { pencarian: 0, dilihat: 0, chat: 0 };
       state.isUnlocked = false;
       renderProfil();
