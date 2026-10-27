@@ -1846,7 +1846,8 @@ function renderAdminReservasi() {
             userName: u.name, 
             userEmail: u.email, 
             cafeName: r.cafeName, 
-            time: r.time 
+            time: r.time,
+            survey: data.survey // Ambil data survey user
           });
         }
       });
@@ -1864,6 +1865,20 @@ function renderAdminReservasi() {
 
   container.innerHTML = resvList.map(r => {
     const tgl = new Date(r.time).toLocaleString('id-ID', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+    
+    // Tampilkan survey jika ada
+    let surveyHtml = '';
+    if (r.survey) {
+      surveyHtml = `
+        <div class="mt-2 p-2 rounded bg-light border" style="font-size:0.72rem;">
+          <div class="fw-semibold mb-1 text-dark"><i class="bi bi-clipboard-check me-1"></i>Jawaban Kuis User:</div>
+          <div class="mb-1"><strong>1.</strong> ${escapeHtml(r.survey.q1 || '-')}</div>
+          <div class="mb-1"><strong>2.</strong> ${escapeHtml(r.survey.q2 || '-')}</div>
+          <div><strong>3.</strong> ${escapeHtml(r.survey.q3 || '-')}</div>
+        </div>
+      `;
+    }
+
     return `
       <div class="admin-user-card" style="border-left: 4px solid var(--admin-purple);">
         <div class="d-flex justify-content-between align-items-start mb-1">
@@ -1876,6 +1891,7 @@ function renderAdminReservasi() {
         <div class="mt-2 p-2 rounded bg-light" style="border: 1px solid #e2e8f0;">
           <div class="fw-semibold" style="font-size:0.85rem; color:var(--primary-blue);"><i class="bi bi-shop me-1"></i>${escapeHtml(r.cafeName)}</div>
         </div>
+        ${surveyHtml}
         <div class="text-secondary mt-2 text-end" style="font-size:0.7rem;"><i class="bi bi-clock me-1"></i>${tgl}</div>
       </div>
     `;
