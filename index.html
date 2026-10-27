@@ -1004,17 +1004,19 @@ function showAuthAlert(msg, type = 'error') {
 
 function handleLogin(e) {
   e.preventDefault();
-  const email = $('#loginEmail').value.trim().toLowerCase();
+  const inputEmail = $('#loginEmail').value.trim();
   const password = $('#loginPassword').value;
   const users = storage.loadUsers();
 
-  const user = users.find(u => u.email.toLowerCase() === email && u.password === password);
+  // Cari user dengan case-insensitive email
+  const user = users.find(u => u.email.toLowerCase() === inputEmail.toLowerCase() && u.password === password);
   if (!user) return showAuthAlert('Email atau password salah.');
 
   resetState();
+  // Simpan email ASLI (sesuai database) agar kunci localStorage konsisten
   state.user = { name: user.name, email: user.email };
 
-  if (user.role === 'admin' || email === ADMIN_ACCOUNT.email) {
+  if (user.role === 'admin' || user.email.toLowerCase() === ADMIN_ACCOUNT.email.toLowerCase()) {
     state.isAdmin = true;
     storage.saveSession({ name: user.name, email: user.email, role: 'admin' });
     enterAdmin();
