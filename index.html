@@ -433,8 +433,7 @@ body {
 
       <div id="authAlert"></div>
 
-      <!-- TAMBAHKAN onsubmit="return false;" UNTUK MENCEGAH RESTART HALAMAN -->
-      <form id="formLogin" onsubmit="return false;">
+      <form id="formLogin">
         <div class="mb-3">
           <label class="form-label fw-semibold">Email</label>
           <input type="email" class="form-control" id="loginEmail" placeholder="nama@email.com" required autocomplete="email">
@@ -443,7 +442,7 @@ body {
           <label class="form-label fw-semibold">Password</label>
           <input type="password" class="form-control" id="loginPassword" placeholder="Minimal 6 karakter" required autocomplete="current-password">
         </div>
-        <button type="button" class="btn btn-primary w-100 py-2" id="btnLogin">
+        <button type="submit" class="btn btn-primary w-100 py-2">
           <i class="bi bi-box-arrow-in-right me-1"></i>Masuk
         </button>
       </form>
@@ -790,16 +789,8 @@ body {
 </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Supabase SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 /* ============================== KONFIG ============================== */
-// URL DAN KEY SUPABASE
-const SUPABASE_URL = 'https://pllgpwtpvqkkwdknoetr.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsbGdwd3RwdnFra3dka25vZXRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMxNDQ1MjYsImV4cCI6MjEwODcyMDUyNn0.s7HmXyN0_G_JeBr2rHNW8i7zFiyyWLcLtpPNyC-ETmg';
-
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
 const CONFIG = { whatsappNumber: '6287705339063', scrollOffset: 70 };
 
 const ADMIN_ACCOUNT = {
@@ -828,6 +819,17 @@ const DEFAULT_USERS = [
   { name: 'Adam', email: 'adam@gmail.com', password: 'Adam123' },
   { name: 'Ircham', email: 'Ircham@gmail.com', password: 'Ircham123' }
 ];
+
+const STORAGE_KEYS = {
+  users: 'ngafeeling_users',
+  session: 'ngafeeling_session',
+  favorites: (email) => `ngafeeling_favorites_${email}`,
+  history:   (email) => `ngafeeling_history_${email}`,
+  stats:     (email) => `ngafeeling_stats_${email}`,
+  unlocked:  (email) => `ngafeeling_unlocked_${email}`,
+  survey:    (email) => `ngafeeling_survey_${email}`,
+  reservations: (email) => `ngafeeling_reservations_${email}`
+};
 
 /* ============================== HELPER GAMBAR ============================== */
 function cafeImage(cafe, width = 600, height = 375) {
@@ -918,88 +920,77 @@ function resetState() {
   sliderState = { current: 0, total: 0, startX: 0, isDragging: false };
 }
 
-/* ============================== STORAGE (SUPABASE) ============================== */
+/* ============================== STORAGE ============================== */
 const storage = {
-  async loadUsers() {
+  loadUsers() {
     try {
-      // Sync default users if not exist
-      for (const du of DEFAULT_USERS) {
-        const { data } = await supabase.from('users').select('email').eq('email', du.email).single();
-        if (!data) {
-          await supabase.from('users').insert([{ name: du.name, email: du.email, password: du.password, role: 'user' }]);
-          await supabase.from('user_data').insert([{ email: du.email }]);
-        }
-      }
-      // Sync admin
-      const { data: adminData } = await supabase.from('users').select('email').eq('email', ADMIN_ACCOUNT.email).single();
-      if (!adminData) {
-        await supabase.from('users').insert([{ name: ADMIN_ACCOUNT.name, email: ADMIN_ACCOUNT.email, password: ADMIN_ACCOUNT.password, role: 'admin' }]);
-        await supabase.from('user_data').insert([{ email: ADMIN_ACCOUNT.email }]);
-      }
+      let raw = JSON.parse(localStorage.getItem(STORAGE_KEYS.users) || '[]');
       
-      const { data: users } = await supabase.from('users').select('*');
-      return users || [];
-    } catch (err) { console.error(err); return []; }
-  },
-
-  async loadUserData(email) {
-    try {
-      const { data, error } = await supabase.from('user_data').select('*').eq('email', email).single();
-      if (error && error.code !== 'PGRST116') throw error; // PGRST116 = no rows
-      if (!data) {
-        // Create empty row if not exists
-        await supabase.from('user_data').insert([{ email }]);
-        return { favorites: [], history: [], reservations: [], stats: { pencarian: 0, dilihat: 0, chat: 0 }, unlocked: false, survey: null };
+      // Pastikan admin selalu ada
+      if (!raw.some(u => u.email === ADMIN_ACCOUNT.email)) {
+        raw.push({ name: ADMIN_ACCOUNT.name, email: ADMIN_ACCOUNT.email, password: ADMIN_ACCOUNT.password, role: 'admin' });
       }
-      return {
-        favorites: data.favorites || [],
-        history: data.history || [],
-        reservations: data.reservations || [],
-        stats: {
-          pencarian: data.pencarian || 0,
-          dilihat: data.dilihat || 0,
-          chat: data.chat || 0
-        },
-        unlocked: data.unlocked || false,
-        survey: data.survey || null
-      };
-    } catch (err) { console.error(err); return null; }
+
+      // Suntikkan default users jika belum ada
+      DEFAULT_USERS.forEach(du => {
+        if (!raw.some(u => u.email === du.email)) {
+          raw.push({ ...du, role: 'user' });
+        }
+      });
+
+      localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(raw));
+      return raw;
+    } catch { return []; }
+  },
+  saveUsers(users) { localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(users)); },
+
+  loadSession() { try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.session) || 'null'); } catch { return null; } },
+  saveSession(user) { localStorage.setItem(STORAGE_KEYS.session, JSON.stringify(user)); },
+  clearSession() { localStorage.removeItem(STORAGE_KEYS.session); },
+
+  _key(type) {
+    const email = state.user?.email || 'guest';
+    return STORAGE_KEYS[type](email);
   },
 
-  async saveUserData(email, fields) {
-    const { error } = await supabase.from('user_data').update(fields).eq('email', email);
-    if (error) console.error('Save error:', error);
+  loadFavorites() { try { const r = localStorage.getItem(this._key('favorites')); state.favorites = r ? JSON.parse(r) : []; } catch { state.favorites = []; } },
+  saveFavorites() { localStorage.setItem(this._key('favorites'), JSON.stringify(state.favorites)); },
+
+  loadHistory() { try { const r = localStorage.getItem(this._key('history')); state.history = r ? JSON.parse(r) : []; } catch { state.history = []; } },
+  saveHistory() { localStorage.setItem(this._key('history'), JSON.stringify(state.history.slice(0, 10))); },
+
+  loadReservations() { try { const r = localStorage.getItem(this._key('reservations')); state.reservations = r ? JSON.parse(r) : []; } catch { state.reservations = []; } },
+  saveReservations() { localStorage.setItem(this._key('reservations'), JSON.stringify(state.reservations.slice(0, 15))); },
+
+  loadStats() { try { const r = localStorage.getItem(this._key('stats')); state.stats = r ? JSON.parse(r) : { pencarian: 0, dilihat: 0, chat: 0 }; } catch { state.stats = { pencarian: 0, dilihat: 0, chat: 0 }; } },
+  saveStats() { localStorage.setItem(this._key('stats'), JSON.stringify(state.stats)); },
+
+  loadUnlocked() { return localStorage.getItem(this._key('unlocked')) === 'true'; },
+  saveUnlocked() { localStorage.setItem(this._key('unlocked'), 'true'); },
+
+  loadSurvey() { try { const r = localStorage.getItem(this._key('survey')); return r ? JSON.parse(r) : null; } catch { return null; } },
+  saveSurvey(data) { localStorage.setItem(this._key('survey'), JSON.stringify(data)); },
+
+  resetAll() {
+    ['favorites', 'history', 'reservations', 'stats', 'unlocked', 'survey'].forEach(type => {
+      localStorage.removeItem(this._key(type));
+    });
   },
 
-  async saveStats(email, stats) {
-    await this.saveUserData(email, { pencarian: stats.pencarian, dilihat: stats.dilihat, chat: stats.chat });
+  getUserData(email) {
+    return {
+      favorites: JSON.parse(localStorage.getItem(STORAGE_KEYS.favorites(email)) || '[]'),
+      history: JSON.parse(localStorage.getItem(STORAGE_KEYS.history(email)) || '[]'),
+      reservations: JSON.parse(localStorage.getItem(STORAGE_KEYS.reservations(email)) || '[]'),
+      stats: JSON.parse(localStorage.getItem(STORAGE_KEYS.stats(email)) || '{"pencarian":0,"dilihat":0,"chat":0}'),
+      unlocked: localStorage.getItem(STORAGE_KEYS.unlocked(email)) === 'true',
+      survey: JSON.parse(localStorage.getItem(STORAGE_KEYS.survey(email)) || 'null')
+    };
   },
 
-  async saveFavorites(email, favorites) {
-    await this.saveUserData(email, { favorites });
-  },
-
-  async saveHistory(email, history) {
-    await this.saveUserData(email, { history });
-  },
-
-  async saveReservations(email, reservations) {
-    await this.saveUserData(email, { reservations });
-  },
-
-  async saveUnlocked(email, unlocked) {
-    await this.saveUserData(email, { unlocked });
-  },
-
-  async saveSurvey(email, survey) {
-    await this.saveUserData(email, { survey });
-  },
-
-  async resetAll(email) {
-    await this.saveUserData(email, {
-      favorites: [], history: [], reservations: [],
-      pencarian: 0, dilihat: 0, chat: 0,
-      unlocked: false, survey: null
+  deleteUserData(email) {
+    ['favorites', 'history', 'reservations', 'stats', 'unlocked', 'survey'].forEach(type => {
+      localStorage.removeItem(STORAGE_KEYS[type](email));
     });
   }
 };
@@ -1011,45 +1002,25 @@ function showAuthAlert(msg, type = 'error') {
   setTimeout(() => { $('#authAlert').innerHTML = ''; }, 4000);
 }
 
-async function handleLogin() {
-  const inputEmail = $('#loginEmail').value.trim().toLowerCase();
+function handleLogin(e) {
+  e.preventDefault();
+  const email = $('#loginEmail').value.trim().toLowerCase();
   const password = $('#loginPassword').value;
-  
-  // Validasi Login menggunakan data lokal (DEFAULT_USERS & ADMIN_ACCOUNT) agar PASTI BERHASIL
-  let foundUser = null;
+  const users = storage.loadUsers();
 
-  // Cek Admin
-  if (inputEmail === ADMIN_ACCOUNT.email.toLowerCase() && password === ADMIN_ACCOUNT.password) {
-    foundUser = { ...ADMIN_ACCOUNT, role: 'admin' };
-  } else {
-    // Cek Default Users
-    foundUser = DEFAULT_USERS.find(u => u.email.toLowerCase() === inputEmail && u.password === password);
-  }
-
-  if (!foundUser) return showAuthAlert('Email atau password salah.');
+  const user = users.find(u => u.email.toLowerCase() === email && u.password === password);
+  if (!user) return showAuthAlert('Email atau password salah.');
 
   resetState();
-  state.user = { name: foundUser.name, email: foundUser.email };
+  state.user = { name: user.name, email: user.email };
 
-  // Load User Data dari Supabase (jika gagal, pakai data kosong)
-  try {
-    const data = await storage.loadUserData(foundUser.email);
-    if (data) {
-      state.favorites = data.favorites;
-      state.history = data.history;
-      state.reservations = data.reservations;
-      state.stats = data.stats;
-      state.isUnlocked = data.unlocked;
-    }
-  } catch (err) {
-    console.warn('Gagal load data dari Supabase, menggunakan data kosong.', err);
-  }
-
-  if (foundUser.role === 'admin' || foundUser.email.toLowerCase() === ADMIN_ACCOUNT.email.toLowerCase()) {
+  if (user.role === 'admin' || email === ADMIN_ACCOUNT.email) {
     state.isAdmin = true;
+    storage.saveSession({ name: user.name, email: user.email, role: 'admin' });
     enterAdmin();
   } else {
     state.isAdmin = false;
+    storage.saveSession({ name: user.name, email: user.email });
     enterApp();
   }
 }
@@ -1057,6 +1028,7 @@ async function handleLogin() {
 function handleLogout() {
   if (!confirm('Yakin ingin logout?')) return;
 
+  storage.clearSession();
   resetState();
   state.user = null;
   state.isAdmin = false;
@@ -1087,6 +1059,16 @@ function showAppShell(show) {
 function showAdminShell(show) {}
 
 function enterApp() {
+  const currentUser = state.user;
+  resetState();
+  state.user = currentUser;
+
+  storage.loadFavorites();
+  storage.loadHistory();
+  storage.loadReservations();
+  storage.loadStats();
+  state.isUnlocked = storage.loadUnlocked();
+
   const initial = state.user.name.charAt(0).toUpperCase();
   $('#navAvatar').textContent = initial;
   $('#navUserName').textContent = state.user.name.split(' ')[0];
@@ -1341,13 +1323,13 @@ window.addEventListener('resize', () => {
 });
 
 /* ============================== DETAIL ============================== */
-async function renderCafeDetail(cafeId, source) {
+function renderCafeDetail(cafeId, source) {
   const cafe = findCafe(cafeId);
   if (!cafe) return;
   if (isCafeLocked(cafe.id)) { openSurveyModal(); return; }
 
   state.stats.dilihat++;
-  await storage.saveStats(state.user.email, state.stats);
+  storage.saveStats();
 
   const isFav = state.favorites.includes(cafe.id);
   const heroImg = cafeImage(cafe, 800, 450);
@@ -1494,7 +1476,7 @@ function hasilCardHTML(cafe, idx) {
   `;
 }
 
-async function renderHasil() {
+function renderHasil() {
   const list = getRecommendations();
   const summary = $('#hasilSummary');
   const grid = $('#hasilGrid');
@@ -1518,10 +1500,8 @@ async function renderHasil() {
   scrollToEl($('#hasilRekomendasi'));
   state.stats.pencarian++;
   state.history.unshift({ mood: state.filter.mood, location: state.filter.location, facilities: [...state.filter.facilities], time: new Date().toISOString() });
-  
-  // Save ke Supabase
-  await storage.saveStats(state.user.email, state.stats);
-  await storage.saveHistory(state.user.email, state.history.slice(0, 10));
+  storage.saveStats();
+  storage.saveHistory();
 }
 
 function renderHasilSilent() {
@@ -1604,13 +1584,13 @@ function renderProfil() {
 }
 
 /* ============================== AKSI USER ============================== */
-async function toggleFavorite(cafeId) {
+function toggleFavorite(cafeId) {
   const id = Number(cafeId);
   if (isCafeLocked(id)) { openSurveyModal(); return; }
   const idx = state.favorites.indexOf(id);
   if (idx === -1) state.favorites.push(id);
   else state.favorites.splice(idx, 1);
-  await storage.saveFavorites(state.user.email, state.favorites);
+  storage.saveFavorites();
 
   if (state.currentMoodQuick && !$('#quickResult').classList.contains('d-none')) {
     const currentSlide = sliderState.current;
@@ -1622,7 +1602,7 @@ async function toggleFavorite(cafeId) {
   if (!$('#hasilRekomendasi').classList.contains('d-none')) renderHasilSilent();
 }
 
-async function handleOrder(cafeId, isAdmin = false) {
+function handleOrder(cafeId, isAdmin = false) {
   const cafe = findCafe(cafeId);
   if (!cafe) return;
   if (isCafeLocked(cafeId)) { openSurveyModal(); return; }
@@ -1636,11 +1616,11 @@ async function handleOrder(cafeId, isAdmin = false) {
     isAdmin: isAdmin, 
     time: new Date().toISOString() 
   });
-  await storage.saveReservations(state.user.email, state.reservations.slice(0, 15));
+  storage.saveReservations();
   
   // Update statistik chat
   state.stats.chat++;
-  await storage.saveStats(state.user.email, state.stats);
+  storage.saveStats();
   
   // Refresh profil jika sedang di halaman profil
   if (state.currentPage === 'app-profil') renderProfil();
@@ -1711,12 +1691,12 @@ function handleSurveyClick(el) {
   const filled = state.surveyAnswers.q1 && state.surveyAnswers.q2 && state.surveyAnswers.q3;
   $('#submitSurveyBtn').disabled = !filled;
 }
-async function submitSurvey() {
+function submitSurvey() {
   const answers = state.surveyAnswers;
   if (!answers.q1 || !answers.q2 || !answers.q3) return;
 
-  await storage.saveSurvey(state.user.email, { ...answers, submittedAt: new Date().toISOString() });
-  await storage.saveUnlocked(state.user.email, true);
+  storage.saveSurvey({ ...answers, submittedAt: new Date().toISOString() });
+  storage.saveUnlocked();
   state.isUnlocked = true;
 
   bootstrap.Modal.getInstance($('#surveyModal')).hide();
@@ -1728,37 +1708,35 @@ async function submitSurvey() {
 }
 
 /* ============================== ADMIN ============================== */
-async function renderAdmin() {
-  await renderAdminDashboard();
-  await renderAdminUsers();
-  await renderAdminSurvey();
-  await renderAdminReservasi();
+function renderAdmin() {
+  renderAdminDashboard();
+  renderAdminUsers();
+  renderAdminSurvey();
+  renderAdminReservasi();
 }
 
-async function renderAdminDashboard() {
-  const users = (await storage.loadUsers()).filter(u => u.role !== 'admin');
+function renderAdminDashboard() {
+  const users = storage.loadUsers().filter(u => u.role !== 'admin');
 
   let totalSearch = 0, totalFav = 0, totalUnlock = 0;
   const activities = [];
 
-  for (const u of users) {
-    const data = await storage.loadUserData(u.email);
-    if (data) {
-      totalSearch += data.stats.pencarian || 0;
-      totalFav += data.favorites.length;
-      if (data.unlocked) totalUnlock++;
+  users.forEach(u => {
+    const data = storage.getUserData(u.email);
+    totalSearch += data.stats.pencarian || 0;
+    totalFav += data.favorites.length;
+    if (data.unlocked) totalUnlock++;
 
-      data.history.forEach(h => {
-        activities.push({
-          name: u.name,
-          email: u.email,
-          type: 'search',
-          detail: `Cari "${h.mood}" di ${h.location}`,
-          time: h.time
-        });
+    data.history.forEach(h => {
+      activities.push({
+        name: u.name,
+        email: u.email,
+        type: 'search',
+        detail: `Cari "${h.mood}" di ${h.location}`,
+        time: h.time
       });
-    }
-  }
+    });
+  });
 
   $('#admTotalUsers').textContent = users.length;
   $('#admTotalSearch').textContent = totalSearch;
@@ -1783,8 +1761,8 @@ async function renderAdminDashboard() {
   }
 }
 
-async function renderAdminUsers() {
-  const users = (await storage.loadUsers()).filter(u => u.role !== 'admin');
+function renderAdminUsers() {
+  const users = storage.loadUsers().filter(u => u.role !== 'admin');
   const container = $('#adminUsersList');
 
   if (users.length === 0) {
@@ -1792,13 +1770,12 @@ async function renderAdminUsers() {
     return;
   }
 
-  let html = '';
-  for (const u of users) {
-    const data = await storage.loadUserData(u.email);
-    const unlockBadge = data?.unlocked
+  container.innerHTML = users.map(u => {
+    const data = storage.getUserData(u.email);
+    const unlockBadge = data.unlocked
       ? '<span class="badge-unlock">✅ Unlock</span>'
       : '<span class="badge-locked">🔒 Belum</span>';
-    html += `
+    return `
       <div class="admin-user-card">
         <div class="d-flex justify-content-between align-items-start gap-2 mb-1">
           <div style="min-width:0;">
@@ -1808,10 +1785,10 @@ async function renderAdminUsers() {
           <div>${unlockBadge}</div>
         </div>
         <div class="u-stats">
-          <span class="u-stat">🔍 <strong>${data?.stats?.pencarian || 0}</strong></span>
-          <span class="u-stat">❤️ <strong>${data?.favorites?.length || 0}</strong></span>
-          <span class="u-stat">👁️ <strong>${data?.stats?.dilihat || 0}</strong></span>
-          <span class="u-stat">💬 <strong>${data?.stats?.chat || 0}</strong></span>
+          <span class="u-stat">🔍 <strong>${data.stats.pencarian || 0}</strong></span>
+          <span class="u-stat">❤️ <strong>${data.favorites.length}</strong></span>
+          <span class="u-stat">👁️ <strong>${data.stats.dilihat || 0}</strong></span>
+          <span class="u-stat">💬 <strong>${data.stats.chat || 0}</strong></span>
         </div>
         <div class="d-flex gap-1 mt-2">
           <button class="btn btn-outline-primary btn-sm flex-fill" data-admin-action="detail" data-email="${escapeHtml(u.email)}"><i class="bi bi-eye me-1"></i>Detail</button>
@@ -1819,20 +1796,19 @@ async function renderAdminUsers() {
         </div>
       </div>
     `;
-  }
-  container.innerHTML = html;
+  }).join('');
 }
 
-async function renderAdminSurvey() {
-  const users = (await storage.loadUsers()).filter(u => u.role !== 'admin');
+function renderAdminSurvey() {
+  const users = storage.loadUsers().filter(u => u.role !== 'admin');
   const rows = [];
 
-  for (const u of users) {
-    const data = await storage.loadUserData(u.email);
-    if (data && data.survey) {
+  users.forEach(u => {
+    const data = storage.getUserData(u.email);
+    if (data.survey) {
       rows.push({ email: u.email, name: u.name, ...data.survey });
     }
-  }
+  });
 
   const container = $('#adminSurveyList');
   if (rows.length === 0) {
@@ -1857,25 +1833,26 @@ async function renderAdminSurvey() {
   }).join('');
 }
 
-async function renderAdminReservasi() {
-  const users = (await storage.loadUsers()).filter(u => u.role !== 'admin');
+function renderAdminReservasi() {
+  const users = storage.loadUsers().filter(u => u.role !== 'admin');
   const resvList = [];
 
-  for (const u of users) {
-    const data = await storage.loadUserData(u.email);
-    if (data && data.reservations) {
+  users.forEach(u => {
+    const data = storage.getUserData(u.email);
+    if (data.reservations) {
       data.reservations.forEach(r => {
         if (r.isAdmin) { // Hanya tampilkan yang via Admin
           resvList.push({ 
             userName: u.name, 
             userEmail: u.email, 
             cafeName: r.cafeName, 
-            time: r.time 
+            time: r.time,
+            survey: data.survey // Ambil data survey user
           });
         }
       });
     }
-  }
+  });
 
   // Urutkan dari yang terbaru
   resvList.sort((a, b) => new Date(b.time) - new Date(a.time));
@@ -1888,6 +1865,20 @@ async function renderAdminReservasi() {
 
   container.innerHTML = resvList.map(r => {
     const tgl = new Date(r.time).toLocaleString('id-ID', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+    
+    // Tampilkan survey jika ada
+    let surveyHtml = '';
+    if (r.survey) {
+      surveyHtml = `
+        <div class="mt-2 p-2 rounded bg-light border" style="font-size:0.72rem;">
+          <div class="fw-semibold mb-1 text-dark"><i class="bi bi-clipboard-check me-1"></i>Jawaban Kuis User:</div>
+          <div class="mb-1"><strong>1.</strong> ${escapeHtml(r.survey.q1 || '-')}</div>
+          <div class="mb-1"><strong>2.</strong> ${escapeHtml(r.survey.q2 || '-')}</div>
+          <div><strong>3.</strong> ${escapeHtml(r.survey.q3 || '-')}</div>
+        </div>
+      `;
+    }
+
     return `
       <div class="admin-user-card" style="border-left: 4px solid var(--admin-purple);">
         <div class="d-flex justify-content-between align-items-start mb-1">
@@ -1900,20 +1891,19 @@ async function renderAdminReservasi() {
         <div class="mt-2 p-2 rounded bg-light" style="border: 1px solid #e2e8f0;">
           <div class="fw-semibold" style="font-size:0.85rem; color:var(--primary-blue);"><i class="bi bi-shop me-1"></i>${escapeHtml(r.cafeName)}</div>
         </div>
+        ${surveyHtml}
         <div class="text-secondary mt-2 text-end" style="font-size:0.7rem;"><i class="bi bi-clock me-1"></i>${tgl}</div>
       </div>
     `;
   }).join('');
 }
 
-async function renderUserDetail(email) {
-  const users = await storage.loadUsers();
+function renderUserDetail(email) {
+  const users = storage.loadUsers();
   const u = users.find(x => x.email === email);
   if (!u) return;
 
-  const data = await storage.loadUserData(email);
-  if (!data) return;
-
+  const data = storage.getUserData(email);
   const favCafes = data.favorites.map(findCafe).filter(Boolean);
 
   $('#userDetailContent').innerHTML = `
@@ -1965,18 +1955,19 @@ async function renderUserDetail(email) {
   new bootstrap.Modal($('#userDetailModal')).show();
 }
 
-async function deleteUser(email) {
+function deleteUser(email) {
   if (!confirm(`Yakin ingin hapus user ${email}?`)) return;
-  await supabase.from('users').delete().eq('email', email);
-  await supabase.from('user_data').delete().eq('email', email);
-  await renderAdminUsers();
-  await renderAdminDashboard();
-  await renderAdminSurvey();
-  await renderAdminReservasi();
+  const users = storage.loadUsers().filter(u => u.email !== email);
+  storage.saveUsers(users);
+  storage.deleteUserData(email);
+  renderAdminUsers();
+  renderAdminDashboard();
+  renderAdminSurvey();
+  renderAdminReservasi();
   showAdminAlert('User berhasil dihapus.', 'success');
 }
 
-async function addUser() {
+function addUser() {
   const name = $('#newUserName').value.trim();
   const email = $('#newUserEmail').value.trim().toLowerCase();
   const password = $('#newUserPassword').value;
@@ -1991,18 +1982,19 @@ async function addUser() {
   if (password.length < 6) return showErr('Password minimal 6 karakter.');
   if (email === ADMIN_ACCOUNT.email) return showErr('Email ini khusus admin.');
 
-  const { data: existing } = await supabase.from('users').select('email').eq('email', email).single();
-  if (existing) return showErr('Email sudah terdaftar.');
+  const users = storage.loadUsers();
+  if (users.some(u => u.email === email)) return showErr('Email sudah terdaftar.');
 
-  await supabase.from('users').insert([{ name, email, password, role: 'user' }]);
-  await supabase.from('user_data').insert([{ email }]);
+  users.push({ name, email, password, role: 'user' });
+  storage.saveUsers(users);
+  storage.deleteUserData(email);
 
   bootstrap.Modal.getInstance($('#addUserModal')).hide();
   $('#newUserName').value = '';
   $('#newUserEmail').value = '';
   $('#newUserPassword').value = '';
-  await renderAdminUsers();
-  await renderAdminDashboard();
+  renderAdminUsers();
+  renderAdminDashboard();
   showAdminAlert(`User ${email} berhasil ditambahkan!`, 'success');
 }
 
@@ -2012,13 +2004,12 @@ function showAdminAlert(msg, type = 'error') {
   setTimeout(() => { $('#adminAlert').innerHTML = ''; }, 4000);
 }
 
-async function exportCSV() {
-  const users = (await storage.loadUsers()).filter(u => u.role !== 'admin');
+function exportCSV() {
+  const users = storage.loadUsers().filter(u => u.role !== 'admin');
   let csv = 'Email,Nama,Pencarian,Favorit,Dilihat,Chat,Unlock,Q1,Q2,Q3,WaktuSurvey\n';
 
-  for (const u of users) {
-    const d = await storage.loadUserData(u.email);
-    if (!d) continue;
+  users.forEach(u => {
+    const d = storage.getUserData(u.email);
     const s = d.survey || {};
     csv += [
       `"${u.email}"`,
@@ -2033,7 +2024,7 @@ async function exportCSV() {
       `"${(s.q3 || '').replace(/"/g, '""')}"`,
       s.submittedAt || ''
     ].join(',') + '\n';
-  }
+  });
 
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const link = document.createElement('a');
@@ -2097,16 +2088,15 @@ document.addEventListener('click', (e) => {
   }
 });
 
-document.addEventListener('click', async (e) => {
+document.addEventListener('click', (e) => {
   if (e.target.closest('#openSurveyBtn')) { e.preventDefault(); openSurveyModal(); }
   if (e.target.closest('#submitSurveyBtn')) { e.preventDefault(); submitSurvey(); }
   if (e.target.closest('#logoutBtn')) { e.preventDefault(); handleLogout(); }
   if (e.target.closest('#adminLogoutBtn')) { e.preventDefault(); handleLogout(); }
   if (e.target.closest('#closeQuickResult')) { e.preventDefault(); closeQuickResult(); }
-  
   if (e.target.closest('#resetDataBtn')) {
     if (confirm('Yakin ingin reset semua data kamu?')) {
-      await storage.resetAll(state.user.email);
+      storage.resetAll();
       state.favorites = [];
       state.history = [];
       state.reservations = [];
@@ -2118,7 +2108,6 @@ document.addEventListener('click', async (e) => {
       alert('Data kamu berhasil direset.');
     }
   }
-  
   if (e.target.closest('#adminAddUserBtn')) {
     $('#addUserAlert').innerHTML = '';
     new bootstrap.Modal($('#addUserModal')).show();
@@ -2128,23 +2117,26 @@ document.addEventListener('click', async (e) => {
 });
 
 document.addEventListener('submit', (e) => {
-  if (e.target.id === 'formLogin') { e.preventDefault(); handleLogin(); }
-});
-
-// TOMBOL LOGIN DENGAN ID
-document.addEventListener('click', (e) => {
-  if (e.target.closest('#btnLogin')) {
-    e.preventDefault();
-    handleLogin();
-  }
+  if (e.target.id === 'formLogin') { e.preventDefault(); handleLogin(e); }
 });
 
 /* ============================== INIT ============================== */
-async function init() {
-  await storage.loadUsers();
-  
-  showAppShell(false);
-  switchPage('app-login');
+function init() {
+  storage.loadUsers();
+
+  const session = storage.loadSession();
+  if (session) {
+    state.user = session;
+    if (session.role === 'admin') {
+      state.isAdmin = true;
+      enterAdmin();
+    } else {
+      enterApp();
+    }
+  } else {
+    showAppShell(false);
+    switchPage('app-login');
+  }
   renderShortcutMood();
   renderWizard();
 }
