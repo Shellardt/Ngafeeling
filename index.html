@@ -793,9 +793,9 @@ body {
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 /* ============================== KONFIG ============================== */
-// GANTI DENGAN URL DAN ANON KEY SUPABASE ANDA
-const SUPABASE_URL = 'https://[PROJECT-ID].supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+// URL DAN KEY SUPABASE
+const SUPABASE_URL = 'https://pllgpwtpvqkkwdknoetr.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsbGdwd3RwdnFra3dka25vZXRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMxNDQ1MjYsImV4cCI6MjEwODcyMDUyNn0.s7HmXyN0_G_JeBr2rHNW8i7zFiyyWLcLtpPNyC-ETmg';
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -2085,15 +2085,16 @@ document.addEventListener('click', (e) => {
   }
 });
 
-document.addEventListener('click', (e) => {
+document.addEventListener('click', async (e) => {
   if (e.target.closest('#openSurveyBtn')) { e.preventDefault(); openSurveyModal(); }
   if (e.target.closest('#submitSurveyBtn')) { e.preventDefault(); submitSurvey(); }
   if (e.target.closest('#logoutBtn')) { e.preventDefault(); handleLogout(); }
   if (e.target.closest('#adminLogoutBtn')) { e.preventDefault(); handleLogout(); }
   if (e.target.closest('#closeQuickResult')) { e.preventDefault(); closeQuickResult(); }
+  
   if (e.target.closest('#resetDataBtn')) {
     if (confirm('Yakin ingin reset semua data kamu?')) {
-      await storage.resetAll(state.user.email);
+      await storage.resetAll(state.user.email); // <- Diperbaiki: sekarang menggunakan await di fungsi async
       state.favorites = [];
       state.history = [];
       state.reservations = [];
@@ -2105,6 +2106,7 @@ document.addEventListener('click', (e) => {
       alert('Data kamu berhasil direset.');
     }
   }
+  
   if (e.target.closest('#adminAddUserBtn')) {
     $('#addUserAlert').innerHTML = '';
     new bootstrap.Modal($('#addUserModal')).show();
