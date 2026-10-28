@@ -1015,10 +1015,15 @@ async function handleLogin(e) {
   const inputEmail = $('#loginEmail').value.trim().toLowerCase();
   const password = $('#loginPassword').value;
   
-  const users = await storage.loadUsers();
-  const user = users.find(u => u.email.toLowerCase() === inputEmail && u.password === password);
-  
-  if (!user) return showAuthAlert('Email atau password salah.');
+  // Mengambil user langsung dari Supabase tanpa harus sync berulang kali
+  const { data: user, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('email', inputEmail)
+    .eq('password', password)
+    .single();
+
+  if (error || !user) return showAuthAlert('Email atau password salah.');
 
   resetState();
   state.user = { name: user.name, email: user.email };
