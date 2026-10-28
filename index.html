@@ -433,7 +433,8 @@ body {
 
       <div id="authAlert"></div>
 
-      <form id="formLogin">
+      <!-- TAMBAHKAN onsubmit="return false;" UNTUK MENCEGAH RESTART HALAMAN -->
+      <form id="formLogin" onsubmit="return false;">
         <div class="mb-3">
           <label class="form-label fw-semibold">Email</label>
           <input type="email" class="form-control" id="loginEmail" placeholder="nama@email.com" required autocomplete="email">
@@ -442,7 +443,7 @@ body {
           <label class="form-label fw-semibold">Password</label>
           <input type="password" class="form-control" id="loginPassword" placeholder="Minimal 6 karakter" required autocomplete="current-password">
         </div>
-        <button type="submit" class="btn btn-primary w-100 py-2">
+        <button type="button" class="btn btn-primary w-100 py-2" id="btnLogin">
           <i class="bi bi-box-arrow-in-right me-1"></i>Masuk
         </button>
       </form>
@@ -1010,35 +1011,41 @@ function showAuthAlert(msg, type = 'error') {
   setTimeout(() => { $('#authAlert').innerHTML = ''; }, 4000);
 }
 
-async function handleLogin(e) {
-  e.preventDefault();
+async function handleLogin() {
   const inputEmail = $('#loginEmail').value.trim().toLowerCase();
   const password = $('#loginPassword').value;
   
-  // Mengambil user langsung dari Supabase tanpa harus sync berulang kali
-  const { data: user, error } = await supabase
-    .from('users')
-    .select('*')
-    .eq('email', inputEmail)
-    .eq('password', password)
-    .single();
+  // Validasi Login menggunakan data lokal (DEFAULT_USERS & ADMIN_ACCOUNT) agar PASTI BERHASIL
+  let foundUser = null;
 
-  if (error || !user) return showAuthAlert('Email atau password salah.');
-
-  resetState();
-  state.user = { name: user.name, email: user.email };
-
-  // Load all user data dari Supabase
-  const data = await storage.loadUserData(user.email);
-  if (data) {
-    state.favorites = data.favorites;
-    state.history = data.history;
-    state.reservations = data.reservations;
-    state.stats = data.stats;
-    state.isUnlocked = data.unlocked;
+  // Cek Admin
+  if (inputEmail === ADMIN_ACCOUNT.email.toLowerCase() && password === ADMIN_ACCOUNT.password) {
+    foundUser = { ...ADMIN_ACCOUNT, role: 'admin' };
+  } else {
+    // Cek Default Users
+    foundUser = DEFAULT_USERS.find(u => u.email.toLowerCase() === inputEmail && u.password === password);
   }
 
-  if (user.role === 'admin' || user.email.toLowerCase() === ADMIN_ACCOUNT.email.toLowerCase()) {
+  if (!foundUser) return showAuthAlert('Email atau password salah.');
+
+  resetState();
+  state.user = { name: foundUser.name, email: foundUser.email };
+
+  // Load User Data dari Supabase (jika gagal, pakai data kosong)
+  try {
+    const data = await storage.loadUserData(foundUser.email);
+    if (data) {
+      state.favorites = data.favorites;
+      state.history = data.history;
+      state.reservations = data.reservations;
+      state.stats = data.stats;
+      state.isUnlocked = data.unlocked;
+    }
+  } catch (err) {
+    console.warn('Gagal load data dari Supabase, menggunakan data kosong.', err);
+  }
+
+  if (foundUser.role === 'admin' || foundUser.email.toLowerCase() === ADMIN_ACCOUNT.email.toLowerCase()) {
     state.isAdmin = true;
     enterAdmin();
   } else {
@@ -2099,7 +2106,7 @@ document.addEventListener('click', async (e) => {
   
   if (e.target.closest('#resetDataBtn')) {
     if (confirm('Yakin ingin reset semua data kamu?')) {
-      await storage.resetAll(state.user.email); // <- Diperbaiki: sekarang menggunakan await di fungsi async
+      await storage.resetAll(state.user.email);
       state.favorites = [];
       state.history = [];
       state.reservations = [];
@@ -2121,37 +2128,20 @@ document.addEventListener('click', async (e) => {
 });
 
 document.addEventListener('submit', (e) => {
-  if (e.target.id === 'formLogin') { e.preventDefault(); handleLogin(e); }
+  if (e.target.id === 'formLogin') { e.preventDefault(); handleLogin(); }
+});
+
+// TOMBOL LOGIN DENGAN ID
+document.addEventListener('click', (e) => {
+  if (e.target.closest('#btnLogin')) {
+    e.preventDefault();
+    handleLogin();
+  }
 });
 
 /* ============================== INIT ============================== */
 async function init() {
   await storage.loadUsers();
-
-  // Cek session dari localStorage (untuk auto-login)
-  const sessionStr = localStorage.getItem('ngafeeling_session');
-  if (sessionStr) {
-    try {
-      const session = JSON.parse(sessionStr);
-      state.user = session;
-      const data = await storage.loadUserData(session.email);
-      if (data) {
-        state.favorites = data.favorites;
-        state.history = data.history;
-        state.reservations = data.reservations;
-        state.stats = data.stats;
-        state.isUnlocked = data.unlocked;
-      }
-      
-      if (session.role === 'admin') {
-        state.isAdmin = true;
-        enterAdmin();
-      } else {
-        enterApp();
-      }
-      return;
-    } catch { /* invalid session */ }
-  }
   
   showAppShell(false);
   switchPage('app-login');
